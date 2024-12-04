@@ -4,7 +4,11 @@ public class Seat {
     private int SeatNumber;
     private boolean IsAvailable;
     private String SeatClass;
+    public Seat(int seatNumber) {
+        this.SeatNumber = seatNumber;
 
+
+    }
     //constructor
     public Seat(int seatNumber, String seatClass) {
         this.SeatNumber = seatNumber;
@@ -42,4 +46,16 @@ public class Seat {
                  + (IsAvailable? "Available" : "Booked") + ", SeatClass:" + SeatClass + '.';
 
     }
-}
+
+    public void cancelBooking()
+   {
+        if (!IsAvailable) {
+            IsAvailable = true;
+            System.out.println("Booking for seat " + SeatNumber + " has been canceled.");
+        } else {
+            System.out.println("Seat " + SeatNumber + " is already available.");
+        }
+    }
+    }
+
+

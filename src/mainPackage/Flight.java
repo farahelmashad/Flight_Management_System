@@ -9,18 +9,24 @@ public class Flight {
   private String ArrivalAirport;
   private String ArrivalTime;
   private String DepartureTime;
-  private double BaseFare;
+  private Double BaseFare;
   public List<Seat> Seats;
 
+
+
+
   //constructor
-  public Flight(String flightNumber, String departureAirport, String arrivalAirport, String arrivalTime, String departureTime, double baseFare ) {
+  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String ArrivalTime, String departureTime, Double baseFare ) {
    this.FlightNumber = flightNumber;
    this.DepartureAirport = departureAirport;
-   this.ArrivalAirport = arrivalAirport;
-   this.ArrivalTime = arrivalTime;
+   this.ArrivalAirport = ArrivalAirport;
+   this.ArrivalTime = ArrivalTime;
    this.DepartureTime = departureTime;
    this.BaseFare = baseFare;
    this.Seats = new ArrayList<>();
+    for (int i = 1; i <= 50; i++) { // Assuming 50 seats per flight
+      Seats.add(new Seat(i));
+    }
 
   }
 //getters ans setters
