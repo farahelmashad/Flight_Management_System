@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 //white space issues // to be dealt with later!!
 public class FlightService {
+
     ArrayList<Airline> Airlines = Airline.getAirlines();
     ArrayList<Airport> Airports = Airport.getAirports();
     public void flightSearch(){
