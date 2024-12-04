@@ -28,7 +28,7 @@ public class Airline {
     }
 
     // Static method to get all airlines
-    public static List<Airline> getAirlines() {
+    public static ArrayList<Airline> getAirlines() {
         return airlines;  // Return the list of airlines
     }
 
@@ -100,4 +100,5 @@ public class Airline {
                 "Special Services: " + specialServices + "\n" +
                 "Flights: " + (flights.isEmpty() ? "No flights available" : flights.size() + " flights available");
     }
+
 }

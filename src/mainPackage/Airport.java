@@ -1,10 +1,16 @@
+package mainPackage;
 import java.util.*;
 
 public class Airport {
     private String airportCode;
     private String airportName;
     private String airportLocation;
-    private static List<Airport> airports = new ArrayList<>();
+    private static ArrayList<Airport> airports = new ArrayList<>();
+
+    public static ArrayList<Airport> getAirports() {
+        return airports;
+    }
+
 
     public Airport(Airport airport) {
         setAirportCode(airport.getAirportCode());
