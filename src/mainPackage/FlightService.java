@@ -11,16 +11,6 @@ public class FlightService {
     ArrayList<Airline> Airlines = Airline.getAirlines();
     ArrayList<Airport> Airports = Airport.getAirports();
     public void flightSearch() {
-        // Adding some test data to Airlines list
-        Airlines.add(new Airline("AA", "American Airlines", 1000, "USA"));
-        Airlines.add(new Airline("BA", "British Airways", 800, "UK"));
-        Airlines.add(new Airline("CA", "Cathay Pacific", 500, "Hong Kong"));
-
-        // Adding some test data to Airports list
-        Airports.add(new Airport("JFK", "John F. Kennedy International Airport", "New York"));
-        Airports.add(new Airport("LHR", "London Heathrow", "London"));
-        Airports.add(new Airport("HKG", "Hong Kong International Airport", "Hong Kong"));
-
 
         System.out.println("Flight Search");
         Scanner in = new Scanner(System.in);
@@ -153,18 +143,20 @@ public class FlightService {
         }
         else{
             System.out.println("--------------------Available Flights----------------------");
-        for(Flight f:Flightss){
-            f.displayFlightDetails();
+        for(int i=0;i<Flightss.size();i++){
+            System.out.println("---------------------------------------------------------------------------");
+
         }
-        }}
+        }
+        }
     private boolean isValidAirportName(String airportName) {
         for (Airport a : Airports) {
             if (airportName.replaceAll("\\s", "").equalsIgnoreCase(a.getAirportName().replaceAll("\\s", ""))) {return true;
             }
         }
         return false;
-    }
+    }}
 
-}
+
 
 
