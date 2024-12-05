@@ -13,7 +13,11 @@ public class Airline {
     private String countryOfOrigin;
     private Map<String, Integer> seatAvailability;
     private List<String> specialServices;
-    private List<Flight> flights;
+    private boolean hasSpecialMealRequest;
+    private boolean hasPetTravel;
+    private boolean hasLoungeAccess;
+    private boolean haswheelchair;
+    private ArrayList<Flight> flights;
     private static ArrayList<Airline> airlines = new ArrayList<>();
 
     public Airline(String airlineCode, String airlineName, int fleetSize, String countryOfOrigin) {
@@ -40,6 +44,22 @@ public class Airline {
         return airlineName;
     }
 
+    public boolean getSpecialMealRequest() {
+        return hasSpecialMealRequest;
+    }
+
+    public boolean getHasPetTravel() {
+        return hasPetTravel;
+    }
+
+    public boolean getHasLoungeAccess() {
+        return hasLoungeAccess;
+    }
+
+    public boolean getHaswheelchair() {
+        return haswheelchair;
+    }
+
     public int getFleetSize() {
         return fleetSize;
     }
@@ -60,7 +80,7 @@ public class Airline {
         return countryOfOrigin;
     }
 
-    public List<Flight> getFlights() {
+    public ArrayList<Flight> getFlights() {
         return flights;
     }
 
@@ -100,5 +120,4 @@ public class Airline {
                 "Special Services: " + specialServices + "\n" +
                 "Flights: " + (flights.isEmpty() ? "No flights available" : flights.size() + " flights available");
     }
-
 }
