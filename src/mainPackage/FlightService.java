@@ -144,7 +144,7 @@ public class FlightService {
         }
         public void FlightSelection(ArrayList<Flight> Flightss){
         Scanner in=new Scanner(System.in);
-        if(Flightss.size()==0){
+        if(Flightss.isEmpty()){
             System.out.println("No flights with those specifications available, would you like to search for another flight? (y/n)");
             String choice= in.nextLine();
             if(choice.equalsIgnoreCase("y"))
