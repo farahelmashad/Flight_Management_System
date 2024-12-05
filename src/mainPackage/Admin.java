@@ -47,13 +47,14 @@ public class Admin extends User {
         }
 
         System.out.println("enter DepartureAirport: ");
-        String DepartureAirport = input.nextLine();
+        String DepartureAirport = input.nextLine().trim();
+
         System.out.println("enter ArrivalAirport: ");
-        String ArrivalAirport = input.nextLine();
+        String ArrivalAirport = input.nextLine().trim();
         System.out.println("enter  ArrivalTime: ");
-        String ArrivalTime = input.nextLine();
+        String ArrivalTime = input.nextLine().trim();
         System.out.println("enter DepartureTime: ");
-        String DepartureTime = input.nextLine();
+        String DepartureTime = input.nextLine().trim();
         System.out.println("enter BaseFare: ");
         Double BaseFare = input.nextDouble();
         Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare);
@@ -68,14 +69,14 @@ public class Admin extends User {
         Flight flight = findFlightByNumber(FlightNumber);
         while (flight == null) {
             System.out.println("Flight not found. Please enter flight number again");
-            FlightNumber = input.nextLine();
+            FlightNumber = input.nextLine().trim();
             flight = findFlightByNumber(FlightNumber);
         }
         System.out.println("enter new departure time:");
-        String DepartureTime = input.nextLine();
+        String DepartureTime = input.nextLine().trim();
         flight.setDepartureTime(DepartureTime);
         System.out.println("enter new arrival time:");
-        String ArrivalTime = input.nextLine();
+        String ArrivalTime = input.nextLine().trim();
         flight.setArrivalTime(ArrivalTime);
         System.out.println("Flight " + FlightNumber + " updated successfully");
 
@@ -85,19 +86,22 @@ public class Admin extends User {
     private void Cancelsaetbooking() {
         System.out.print("Enter Flight Number: ");
         String flightNumber = input.next();
+        input.nextLine();
 
         Flight flight = findFlightByNumber(flightNumber);
         while (flight == null) {
             System.out.println("Flight not found. Please enter another flight number.");
-            flightNumber = input.nextLine();
+            flightNumber = input.nextLine().trim();
             flight = findFlightByNumber(flightNumber);
         }
 
         System.out.print("Enter Seat Number to cancel booking: ");
         int SeatNumber = input.nextInt();
+        input.nextLine();
         while (SeatNumber <= 0 || SeatNumber > flight.getSeats().size()) {
             System.out.println("Invalid seat number. Please try again.");
             SeatNumber = input.nextInt();
+            input.nextLine();
         }
 
         Seat seat = flight.getSeats().get(SeatNumber - 1);
@@ -112,12 +116,12 @@ public class Admin extends User {
 
     private void DisplayAvailbleSeats() {
         System.out.print("Enter Flight Number: ");
-        String FlightNumber = input.nextLine();
+        String FlightNumber = input.nextLine().trim();
 
         Flight flight = findFlightByNumber(FlightNumber);
         while (flight == null) {
             System.out.println("Flight not found. Please enter another flight number.");
-            FlightNumber = input.nextLine();
+            FlightNumber = input.nextLine().trim();
         }
         for (Seat seat : flight.Seats) {
             System.out.println("Seat " + seat.getSeatNumber() + ": " +
@@ -127,11 +131,11 @@ public class Admin extends User {
 
     private void Deleteflight() {
         System.out.println("enter the number of the flight you want to delete: ");
-        String FlightNumber = input.nextLine();
+        String FlightNumber = input.nextLine().trim();
         Flight flight = findFlightByNumber(FlightNumber);
         while ((flight == null)) {
             System.out.println("Flight not found. Please enter another flight number.");
-            FlightNumber = input.nextLine();
+            FlightNumber = input.nextLine().trim();
         }
         flights.remove(flight);
         System.out.println("Flight with Flight Number " + FlightNumber + " has been deleted successfully.");
@@ -147,7 +151,23 @@ public class Admin extends User {
           System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
       }
       }
-public void Adminpanel()
+    private void FindFlight() {
+        System.out.println("Enter the flight number to search: ");
+
+        String flightNumber = input.nextLine().trim(); // Read the flight number and trim any extra spaces
+
+        Flight flight = findFlightByNumber(flightNumber);
+
+        while (flight == null) {
+            System.out.println("Flight not found. Please enter flight number again");
+            flightNumber = input.nextLine().trim();
+            flight = findFlightByNumber(flightNumber);
+        }
+        System.out.println("Flight found! Here are the flight  details:");
+        flight.displayFlightDetails();
+    }
+
+    public void Adminpanel()
     {
 
         boolean running = true;
@@ -159,12 +179,13 @@ public void Adminpanel()
             System.out.println("4. Delete Flight");
             System.out.println("5. Cancel Seat Booking");
             System.out.println("6:Display all flights");
-            System.out.println("7. Exit");  //hnghirha w nkhliha lal mainmenu
+            System.out.println("7:Display  a certain flight");
+            System.out.println("8. Exit");  //hnghirha w nkhliha lal mainmenu
             System.out.print("Enter your choice: ");
 
 
             int choice = input.nextInt();
-
+            input.nextLine();
 
             switch (choice) {
                 case 1:
@@ -185,7 +206,11 @@ public void Adminpanel()
                 case 6:
                     this.Displayflights();
                     break;
-                case 7: {
+                case 7:
+                    this.FindFlight();
+                    break;
+
+                case 8: {
                     running = false;
                     System.out.println("Exiting Admin Panel. Goodbye!");
                     break;
