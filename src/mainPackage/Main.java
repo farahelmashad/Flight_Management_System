@@ -6,7 +6,7 @@ import java.util.List;
 public class Main {
     public static void main (String[] args){
         Scanner input = new Scanner(System.in);
-
+        System.out.println("hi");
         List<Flight> flights = new ArrayList<>();
         flights.add(new Flight("AA101", "JFK", "LAX", "14:00", "11:00", 300.00));
         flights.add(new Flight("BA202", "LHR", "CDG", "09:30", "08:00", 120.00));
