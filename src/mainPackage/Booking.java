@@ -105,7 +105,7 @@ public class Booking {
                 System.out.println("Invalid choice ! Please try again.");
         }
     }
-    public static Booking findBookingById(int bookingID) {
+    public static Booking FindBookingById(int bookingID) {
         for (Booking b : bookings) {
             if (b.getBookingID() == bookingID) {
                 return b;
