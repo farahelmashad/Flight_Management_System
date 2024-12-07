@@ -1,5 +1,6 @@
-import java.util.*;
+package mainPackage;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 public class Ticket {
     private String ticketNumber;
     private double fare;

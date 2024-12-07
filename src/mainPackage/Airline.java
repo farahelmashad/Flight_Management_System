@@ -9,7 +9,7 @@ public class Airline {
     private String airlineCode;
     private String airlineName;
     private int fleetSize;
-    private double baggageAllowance;
+    private int baggageAllowance;
     private String countryOfOrigin;
     private Map<String, Integer> seatAvailability;
     private List<String> specialServices;
@@ -68,7 +68,7 @@ public class Airline {
         return seatAvailability;
     }
 
-    public double getBaggageAllowance() {
+    public int getBaggageAllowance() {
         return baggageAllowance;
     }
 
