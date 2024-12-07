@@ -21,12 +21,19 @@ public class Main {
 //        flights.add(new Flight("JA010", "YYZ", "YVR", "08:00", "06:30", 230.00));
 //        Admin admin1=new Admin(flights);
 //        admin1.Adminpanel();
-
+       // Flight flight = new Flight("AB123", "New York", "Los Angeles", "10-12-2024 08:00", "10-12-2024 11:00", 250.0, "AA");
         Flight.initializeSeats();
 
+        //Passenger passenger = new Passenger();
+        //Seat seat = new Seat("A01","First");
         FlightService flightService = new FlightService();
 
+       // Booking booking = new Booking(1,passenger,flight,seat,"confirmed");
+        //booking.ManageBooking();
+        //booking.BookingConfirmation();
 //        flightService.;
+
+
 
     }
 }
