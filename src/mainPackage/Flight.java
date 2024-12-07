@@ -93,11 +93,8 @@ public class Flight {
     System.out.println("Arrival Airport: " + ArrivalAirport);
     System.out.println("Arrival Time: " + ArrivalTime);
     System.out.println("Departure Time: " + DepartureTime);
-    System.out.println("BaseFare:$" + BaseFare);
-    System.out.println("Seats: ");
-    for (Seat seat : Seats) {
-      System.out.println(seat);
-    }
+    System.out.println("Flight Price:$" + BaseFare);
+
 
   }
 }
