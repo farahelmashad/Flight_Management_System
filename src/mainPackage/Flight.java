@@ -1,29 +1,34 @@
 package mainPackage;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Flight {
   private String FlightNumber;
   private String DepartureAirport;
   private String ArrivalAirport;
-  private String ArrivalTime;
-  private String DepartureTime;
+  private Date ArrivalTime;
+  private Date DepartureTime;
   private Double BaseFare;
   public List<Seat> Seats;
 
+  public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
 
 
   //constructor
-  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String ArrivalTime, String departureTime, Double baseFare ) {
-   this.FlightNumber = flightNumber;
-   this.DepartureAirport = departureAirport;
-   this.ArrivalAirport = ArrivalAirport;
-   this.ArrivalTime = ArrivalTime;
-   this.DepartureTime = departureTime;
-   this.BaseFare = baseFare;
-   this.Seats = new ArrayList<>();
+  public Flight(String flightNumber, String departureAirport, String arrivalAirport,
+                String arrivalTime, String departureTime, Double baseFare) throws ParseException {
+    this.FlightNumber = flightNumber;
+    this.DepartureAirport = departureAirport;
+    this.ArrivalAirport = arrivalAirport;
+    this.ArrivalTime = dateFormat.parse(arrivalTime); // Parse String to Date
+    this.DepartureTime = dateFormat.parse(departureTime); // Parse String to Date
+    this.BaseFare = baseFare;
+    this.Seats = new ArrayList<>();
     for (int i = 1; i <= 50; i++) { // Assuming 50 seats per flight
       Seats.add(new Seat(i));
     }
@@ -55,19 +60,19 @@ public class Flight {
   }
 
   public String getArrivalTime() {
-    return ArrivalTime;
+    return dateFormat.format(ArrivalTime); // Convert Date to String
   }
 
-  public void setArrivalTime(String arrivalTime) {
-    this.ArrivalTime = arrivalTime;
+  public void setArrivalTime(String arrivalTime) throws ParseException {
+    this.ArrivalTime = dateFormat.parse(arrivalTime);
   }
 
   public String getDepartureTime() {
-    return DepartureTime;
+    return dateFormat.format(DepartureTime); // Convert Date to String
   }
 
-  public void setDepartureTime(String departureTime) {
-    this.DepartureTime = departureTime;
+  public void setDepartureTime(String departureTime) throws ParseException {
+    this.DepartureTime = dateFormat.parse(departureTime);
   }
 
   public double getBaseFare() {

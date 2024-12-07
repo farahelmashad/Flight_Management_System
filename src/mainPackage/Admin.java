@@ -1,6 +1,8 @@
 package mainPackage;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -35,53 +37,98 @@ public class Admin extends User {
         return null; // Flight not found
     }
 
-    private void Addflight() {
-        System.out.println("enter flight number");
-        String FlightNumber = input.next();
-        input.nextLine();
-        while (findFlightByNumber(FlightNumber) != null) {
-            System.out.println("Flight number already exists. Please enter a unique flight number.");
-            System.out.println("Enter Flight Number: ");
-            FlightNumber = input.next();
-            input.nextLine();
-        }
+    private void Addflight()  {
+      try {
+          System.out.println("enter flight number");
+          String FlightNumber = input.next();
+          input.nextLine();
+          while (findFlightByNumber(FlightNumber) != null) {
+              System.out.println("Flight number already exists. Please enter a unique flight number.");
+              System.out.println("Enter Flight Number: ");
+              FlightNumber = input.next();
+              input.nextLine();
+          }
 
-        System.out.println("enter DepartureAirport: ");
-        String DepartureAirport = input.nextLine().trim();
 
-        System.out.println("enter ArrivalAirport: ");
-        String ArrivalAirport = input.nextLine().trim();
-        System.out.println("enter  ArrivalTime: ");
-        String ArrivalTime = input.nextLine().trim();
-        System.out.println("enter DepartureTime: ");
-        String DepartureTime = input.nextLine().trim();
-        System.out.println("enter BaseFare: ");
-        Double BaseFare = input.nextDouble();
-        Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare);
-        flights.add(flight);
-        System.out.println("flight " + FlightNumber + " added successfully");
-    }
+          System.out.println("enter DepartureAirport: ");
+          String DepartureAirport = input.nextLine().trim();
+
+          System.out.println("enter ArrivalAirport: ");
+          String ArrivalAirport = input.nextLine().trim();
+          Date departureDate, arrivalDate;
+          while (true) {
+              System.out.println("Enter Departure Time (dd-MM-yyyy HH:mm): ");
+              String DepartureTime = input.nextLine().trim();
+              System.out.println("Enter Arrival Time (dd-MM-yyyy HH:mm): ");
+              String ArrivalTime = input.nextLine().trim();
+              try {
+                  departureDate = Flight.dateFormat.parse(DepartureTime);
+                  arrivalDate = Flight.dateFormat.parse(ArrivalTime);
+
+                  if (arrivalDate.before(departureDate)) {
+                      System.out.println("Arrival time cannot be earlier than departure time. Please enter the dates again.");
+                  } else {
+                      break; // Dates are valid
+                  }
+              } catch (ParseException e) {
+                  System.out.println("Invalid date format. Please use dd-MM-yyyy HH:mm.");
+              }
+          }
+
+
+          System.out.println("enter BaseFare: ");
+          Double BaseFare = input.nextDouble();
+
+          Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, Flight.dateFormat.format(arrivalDate), Flight.dateFormat.format(departureDate),BaseFare);
+          System.out.println("flight " + FlightNumber + " added successfully");
+      }catch (Exception e) {
+          System.out.println("An error occurred: " + e.getMessage());
+      }
+      }
 
     private void UpdateFlightschedule() {
-        System.out.println("enter flight number");
-        String FlightNumber = input.next();
-        input.nextLine();
-        Flight flight = findFlightByNumber(FlightNumber);
-        while (flight == null) {
-            System.out.println("Flight not found. Please enter flight number again");
-            FlightNumber = input.nextLine().trim();
-            flight = findFlightByNumber(FlightNumber);
-        }
-        System.out.println("enter new departure time:");
-        String DepartureTime = input.nextLine().trim();
-        flight.setDepartureTime(DepartureTime);
-        System.out.println("enter new arrival time:");
-        String ArrivalTime = input.nextLine().trim();
-        flight.setArrivalTime(ArrivalTime);
-        System.out.println("Flight " + FlightNumber + " updated successfully");
+        try {
+            System.out.println("enter flight number");
+            String FlightNumber = input.next();
+            input.nextLine();
+            Flight flight = findFlightByNumber(FlightNumber);
+            while (flight == null) {
+                System.out.println("Flight not found. Please enter flight number again");
+                FlightNumber = input.nextLine().trim();
+                flight = findFlightByNumber(FlightNumber);
+            }
+            Date departureDate, arrivalDate;
+            while (true) {
+                System.out.println("Enter new Departure Time (dd-MM-yyyy HH:mm):");
+                String DepartureTime = input.nextLine().trim();
+
+                System.out.println("Enter new Arrival Time (dd-MM-yyyy HH:mm):");
+                String ArrivalTime = input.nextLine().trim();
+
+                try {
+                    departureDate = Flight.dateFormat.parse(DepartureTime);
+                    arrivalDate = Flight.dateFormat.parse(ArrivalTime);
+
+                    if (arrivalDate.before(departureDate)) {
+                        System.out.println("Arrival time cannot be earlier than departure time. Please enter the dates again.");
+                    } else {
+                        break; // Dates are valid
+                    }
+                } catch (ParseException e) {
+                    System.out.println("Invalid date format. Please use dd-MM-yyyy HH:mm.");
+                }
+            }
+                    flight.setDepartureTime(Flight.dateFormat.format(departureDate));
+                    flight.setArrivalTime(Flight.dateFormat.format(arrivalDate));
+                    System.out.println("Flight " + FlightNumber + " updated successfully!");
+
+                }
+            catch (Exception e) {
+                    System.out.println("An error occurred: " + e.getMessage());
+                }
+            }
 
 
-    }
 
     private void Cancelsaetbooking() {
         System.out.print("Enter Flight Number: ");

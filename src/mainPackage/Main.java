@@ -1,23 +1,45 @@
 package mainPackage;
 
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 public class Main {
-    public static void main (String[] args){
+    public static void main (String[] args)  {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Scanner input = new Scanner(System.in);
 
         List<Flight> flights = new ArrayList<>();
-        flights.add(new Flight("AA101", "JFK", "LAX", "14:00", "11:00", 300.00));
-        flights.add(new Flight("BA202", "LHR", "CDG", "09:30", "08:00", 120.00));
-        flights.add(new Flight("CA303", "PEK", "HKG", "16:00", "14:30", 250.00));
-        flights.add(new Flight("DA404", "DXB", "DEL", "22:00", "19:00", 200.00));
-        flights.add(new Flight("EA505", "SYD", "MEL", "18:45", "17:30", 150.00));
-        flights.add(new Flight("FA606", "ORD", "DFW", "13:15", "11:45", 180.00));
-        flights.add(new Flight("GA707", "ATL", "MIA", "20:00", "18:00", 220.00));
-        flights.add(new Flight("HA808", "SEA", "SFO", "15:00", "13:00", 210.00));
-        flights.add(new Flight("IA909", "ICN", "NRT", "11:00", "09:30", 270.00));
-        flights.add(new Flight("JA010", "YYZ", "YVR", "08:00", "06:30", 230.00));
+        try {
+            // Initialize flights with sample data
+            flights.add(new Flight("AB123", "JFK", "LAX",
+                    "15-12-2024 10:30", "15-12-2024 13:30", 150.0));
+            flights.add(new Flight("CD456", "ORD", "DFW",
+                    "16-12-2024 08:00", "16-12-2024 11:00", 200.0));
+            flights.add(new Flight("EF789", "SFO", "SEA",
+                    "17-12-2024 14:00", "17-12-2024 15:30", 120.0));
+            flights.add(new Flight("GH012", "ATL", "MIA",
+                    "18-12-2024 09:00", "18-12-2024 11:30", 180.0));
+            flights.add(new Flight("IJ345", "LGA", "BOS",
+                    "19-12-2024 07:00", "19-12-2024 08:15", 100.0));
+            flights.add(new Flight("KL678", "DEN", "PHX",
+                    "20-12-2024 16:00", "20-12-2024 18:00", 170.0));
+            flights.add(new Flight("MN901", "LAS", "SAN",
+                    "21-12-2024 20:00", "21-12-2024 21:30", 110.0));
+            flights.add(new Flight("OP234", "DCA", "IAH",
+                    "22-12-2024 12:00", "22-12-2024 15:00", 210.0));
+            flights.add(new Flight("QR567", "MSP", "DTW",
+                    "23-12-2024 06:30", "23-12-2024 08:30", 130.0));
+            flights.add(new Flight("ST890", "CLT", "TPA",
+                    "24-12-2024 19:45", "24-12-2024 21:15", 160.0));
+
+            System.out.println("Flights initialized successfully.");
+
+        } catch (ParseException e) {
+            System.out.println("Error parsing dates: " + e.getMessage());
+        }
+
         Admin admin1=new Admin(flights);
         admin1.Adminpanel();
 
