@@ -57,7 +57,9 @@ public class Admin extends User {
         String DepartureTime = input.nextLine().trim();
         System.out.println("enter BaseFare: ");
         Double BaseFare = input.nextDouble();
-        Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare);
+        System.out.println("Enter Airline Code: ");
+        String AirlineCode=input.next().trim();
+        Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare,AirlineCode);
         flights.add(flight);
         System.out.println("flight " + FlightNumber + " added successfully");
     }

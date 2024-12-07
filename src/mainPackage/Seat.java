@@ -1,26 +1,26 @@
 package mainPackage;
 
 public class Seat {
-    private int SeatNumber;
+    private String SeatNumber;
     private boolean IsAvailable;
     private String SeatClass;
-    public Seat(int seatNumber) {
+    public Seat(String seatNumber) {
         this.SeatNumber = seatNumber;
 
 
     }
     //constructor
-    public Seat(int seatNumber, String seatClass) {
+    public Seat(String seatNumber, String seatClass) {
         this.SeatNumber = seatNumber;
         this.IsAvailable = true;
         this.SeatClass = seatClass;
     }
    //getters and setters
-    public int getSeatNumber() {
+    public String getSeatNumber() {
         return SeatNumber;
     }
 
-    public void setSeatNumber(int seatNumber) {
+    public void setSeatNumber(String seatNumber) {
         this.SeatNumber = seatNumber;
     }
 

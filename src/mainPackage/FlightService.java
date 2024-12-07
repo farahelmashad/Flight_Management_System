@@ -10,6 +10,8 @@ import java.util.Scanner;
 public class FlightService {
     ArrayList<Airline> Airlines = Airline.getAirlines();
     ArrayList<Airport> Airports = Airport.getAirports();
+    ArrayList<Seat> seat = Flight.Seats;
+
     public void flightSearch() {
 
         System.out.println("Flight Search");
@@ -132,9 +134,9 @@ public class FlightService {
           }
           FlightSelection(AvailableFlights);
         }
-        public void FlightSelection(ArrayList<Flight> Flightss){
+        public void FlightSelection(ArrayList<Flight> f){
         Scanner in=new Scanner(System.in);
-        if(Flightss.isEmpty()){
+        if(f.isEmpty()){
             System.out.println("No flights with those specifications available, would you like to search for another flight? (y/n)");
             String choice= in.nextLine();
             if(choice.equalsIgnoreCase("y"))
@@ -143,10 +145,162 @@ public class FlightService {
         }
         else{
             System.out.println("--------------------Available Flights----------------------");
-        for(int i=0;i<Flightss.size();i++){
+        for(int i=0;i<f.size();i++){
+            if(f.get(i).numberOfAvailableSeats()==0){
+                continue; //no available seats on this flight, check the next flight
+            }
             System.out.println("---------------------------------------------------------------------------");
+            f.get(i).displayFlightDetails();
+            Airline thisFlightairline=findAirlineByCode(f.get(i).getAirlineCode());
+            System.out.println("Airline : "+thisFlightairline.getAirlineName());
+            System.out.println("Special Services offered by the Airline: ");
+            boolean offersServices=false;
+            if(thisFlightairline.getSpecialMealRequest()){
+                System.out.println("Special Meal Requests");
+                offersServices=true;
+            }
+            if(thisFlightairline.getHaswheelchair()){
+                System.out.println("Wheelchair Accessibility");
+                offersServices=true;
+            }
+            if(thisFlightairline.getHasPetTravel()){
+                System.out.println("Pet Travel");
+                offersServices=true;
+            }
+            if(thisFlightairline.getHasLoungeAccess()){
+                System.out.println("Lounge Access");
+                offersServices=true;
+            }
+            if(offersServices==false){
+                System.out.println("The airline doesn't offer special services");
+            }
+            System.out.println("Baggage allowance (maximum number of bags per passenger) : "+thisFlightairline.getBaggageAllowance());
+            System.out.println("Number of available seats : "+f.get(i).numberOfAvailableSeats());
 
         }
+            System.out.print("Please enter the flight number of your preferred flight ( ");
+        for(Flight fl:f ){
+            System.out.print( fl.getFlightNumber()+" ");
+
+        }
+            System.out.print(")");
+            System.out.println("\n");
+            Flight foundFlight=null;
+            while (foundFlight == null) {
+                System.out.print("Enter the flight number to search: ");
+                String flightNumberToSearch = in.nextLine();
+
+                for (Flight flight : f) {
+                    if (flight.getFlightNumber().equalsIgnoreCase(flightNumberToSearch)) {
+                        foundFlight = flight;
+                        break;
+                    }
+                }
+
+                if (foundFlight == null) {
+                    System.out.println("No flight found with the flight number " + flightNumberToSearch + ". Please try again.");
+                }
+            }
+            SeatSelection(foundFlight);
+        }
+        }
+        public void SeatSelection(Flight flight){
+            ArrayList<Seat> chosenSeats=new ArrayList<>();
+            Scanner in=new Scanner(System.in);
+            System.out.println("How many seats do you want to choose: ");
+            int number=in.nextInt();
+            in.nextLine();
+            while(number>flight.numberOfAvailableSeats()){
+                System.out.println("Please enter a number that is less than or equal to the number of available seats ("+flight.numberOfAvailableSeats()+")");
+                number=in.nextInt();
+                in.nextLine();
+            }
+            displaySeats();
+            for (int i = 0; i < number; i++) {
+                Seat chosenSeat = null;
+                boolean validSeatChosen = false;
+
+                while (!validSeatChosen) {
+                    if (number == 1) {
+                        System.out.println("Enter the seat number: (e.g., A01)");
+                    } else {
+                        System.out.println("Enter the seat number for seat " + (i + 1) + " (e.g., A01):");
+                    }
+                    String seatno = in.nextLine();
+
+                    boolean seatExists = false;
+
+                    for (Seat seat1 : seat) {
+                        if (seatno.equalsIgnoreCase(seat1.getSeatNumber())) {
+                            seatExists = true;
+                            chosenSeat = seat1;
+                            break;
+                        }
+                    }
+
+                    if (!seatExists) {
+
+                        System.out.println("Invalid seat number. Please enter a valid seat number (e.g., A01).");
+                        continue;
+                    }
+
+                    if (!chosenSeat.isAvailable()) {
+                        System.out.println("This seat is unavailable. Please choose another seat.");
+                        continue;
+                    }
+
+                    chosenSeat.setAvailable(false);
+                    System.out.println("Seat chosen successfully!");
+                    chosenSeats.add(chosenSeat);
+                    validSeatChosen = true;
+//                    displaySeats();
+
+                }
+            }
+//            getUserInformation(chosenSeats,number); when the method is added , hab3at elchosen seats w the number of chosen seats, n loop aala aadad el number of seats aashan
+            //w n display for each seat : passenger details for seat no. (chosenSeats.get(i).getSeatNumber())
+
+        }
+          public void displaySeats() {
+//                ArrayList<Seat> seat = Flight.Seats;
+                for (int i = 0; i < seat.size(); i++) {
+                    Seat s = seat.get(i);
+                    if (i == 0)
+                        System.out.println("First Class: \n ------------------------------------------");
+                    if (i == 12)
+                        System.out.println("Business Class: \n ------------------------------------------");
+                    if (i == 30)
+                        System.out.println("Economy Class: \n ------------------------------------------");
+                    if (s.getSeatNumber().charAt(0) <= 'C') {
+                        System.out.print(getSeat(s) + " ");
+                        if(s.getSeatNumber().charAt(0)=='C')
+                            System.out.print("  |  ");
+                    } else {
+                        if (s.getSeatNumber().charAt(0) == 'C') {
+                    }
+                        System.out.print(getSeat(s) + " ");
+
+                    }
+
+                    if (i % 6 == 5) {
+                        System.out.println();
+                    }
+                }
+
+              System.out.println("\n\n 🟩 : Available \t \uD83D\uDFE5 : Unavailable ");
+              System.out.println("Seats with seat number A__ or F__ are window seats");
+              System.out.println("Seats with seat number C__ or D__ are aisle seats");
+
+          }
+
+        public String getSeat(Seat s){
+        String availableIcon="🟩";
+        String unavailableIcon= "\uD83D\uDFE5";
+        if(s.isAvailable()){
+            return s.getSeatNumber()+availableIcon;
+        }
+        else{
+            return s.getSeatNumber()+unavailableIcon;
         }
         }
     private boolean isValidAirportName(String airportName) {
@@ -155,7 +309,16 @@ public class FlightService {
             }
         }
         return false;
-    }}
+    }
+    public Airline findAirlineByCode(String airlineCode) {
+        for (Airline airline : Airlines) {
+            if (airline.getAirlineCode().equalsIgnoreCase(airlineCode)) {
+                return airline; // will return el airline ely feha this flight
+            }
+        }
+        return null; //law mala2etsh elairline
+    }
+}
 
 
 
