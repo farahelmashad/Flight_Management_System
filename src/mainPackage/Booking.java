@@ -1,5 +1,6 @@
 package mainPackage;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Booking {
@@ -9,8 +10,7 @@ public class Booking {
     private Seat seat;
     private String bookingStatus ;
 
-    public Booking(){
-    }
+    private static ArrayList<Booking> bookings = new ArrayList<>();
 
     public Booking(int bookingID, Passenger passenger, Flight flight, Seat seat, String bookingStatus){
         this.bookingID = bookingID;
@@ -66,6 +66,23 @@ public class Booking {
     public void setBookingStatus(String bookingStatus) {
         this.bookingStatus = bookingStatus;
     }
+
+    public static ArrayList<Booking> getBookings() {
+        return bookings;
+    }
+    public static void listAllBookings(){
+        if(bookings.isEmpty()){
+            System.out.println("No bookings exist");
+
+        }
+        System.out.println("All Bookings: ");
+        for(Booking b : bookings){
+            b.BookingConfirmation();
+        }
+
+    }
+
+
     public void ManageBooking(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Manage Booking Options: ");
@@ -88,7 +105,15 @@ public class Booking {
                 System.out.println("Invalid choice ! Please try again.");
         }
     }
-
+    public static Booking findBookingById(int bookingID) {
+        for (Booking b : bookings) {
+            if (b.getBookingID() == bookingID) {
+                return b;
+            }
+        }
+        System.out.println("Booking not found with ID: " + bookingID);
+        return null;
+    }
     private void cancelBooking(){
         if(bookingStatus.equals("Cancelled")){
             System.out.println("Your Booking is already cancelled");
