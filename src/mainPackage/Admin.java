@@ -59,7 +59,8 @@ public class Admin extends User {
         Double BaseFare = input.nextDouble();
         System.out.println("Enter Airline Code: ");
         String AirlineCode=input.next().trim();
-        Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare,AirlineCode);
+        boolean []availability=new boolean[60];
+        Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare,AirlineCode,availability);
         flights.add(flight);
         System.out.println("flight " + FlightNumber + " added successfully");
     }
@@ -125,7 +126,7 @@ public class Admin extends User {
             System.out.println("Flight not found. Please enter another flight number.");
             FlightNumber = input.nextLine().trim();
         }
-        for (Seat seat : flight.Seats) {
+        for (Seat seat : flight.getSeats()) {
             System.out.println("Seat " + seat.getSeatNumber() + ": " +
                     (seat.isAvailable() ? "Available" : "Booked"));
         }

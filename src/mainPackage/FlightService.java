@@ -8,10 +8,14 @@ import java.util.Scanner;
 
 //white space issues // to be dealt with later!!
 public class FlightService {
+    private User currentUser;
     ArrayList<Airline> Airlines = Airline.getAirlines();
     ArrayList<Airport> Airports = Airport.getAirports();
-    ArrayList<Seat> seat = Flight.Seats;
-
+     public ArrayList<Passenger>Passengers=new ArrayList<>();
+//    ArrayList<Seat> seat = Flight.Seats;
+     public FlightService(User currentUser){
+         this.currentUser=currentUser;
+     }
     public void flightSearch() {
 
         System.out.println("Flight Search");
@@ -205,6 +209,8 @@ public class FlightService {
         }
         }
         public void SeatSelection(Flight flight){
+        ArrayList<Seat> flightSeats=flight.getSeats();
+        int seatindex=-1;
             ArrayList<Seat> chosenSeats=new ArrayList<>();
             Scanner in=new Scanner(System.in);
             System.out.println("How many seats do you want to choose: ");
@@ -215,7 +221,7 @@ public class FlightService {
                 number=in.nextInt();
                 in.nextLine();
             }
-            displaySeats();
+            displaySeats(flight);
             for (int i = 0; i < number; i++) {
                 Seat chosenSeat = null;
                 boolean validSeatChosen = false;
@@ -229,11 +235,19 @@ public class FlightService {
                     String seatno = in.nextLine();
 
                     boolean seatExists = false;
-
-                    for (Seat seat1 : seat) {
-                        if (seatno.equalsIgnoreCase(seat1.getSeatNumber())) {
-                            seatExists = true;
-                            chosenSeat = seat1;
+//
+//                    for (Seat seat1 : flightSeats) {
+//                        if (seatno.equalsIgnoreCase(seat1.getSeatNumber())) {
+//                            seatExists = true;
+//                            chosenSeat =seat1 ;
+//                            break;
+//                        }
+//                    }
+                    for(int j=0;j<flightSeats.size();j++){
+                        if(seatno.equalsIgnoreCase(flightSeats.get(j).getSeatNumber())){
+                            seatExists=true;
+                            seatindex=j;
+                            chosenSeat=flightSeats.get(j);
                             break;
                         }
                     }
@@ -250,19 +264,24 @@ public class FlightService {
                     }
 
                     chosenSeat.setAvailable(false);
+                    flight.getSeatAvailability()[seatindex]=false;
                     System.out.println("Seat chosen successfully!");
                     chosenSeats.add(chosenSeat);
                     validSeatChosen = true;
 //                    displaySeats();
 
                 }
+                Passenger passenger = new Passenger();
+                getPassengerInformation(passenger);
+//                passenger.setSeat(chosenSeat);
+
             }
 //            getUserInformation(chosenSeats,number); when the method is added , hab3at elchosen seats w the number of chosen seats, n loop aala aadad el number of seats aashan
             //w n display for each seat : passenger details for seat no. (chosenSeats.get(i).getSeatNumber())
 
         }
-          public void displaySeats() {
-//                ArrayList<Seat> seat = Flight.Seats;
+          public void displaySeats(Flight flight) {
+                  ArrayList<Seat> seat = flight.getSeats();
                 for (int i = 0; i < seat.size(); i++) {
                     Seat s = seat.get(i);
                     if (i == 0)
@@ -317,6 +336,24 @@ public class FlightService {
             }
         }
         return null; //law mala2etsh elairline
+    }
+    public void getPassengerInformation(Passenger passenger){
+        Scanner in=new Scanner(System.in);
+        System.out.println("Please enter passenger's name: ");
+        passenger.setName(in.nextLine());
+        System.out.println("Please enter passenger's gender (M/F)");
+        passenger.setGender(in.nextLine());
+        System.out.println("Please enter passenger's phone number : ");
+        passenger.setPhoneNumber(in.nextInt());
+        in.nextLine();
+        System.out.println("Please enter passenger's date of birth in the format (dd/mm/yyyy)");
+        passenger.setDateOfBirth(in.nextLine());
+        System.out.println("Please enter passenger's ID (SSN)");
+        passenger.setPId(in.nextInt());
+        in.nextLine();
+        passenger.setUserEmail(currentUser.getEmail()); //momken akhaly eluser ydakhal elemail bta3o abl ma ybda2 ydakhal elpassengers w astakhdem this email for getting the user ba w arboto blpassengers wkeda
+        Passengers.add(passenger);
+        // input handling+ special services w notes wlklam da
     }
 }
 

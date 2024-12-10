@@ -12,10 +12,15 @@ public class Seat {
     //constructor
     public Seat(String seatNumber, String seatClass) {
         this.SeatNumber = seatNumber;
-        this.IsAvailable = true;
         this.SeatClass = seatClass;
     }
-   //getters and setters
+    public Seat(String seatNumber, String seatClass,boolean isAvailable) {
+        this(seatNumber,seatClass);
+        this.IsAvailable = isAvailable;
+    }
+
+
+    //getters and setters
     public String getSeatNumber() {
         return SeatNumber;
     }

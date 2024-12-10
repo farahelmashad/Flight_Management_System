@@ -1,10 +1,10 @@
 package mainPackage;
 
-import java.time.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
-
+import java.lang.String;
 public class Flight {
   private String FlightNumber;
   private String DepartureAirport;
@@ -12,13 +12,22 @@ public class Flight {
   private String ArrivalTime;
   private String DepartureTime;
   private Double BaseFare;
-  public static ArrayList<Seat> Seats=new ArrayList<>(60);
+//  private String seatsAvailability;
+//  public static ArrayList<Seat> Seats=new ArrayList<>(60);
   private String airlineCode;
+  private ArrayList<Seat> seats; // Instance-level seats list
+  private static ArrayList<Seat> seatTemplate = new ArrayList<>(60);
+  private boolean[] seatAvailability;
+
+  static {
+    initializeSeats();
+  }
+
 
 
 
   //constructor
-  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String ArrivalTime, String departureTime, Double baseFare , String airlineCode) {
+  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String ArrivalTime, String departureTime, Double baseFare , String airlineCode,boolean[] seatAvailability) {
    this.FlightNumber = flightNumber;
    this.DepartureAirport = departureAirport;
    this.ArrivalAirport = ArrivalAirport;
@@ -26,15 +35,53 @@ public class Flight {
    this.DepartureTime = departureTime;
    this.BaseFare = baseFare;
    this.airlineCode=airlineCode;
-   this.Seats = new ArrayList<>(60);
-    initializeSeats();
-//    for (int i = 1; i <= 50; i++) { // Assuming 50 seats per flight
-//      Seats.add(new Seat(i));
-//
+    this.seatAvailability=seatAvailability;
+    this.seats = new ArrayList<>(60);
+    // Debugging output: Print availability array to ensure it's correct
+    System.out.println("Seat availability array:");
+    for (int i = 0; i < seatAvailability.length; i++) {
+      System.out.print(seatAvailability[i] + " ");
+    }
+    System.out.println("\n");
+
+
+    for (int i = 0; i < 60; i++) {
+      boolean isAvailable = seatAvailability[i]; // Fetch availability
+      Seat templateSeat = seatTemplate.get(i);   // Get seat template (number and class)
+
+      // Debugging output: Print the seat availability
+      System.out.println("Seat " + templateSeat.getSeatNumber() + " availability: " + isAvailable);
+
+      // Add the seat with the correct availability status
+      this.seats.add(new Seat(templateSeat.getSeatNumber(), templateSeat.getSeatClass(), isAvailable));
+
+    }
+
+//    for (int i = 0; i < 60; i++) {
+//      boolean isAvailable = seatAvailability[i]; // Use the boolean directly
+//      Seat templateSeat = seatTemplate.get(i); // Get the seat template (number and class)
+//      this.seats.add(new Seat(templateSeat.getSeatNumber(), templateSeat.getSeatClass(), isAvailable));
+//      System.out.println(seats.get(i).isAvailable());
+//    }
+
+
+
 
   }
 
 //getters ans setters
+
+  public boolean[] getSeatAvailability() {
+    return seatAvailability;
+  }
+
+  public void setSeatAvailability(boolean[] seatAvailability) {
+  if (seatAvailability.length != 60) {
+    throw new IllegalArgumentException("seatAvailability array must be exactly 60 elements.");
+  }
+  this.seatAvailability = seatAvailability;
+}
+
   public String getFlightNumber() {
     return FlightNumber;
   }
@@ -87,12 +134,12 @@ public class Flight {
     this.BaseFare = baseFare;
   }
 
-  public List<Seat> getSeats() {
-    return Seats;
+  public ArrayList<Seat> getSeats() {
+    return this.seats;
   }
 
   public void AddSeat(Seat seat) {
-    this.Seats.add(seat);
+    this.seats.add(seat);
   }
   public LocalDateTime toDateTime(String date){
     DateTimeFormatter format=DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -111,7 +158,7 @@ public class Flight {
 
     int number=0;
     for(int i=0;i<50;i++){
-      if(Seats.get(i).isAvailable()){
+      if(seats.get(i).isAvailable()){
         number++;
       }
     }
@@ -134,32 +181,31 @@ public class Flight {
   public static void initializeSeats() {
     // First Class: row 1 w 2
     for (int i = 1; i <= 2; i++) {
-      Seats.add(new Seat("A" + String.format("%02d", i), "First Class"));
-      Seats.add(new Seat("B" + String.format("%02d", i), "First Class"));
-      Seats.add(new Seat("C" + String.format("%02d", i), "First Class"));
-      Seats.add(new Seat("D" + String.format("%02d", i), "First Class"));
-      Seats.add(new Seat("E" + String.format("%02d", i), "First Class"));
-      Seats.add(new Seat("F" + String.format("%02d", i), "First Class"));
+      seatTemplate.add(new Seat("A" + String.format("%02d", i), "First Class"));
+      seatTemplate.add(new Seat("B" + String.format("%02d", i), "First Class"));
+      seatTemplate.add(new Seat("C" + String.format("%02d", i), "First Class"));
+      seatTemplate.add(new Seat("D" + String.format("%02d", i), "First Class"));
+      seatTemplate.add(new Seat("E" + String.format("%02d", i), "First Class"));
+      seatTemplate.add(new Seat("F" + String.format("%02d", i), "First Class"));
     }
 
-    // Business Class: (men row 3-5)
+    // Business Class: row 3-5
     for (int i = 3; i <= 5; i++) {
-      Seats.add(new Seat("A" + String.format("%02d", i), "Business Class"));
-      Seats.add(new Seat("B" + String.format("%02d", i), "Business Class"));
-      Seats.add(new Seat("C" + String.format("%02d", i), "Business Class"));
-      Seats.add(new Seat("D" + String.format("%02d", i), "Business Class"));
-      Seats.add(new Seat("E" + String.format("%02d", i), "Business Class"));
-      Seats.add(new Seat("F" + String.format("%02d", i), "Business Class"));
+      seatTemplate.add(new Seat("A" + String.format("%02d", i), "Business Class"));
+      seatTemplate.add(new Seat("B" + String.format("%02d", i), "Business Class"));
+      seatTemplate.add(new Seat("C" + String.format("%02d", i), "Business Class"));
+      seatTemplate.add(new Seat("D" + String.format("%02d", i), "Business Class"));
+      seatTemplate.add(new Seat("E" + String.format("%02d", i), "Business Class"));
+      seatTemplate.add(new Seat("F" + String.format("%02d", i), "Business Class"));
     }
 
-    // Economy Class (men row 6 l 10)
+    // Economy Class: row 6-10
     for (int i = 6; i <= 10; i++) {
-      Seats.add(new Seat("A" + String.format("%02d", i), "Economy Class"));
-      Seats.add(new Seat("B" + String.format("%02d", i), "Economy Class"));
-      Seats.add(new Seat("C" + String.format("%02d", i), "Economy Class"));
-      Seats.add(new Seat("D" + String.format("%02d", i), "Economy Class"));
-      Seats.add(new Seat("E" + String.format("%02d", i), "Economy Class"));
-      Seats.add(new Seat("F" + String.format("%02d", i), "Economy Class"));
-    }
-  }
+      seatTemplate.add(new Seat("A" + String.format("%02d", i), "Economy Class"));
+      seatTemplate.add(new Seat("B" + String.format("%02d", i), "Economy Class"));
+      seatTemplate.add(new Seat("C" + String.format("%02d", i), "Economy Class"));
+      seatTemplate.add(new Seat("D" + String.format("%02d", i), "Economy Class"));
+      seatTemplate.add(new Seat("E" + String.format("%02d", i), "Economy Class"));
+      seatTemplate.add(new Seat("F" + String.format("%02d", i), "Economy Class"));
+    }  }
 }
