@@ -9,7 +9,7 @@ public class SignUp_LogIn {
     ArrayList<User> users = new ArrayList<>();
     Admin a=new Admin();
     Booking b =new Booking ();
-    FlightService f = new FlightService();
+    //FlightService f = new FlightService();
     private static Scanner scanner = new Scanner(System.in);
 
     public boolean SignUp() {
@@ -249,7 +249,7 @@ public class SignUp_LogIn {
             // Process the valid choice
             switch (choice) {
                 case 1:
-                    f.flightSearch();
+                    b.flightSearch();
 
                     break;
 

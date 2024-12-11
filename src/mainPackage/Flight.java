@@ -12,12 +12,16 @@ public class Flight {
   private String ArrivalTime;
   private String DepartureTime;
   private Double BaseFare;
-//  private String seatsAvailability;
-//  public static ArrayList<Seat> Seats=new ArrayList<>(60);
-  private String airlineCode;
+  private boolean hasSpecialMealRequest;
+  private boolean hasPetTravel;
+  private boolean hasLoungeAccess;
+  private boolean haswheelchair;
+  private String seatsAvailability;
+  private String airlineName;
   private ArrayList<Seat> seats; // Instance-level seats list
   private static ArrayList<Seat> seatTemplate = new ArrayList<>(60);
   private boolean[] seatAvailability;
+  private int baggageAllowance;
 
   static {
     initializeSeats();
@@ -27,14 +31,14 @@ public class Flight {
 
 
   //constructor
-  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String ArrivalTime, String departureTime, Double baseFare , String airlineCode,boolean[] seatAvailability) {
-   this.FlightNumber = flightNumber;
-   this.DepartureAirport = departureAirport;
-   this.ArrivalAirport = ArrivalAirport;
-   this.ArrivalTime = ArrivalTime;
-   this.DepartureTime = departureTime;
-   this.BaseFare = baseFare;
-   this.airlineCode=airlineCode;
+  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String ArrivalTime, String departureTime, Double baseFare , String airlineName,boolean[] seatAvailability, boolean hasLoungeAccess,boolean haswheelchair,boolean hasPetTravel,boolean hasSpecialMealRequest) {
+    this.FlightNumber = flightNumber;
+    this.DepartureAirport = departureAirport;
+    this.ArrivalAirport = ArrivalAirport;
+    this.ArrivalTime = ArrivalTime;
+    this.DepartureTime = departureTime;
+    this.BaseFare = baseFare;
+    this.airlineName=airlineName;
     this.seatAvailability=seatAvailability;
     this.seats = new ArrayList<>(60);
     // Debugging output: Print availability array to ensure it's correct
@@ -71,16 +75,20 @@ public class Flight {
 
 //getters ans setters
 
+  public int getBaggageAllowance() {
+    return baggageAllowance;
+  }
+
   public boolean[] getSeatAvailability() {
     return seatAvailability;
   }
 
   public void setSeatAvailability(boolean[] seatAvailability) {
-  if (seatAvailability.length != 60) {
-    throw new IllegalArgumentException("seatAvailability array must be exactly 60 elements.");
+    if (seatAvailability.length != 60) {
+      throw new IllegalArgumentException("seatAvailability array must be exactly 60 elements.");
+    }
+    this.seatAvailability = seatAvailability;
   }
-  this.seatAvailability = seatAvailability;
-}
 
   public String getFlightNumber() {
     return FlightNumber;
@@ -101,6 +109,21 @@ public class Flight {
   public String getArrivalAirport() {
     return ArrivalAirport;
   }
+  public boolean getSpecialMealRequest() {
+    return hasSpecialMealRequest;
+  }
+
+  public boolean getHasPetTravel() {
+    return hasPetTravel;
+  }
+
+  public boolean getHasLoungeAccess() {
+    return hasLoungeAccess;
+  }
+
+  public boolean getHaswheelchair() {
+    return haswheelchair;
+  }
 
   public void setArrivalAirport(String arrivalAirport) {
     this.ArrivalAirport = arrivalAirport;
@@ -110,8 +133,8 @@ public class Flight {
     return ArrivalTime;
   }
 
-  public String getAirlineCode() {
-    return airlineCode;
+  public String getAirlineName() {
+    return airlineName;
   }
 
   public void setArrivalTime(String arrivalTime) {
