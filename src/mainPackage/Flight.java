@@ -31,14 +31,14 @@ public class Flight {
 
 
   //constructor
-  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String ArrivalTime, String departureTime, Double baseFare , String airlineCode,boolean[] seatAvailability) {
+  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String ArrivalTime, String departureTime, Double baseFare , String airlineName,boolean[] seatAvailability, boolean hasLoungeAccess,boolean haswheelchair,boolean hasPetTravel,boolean hasSpecialMealRequest) {
    this.FlightNumber = flightNumber;
    this.DepartureAirport = departureAirport;
    this.ArrivalAirport = ArrivalAirport;
    this.ArrivalTime = ArrivalTime;
    this.DepartureTime = departureTime;
    this.BaseFare = baseFare;
-   this.airlineCode=airlineCode;
+   this.airlineName=airlineName;
     this.seatAvailability=seatAvailability;
     this.seats = new ArrayList<>(60);
     // Debugging output: Print availability array to ensure it's correct
