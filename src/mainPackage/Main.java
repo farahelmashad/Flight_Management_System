@@ -62,12 +62,12 @@ public class Main {
                 );
 
 
-
+User user=new User("farahalmashad75@gmail.com","1234567");
 
 //flight1.setSeatAvailability(seatsAvailability);
 //        System.out.println(flight1.getSeats().get(12).isAvailable());
-  //   FlightService flightService = new FlightService(user);
- //    flightService.SeatSelection(flight1);
+     FlightService flightService = new FlightService(user);
+     flightService.SeatSelection(flight1);
 //        flightService.displaySeats(flight1);
 
 //        flightService.;

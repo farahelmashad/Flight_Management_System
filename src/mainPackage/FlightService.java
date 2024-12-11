@@ -351,7 +351,7 @@ public class FlightService {
         System.out.println("Please enter passenger's ID (SSN)");
         passenger.setPId(in.nextInt());
         in.nextLine();
-        passenger.setUserEmail(currentUser.getEmail()); //momken akhaly eluser ydakhal elemail bta3o abl ma ybda2 ydakhal elpassengers w astakhdem this email for getting the user ba w arboto blpassengers wkeda
+//        passenger.setUserEmail(currentUser.getEmail()); //momken akhaly eluser ydakhal elemail bta3o abl ma ybda2 ydakhal elpassengers w astakhdem this email for getting the user ba w arboto blpassengers wkeda
         Passengers.add(passenger);
         // input handling+ special services w notes wlklam da
     }
