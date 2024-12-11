@@ -10,6 +10,11 @@ public class User {
     public User() {
     }
 
+    public User(String email, String password) {
+        Email = email;
+        Password = password;
+    }
+
     public User(String email, String password, ArrayList<Passenger> p) {
         Email = email;
         Password = password;

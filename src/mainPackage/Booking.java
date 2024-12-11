@@ -10,6 +10,9 @@ public class Booking {
     private Seat seat;
     private String bookingStatus ;
 
+    public Booking() {
+    }
+
     private static ArrayList<Booking> bookings = new ArrayList<>();
 
     public Booking(int bookingID, Passenger passenger, Flight flight, Seat seat, String bookingStatus){
@@ -70,7 +73,7 @@ public class Booking {
     public static ArrayList<Booking> getBookings() {
         return bookings;
     }
-    public static void listAllBookings(){
+    public  void listAllBookings(){
         if(bookings.isEmpty()){
             System.out.println("No bookings exist");
 
@@ -114,7 +117,7 @@ public class Booking {
         System.out.println("Booking not found with ID: " + bookingID);
         return null;
     }
-    private void cancelBooking(){
+    public void cancelBooking(){
         if(bookingStatus.equals("Cancelled")){
             System.out.println("Your Booking is already cancelled");
         }else{
@@ -124,7 +127,7 @@ public class Booking {
         }
     }
 
-    private void changeSeat(){
+    public void changeSeat(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Available Seats: ");
         for(Seat s : flight.getSeats()){
