@@ -9,10 +9,12 @@ import java.util.Scanner;
 //white space issues // to be dealt with later!!
 public class FlightService {
     private User currentUser;
-    ArrayList<Airline> Airlines = Airline.getAirlines();
+//    ArrayList<Airline> Airlines = Airline.getAirlines();
     ArrayList<Airport> Airports = Airport.getAirports();
      public ArrayList<Passenger>Passengers=new ArrayList<>();
+     public ArrayList<Flight> Flights=new ArrayList<Flight>();
 //    ArrayList<Seat> seat = Flight.Seats;
+
      public FlightService(User currentUser){
          this.currentUser=currentUser;
      }
@@ -119,10 +121,9 @@ public class FlightService {
 //        FlightSelection( departureAirport,arrivalAirport,deptTime,specialMeal,petTravel,wheelchair,loungeAccess);
            //flights search
         ArrayList<Flight> AvailableFlights=new ArrayList<>();
-          for(int i=0;i<Airlines.size();i++){
-              if((Airlines.get(i).getSpecialMealRequest()==specialMeal)&&(Airlines.get(i).getHasPetTravel()==petTravel)&&(Airlines.get(i).getHasLoungeAccess()==loungeAccess)&&(Airlines.get(i).getHaswheelchair()==wheelchair)){
-                ArrayList<Flight> f=Airlines.get(i).getFlights();
-                for(Flight F:f){
+          for(int i=0;i<Flights.size();i++){
+              if((Flights.get(i).getSpecialMealRequest()==specialMeal)&&(Flights.get(i).getHasPetTravel()==petTravel)&&(Flights.get(i).getHasLoungeAccess()==loungeAccess)&&(Flights.get(i).getHaswheelchair()==wheelchair)){
+                for(Flight F:Flights){
                     if((F.getDepartureAirport().equalsIgnoreCase(departureAirport))&&(F.getArrivalAirport().equalsIgnoreCase(arrivalAirport))){
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                         String date= F.getDepartureTime();
@@ -155,30 +156,28 @@ public class FlightService {
             }
             System.out.println("---------------------------------------------------------------------------");
             f.get(i).displayFlightDetails();
-            Airline thisFlightairline=findAirlineByCode(f.get(i).getAirlineCode());
-            System.out.println("Airline : "+thisFlightairline.getAirlineName());
-            System.out.println("Special Services offered by the Airline: ");
+            System.out.println("Special Services offered by the Airline: "+ f.get(i).getAirlineName());
             boolean offersServices=false;
-            if(thisFlightairline.getSpecialMealRequest()){
+            if(f.get(i).getSpecialMealRequest()){
                 System.out.println("Special Meal Requests");
                 offersServices=true;
             }
-            if(thisFlightairline.getHaswheelchair()){
+            if(f.get(i).getHaswheelchair()){
                 System.out.println("Wheelchair Accessibility");
                 offersServices=true;
             }
-            if(thisFlightairline.getHasPetTravel()){
+            if(f.get(i).getHasPetTravel()){
                 System.out.println("Pet Travel");
                 offersServices=true;
             }
-            if(thisFlightairline.getHasLoungeAccess()){
+            if(f.get(i).getHasLoungeAccess()){
                 System.out.println("Lounge Access");
                 offersServices=true;
             }
             if(offersServices==false){
                 System.out.println("The airline doesn't offer special services");
             }
-            System.out.println("Baggage allowance (maximum number of bags per passenger) : "+thisFlightairline.getBaggageAllowance());
+            System.out.println("Baggage allowance (maximum number of bags per passenger) : "+f.get(i).getBaggageAllowance());
             System.out.println("Number of available seats : "+f.get(i).numberOfAvailableSeats());
 
         }
@@ -329,14 +328,14 @@ public class FlightService {
         }
         return false;
     }
-    public Airline findAirlineByCode(String airlineCode) {
-        for (Airline airline : Airlines) {
-            if (airline.getAirlineCode().equalsIgnoreCase(airlineCode)) {
-                return airline; // will return el airline ely feha this flight
-            }
-        }
-        return null; //law mala2etsh elairline
-    }
+//    public Airline findAirlineByCode(String airlineCode) {
+//        for (Airline airline : Airlines) {
+//            if (airline.getAirlineCode().equalsIgnoreCase(airlineCode)) {
+//                return airline; // will return el airline ely feha this flight
+//            }
+//        }
+//        return null; //law mala2etsh elairline
+//    }
     public void getPassengerInformation(Passenger passenger){
         Scanner in=new Scanner(System.in);
         System.out.println("Please enter passenger's name: ");

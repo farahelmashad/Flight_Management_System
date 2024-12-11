@@ -12,12 +12,16 @@ public class Flight {
   private String ArrivalTime;
   private String DepartureTime;
   private Double BaseFare;
-//  private String seatsAvailability;
-//  public static ArrayList<Seat> Seats=new ArrayList<>(60);
-  private String airlineCode;
+  private boolean hasSpecialMealRequest;
+  private boolean hasPetTravel;
+  private boolean hasLoungeAccess;
+  private boolean haswheelchair;
+  private String seatsAvailability;
+  private String airlineName;
   private ArrayList<Seat> seats; // Instance-level seats list
   private static ArrayList<Seat> seatTemplate = new ArrayList<>(60);
   private boolean[] seatAvailability;
+  private int baggageAllowance;
 
   static {
     initializeSeats();
@@ -71,6 +75,10 @@ public class Flight {
 
 //getters ans setters
 
+  public int getBaggageAllowance() {
+    return baggageAllowance;
+  }
+
   public boolean[] getSeatAvailability() {
     return seatAvailability;
   }
@@ -101,6 +109,21 @@ public class Flight {
   public String getArrivalAirport() {
     return ArrivalAirport;
   }
+  public boolean getSpecialMealRequest() {
+        return hasSpecialMealRequest;
+    }
+
+    public boolean getHasPetTravel() {
+        return hasPetTravel;
+    }
+
+    public boolean getHasLoungeAccess() {
+        return hasLoungeAccess;
+    }
+
+    public boolean getHaswheelchair() {
+        return haswheelchair;
+    }
 
   public void setArrivalAirport(String arrivalAirport) {
     this.ArrivalAirport = arrivalAirport;
@@ -110,8 +133,8 @@ public class Flight {
     return ArrivalTime;
   }
 
-  public String getAirlineCode() {
-    return airlineCode;
+  public String getAirlineName() {
+    return airlineName;
   }
 
   public void setArrivalTime(String arrivalTime) {
