@@ -2,23 +2,24 @@ package mainPackage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 public class Ticket {
-    private String ticketNumber;
+    public static int ticketCount;
+    private int ticketNumber;
     private double fare;
     private String ticketStatus;
     private Date issueDate;
     private Passenger passenger;
     private Flight flight;
 
-    public Ticket(String ticketNumber, Payment payment, Date issueDate, String ticketStatus, Passenger passenger, Flight flight) {
-        this.ticketNumber = ticketNumber;
+    public Ticket(int ticketNumber, Payment payment, Date issueDate, String ticketStatus, Passenger passenger, Flight flight) {
+        this.ticketNumber = ++ticketCount;
         this.fare = payment.getPaymentAmount();
         this.issueDate = issueDate;
-        this.ticketStatus = ticketStatus;
+        this.ticketStatus = "Booked";
         this.passenger = passenger;
         this.flight = flight;
     }
 
-    public String getTicketNumber() {
+    public int getTicketNumber() {
         return ticketNumber;
     }
 
