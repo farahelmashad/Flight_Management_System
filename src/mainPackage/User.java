@@ -6,14 +6,28 @@ public class User {
     protected String Email;
     protected String Password;
     private ArrayList<Passenger> p = new ArrayList<>();
+    private int User_Id;
+    public static int UserCount=0;
 
     public User() {
+    }
+
+    public User(String email, String password) {
+        Email = email;
+        Password = password;
     }
 
     public User(String email, String password, ArrayList<Passenger> p) {
         Email = email;
         Password = password;
         this.p = p;
+    }
+
+    public User(String email, String password, ArrayList<Passenger> p, int user_Id) {
+        Email = email;
+        Password = password;
+        this.p = p;
+        User_Id = ++UserCount;
     }
 
     public String getEmail() {

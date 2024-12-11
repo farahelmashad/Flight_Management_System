@@ -7,6 +7,9 @@ import java.util.Scanner;
 public class SignUp_LogIn {
     ArrayList<Admin> admins = new ArrayList<>();
     ArrayList<User> users = new ArrayList<>();
+    Admin a=new Admin();
+    Booking b =new Booking ();
+    FlightService f = new FlightService();
     private static Scanner scanner = new Scanner(System.in);
 
     public boolean SignUp() {
@@ -185,11 +188,13 @@ public class SignUp_LogIn {
                         if (userType.equalsIgnoreCase("Admin")) {
                             if (LogIn_A()) {
                                 System.out.println("Welcome to the Admin Panel.");
+                                a.Adminpanel();
                             }
                             break;
                         } else if (userType.equalsIgnoreCase("User")) {
                             if (LogIn_U()) {
                                 System.out.println("Welcome to the User Section.");
+                                this.MainMenu2();
                             }
                             break;
                         } else {
@@ -201,6 +206,7 @@ public class SignUp_LogIn {
                 case 2:
                     if (SignUp() && LogIn_U()) {
                         System.out.println("Logged In After Sign-Up.");
+                        this.MainMenu2();
                     }
                     break;
 
@@ -213,4 +219,61 @@ public class SignUp_LogIn {
             }
         }
     }
-}
+    public void MainMenu2(){
+        while (true) {
+            System.out.println("\nWelcome To Our Flight Management System");
+            System.out.println("1. Search And Book A Flight");
+            System.out.println("2. Modify Your Flight");
+            System.out.println("3. List All Bookings");
+            System.out.println("4. Cancel Your Booking");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = -1;
+            boolean validChoice = false;
+
+            while (!validChoice) {
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+
+                    if (choice >= 1 && choice <= 5) {
+                        validChoice = true; // Valid choice entered
+                    } else {
+                        System.out.println("Invalid choice. Please enter a number between 1 and 5.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                }
+            }
+
+            // Process the valid choice
+            switch (choice) {
+                case 1:
+                    f.flightSearch();
+
+                    break;
+
+                case 2:
+                    b.changeSeat();
+
+                    break;
+
+                case 3:
+                    b.listAllBookings();
+
+                    break;
+
+                case 4:
+                    b.cancelBooking();
+                    break;
+
+                case 5:
+                    // Exit the system
+                    System.out.println("Exiting the Flight Management System. Goodbye!");
+                    return;
+
+            }
+
+    }
+
+}}

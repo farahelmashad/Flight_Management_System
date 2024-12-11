@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 //white space issues // to be dealt with later!!
 public class FlightService {
+    public FlightService() {
+    }
+
     private User currentUser;
     ArrayList<Airline> Airlines = Airline.getAirlines();
     ArrayList<Airport> Airports = Airport.getAirports();
