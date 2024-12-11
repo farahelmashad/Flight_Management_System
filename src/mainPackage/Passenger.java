@@ -1,6 +1,6 @@
 package mainPackage;
 
-public class Passenger extends User{
+public class Passenger {
     private String Name;
     private String Gender;
     private int PhoneNumber;
@@ -8,17 +8,17 @@ public class Passenger extends User{
     private int PId;
 
 
-    public Passenger() {
+
+    public Passenger(){
+    }
+    public Passenger(String Name, String Gender, int PhoneNumber, String DateOfBirth) {
+        this.Name = Name;
+        this.Gender = Gender;
+        this.PhoneNumber = PhoneNumber;
+        this.DateOfBirth = DateOfBirth;
     }
 
-    public Passenger(String email, String password, String name, String gender, int phoneNumber, String dateOfBirth ,int id) {
-        super(email, password);
-        Name = name;
-        Gender = gender;
-        PhoneNumber = phoneNumber;
-        DateOfBirth = dateOfBirth;
-        PId=id;
-    }
+
 
     public String getName() {
         return Name;
@@ -59,7 +59,22 @@ public class Passenger extends User{
     public void setPId(int PId) {
         this.PId = PId;
     }
+/*
+    public String getEmail() {
+        return Email;
+    }
 
+    public void setEmail(String email) {
+        Email = email;
+    }
 
+    public String getPassword() {
+        return Password;
+    }
 
+    public void setPassword(String password) {
+        Password = password;
+    }
+*/
 }
+

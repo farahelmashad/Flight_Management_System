@@ -1,117 +1,144 @@
 package mainPackage;
 
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SignUp_LogIn {
-
-    static Passenger[] P =new Passenger[100];
-    public static int numofusers;
+    ArrayList<Admin> admins = new ArrayList<>();
+    ArrayList<User> users = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
-    public  boolean SignUp() {
-        String Email;
-        String Pass;
+
+    public boolean SignUp() {
+        String email;
+        String pass;
         String name;
-        String Gender;
-        int PNum;
-        int id;
-        Passenger m = new Passenger();
-        System.out.println("Please Enter Your Name");
+        String gender;
+        String dateOfBirth;
+        int phoneNumber;
+
+
+       User newUser = new User();
+
+        System.out.println("Please Enter Your Name:");
         name = scanner.nextLine();
-        m.setName(name);
+
+
         while (true) {
-            System.out.println(" Please Enter Your Email");
-            Email = scanner.nextLine();
-            if (!Email.endsWith("@gmail.com")) {
+            System.out.println("Please Enter Your Email:");
+            email = scanner.nextLine();
+
+            if (!email.endsWith("@gmail.com")) {
                 System.out.println("Invalid Email Format. Email must end with '@gmail.com'. Please Try Again!");
                 continue;
             }
-            boolean b = false;
-            for (int i = 0; i < numofusers; i++) {
-                if (P[i] != null && Email.equals(P[i].getEmail())) {
-                    b = true;
-                    System.out.println("Invalid Email ,Please Try Again!! ");
+
+            boolean emailExists = false;
+            for (User u : users) {
+                if (u.getEmail().equals(email)) {
+                    emailExists = true;
+                    break;
                 }
             }
-            if (b == false) {
-                m.setEmail(Email);
+
+            if (emailExists) {
+                System.out.println("Invalid Email, Email already exists. Please Try Again!");
+            } else {
+               newUser.setEmail(email);
                 break;
-
             }
-
-
         }
+
         Console console = System.console();
         if (console != null) {
-            char[] passwordArray;
             while (true) {
-                System.out.println("Please Set A Password");
-                passwordArray = console.readPassword();
-                Pass = new String(passwordArray);
-                if (Pass.length() >= 6) {
-                    m.setPassword(Pass);
+                System.out.println("Please Set A Password:");
+                char[] passwordArray = console.readPassword();
+                pass = new String(passwordArray);
+
+                if (pass.length() >= 6) {
+                    //newUser.setPassword(pass);
+                    break;
+                } else {
+                    System.out.println("Password must be at least 6 characters long. Please Try Again!");
+                }
+            }
+        } else {
+            while (true) {
+                System.out.println("Please Set A Password (Unmasked in IDE):");
+                pass = scanner.nextLine();
+
+                if (pass.length() >= 6) {
+                    //newUser.setPassword(pass);
                     break;
                 } else {
                     System.out.println("Password must be at least 6 characters long. Please Try Again!");
                 }
             }
         }
-        else {
-            while (true) {
-                System.out.println("Please Set A Password (Unmasked in IDE)");
-                Pass = scanner.nextLine();
-
-                if (Pass.length() >= 6) {
-                    m.setPassword(Pass);
-                    break;
-                } else {
-                    System.out.println("Password must be at least 6 characters long. Please Try Again!");
-                }
-            }
-        }
-
 
 
         while (true) {
-            System.out.println("Enter Your Gender :(Male/Female)");
-            Gender = scanner.nextLine().trim();
-            if (Gender.equalsIgnoreCase("Male") || Gender.equalsIgnoreCase("Female")) {
-                m.setGender(Gender);
+            System.out.println("Enter Your Gender (Male/Female):");
+            gender = scanner.nextLine().trim();
+
+            if (gender.equalsIgnoreCase("Male") || gender.equalsIgnoreCase("Female")) {
+                //newUser.setGender(gender);
                 break;
-
             } else {
-                System.out.println("Invalid Choice,Please Try Again!!");
-
+                System.out.println("Invalid Choice. Please Try Again!");
             }
         }
+
         while (true) {
             System.out.println("Enter Your Phone Number (must be numeric and at least 11 digits):");
             String phoneInput = scanner.nextLine().trim();
 
             if (phoneInput.matches("\\d{11,}")) {
-                PNum = Integer.parseInt(phoneInput);
-                m.setPhoneNumber(PNum);
+                phoneNumber = Integer.parseInt(phoneInput);
+               // newUser.setPhoneNumber(phoneNumber);
                 break;
             } else {
                 System.out.println("Invalid Phone Number. Please Try Again!");
             }
         }
 
-        System.out.println("Enter Your Date Of Birth");
-        String BDate = scanner.nextLine();
-        m.setDateOfBirth(BDate);
-        m.setPId(numofusers + 1);
-        P[numofusers] = m;
-        numofusers += 1;
-        System.out.println("Sign Up Successfully !!");
-        System.out.println("Please Log In");
+        System.out.println("Enter Your Date Of Birth:");
+         dateOfBirth = scanner.nextLine();
+        //newUser.setDateOfBirth(birthDate);
+
+        Passenger newPassenger = new Passenger(name, gender, phoneNumber, dateOfBirth);
+
+        newUser.addPassenger(newPassenger);
+
+
+        users.add(newUser);
+
+        System.out.println("Sign Up Successfully!");
+        System.out.println("Please Log In.");
         return true;
     }
-    public void display() {
-        System.out.println(P[numofusers - 1].getName());
+
+    public boolean LogIn_A() {
+        System.out.println("Enter Your Email:");
+        String email = scanner.nextLine();
+
+        System.out.println("Enter Your Password:");
+        String password = scanner.nextLine();
+
+        for (Admin admin : admins) {
+            if (email.equals(admin.getEmail()) && password.equals(admin.getPassword())) {
+                System.out.println("Admin Log-In Successful! Welcome, " );
+                return true;
+            }
+        }
+
+        System.out.println("Invalid Admin Email or Password. Please Try Again.");
+        return false;
     }
-    public boolean LogIn_P() {
-        if (numofusers == 0) {
+
+    public boolean LogIn_U() {
+        if (users.isEmpty()) {
             System.out.println("No users found! Please sign up first.");
             return false;
         }
@@ -122,25 +149,18 @@ public class SignUp_LogIn {
         System.out.println("Enter Your Password:");
         String password = scanner.nextLine();
 
-        for (int i = 0; i < numofusers; i++) {
-            if (P[i] != null && email.equals(P[i].getEmail()) && password.equals(P[i].getPassword())) {
-                System.out.println("Log-In Successful! Welcome back, " + P[i].getName() + "!");
+        for (User u : users) {
+            if (email.equals(u.getEmail()) && password.equals(u.getPassword())) {
+                System.out.println("Log-In Successful! Welcome back, " );
                 return true;
             }
         }
 
-        System.out.println("Invalid Email or Password. Please try again.");
+        System.out.println("Invalid Email or Password. Please Try Again.");
         return false;
     }
-    public boolean LogIn_A(){
-        System.out.println("Enter Your Email:");
-        String email = scanner.nextLine();
 
-        System.out.println("Enter Your Password:");
-        String password = scanner.nextLine();
-        return true;
-    }
-    public void MainMenu(){
+    public void MainMenu() {
         while (true) {
             System.out.println("\nWelcome to the Flight Booking System");
             System.out.println("1. Log In");
@@ -152,48 +172,44 @@ public class SignUp_LogIn {
             try {
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println("Invalid Input. Please enter a valid choice.");
+                System.out.println("Invalid Input. Please Enter a Valid Choice.");
                 continue;
             }
 
             switch (choice) {
                 case 1:
-                    String userType = "";
                     while (true) {
-                        System.out.println("Do You Want To Enter As An Admin Or A Passenger? (Type 'Admin' or 'Passenger')");
-                        userType = scanner.nextLine().trim();
+                        System.out.println("Do You Want To Enter As An Admin Or A User? (Type 'Admin' or 'User')");
+                        String userType = scanner.nextLine().trim();
 
                         if (userType.equalsIgnoreCase("Admin")) {
                             if (LogIn_A()) {
-                                // Admin section logic here
-                                System.out.println("Done!!! Admin Section");
+                                System.out.println("Welcome to the Admin Panel.");
                             }
                             break;
-                        } else if (userType.equalsIgnoreCase("Passenger")) {
-                            if (LogIn_P()) {
-                                // Passenger section logic here
-                                System.out.println("Done!!! Passenger Section");
+                        } else if (userType.equalsIgnoreCase("User")) {
+                            if (LogIn_U()) {
+                                System.out.println("Welcome to the User Section.");
                             }
                             break;
                         } else {
-                            System.out.println("Invalid input! Please enter 'Admin' or 'Passenger'.");
+                            System.out.println("Invalid Input! Please Enter 'Admin' or 'User'.");
                         }
                     }
                     break;
 
-
                 case 2:
-                    if (SignUp() && LogIn_P()) {
-                        System.out.println("Done22222!!!");; // Automatically logs the user in after sign-up
+                    if (SignUp() && LogIn_U()) {
+                        System.out.println("Logged In After Sign-Up.");
                     }
                     break;
 
                 case 3:
-                    System.out.println("Thank you for using the Flight Booking System. Goodbye!");
+                    System.out.println("Thank You for Using the Flight Booking System. Goodbye!");
                     return;
 
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Invalid Choice. Please Try Again.");
             }
         }
     }

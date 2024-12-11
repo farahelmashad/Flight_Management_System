@@ -1,16 +1,19 @@
 package mainPackage;
 
+import java.util.ArrayList;
+
 public class User {
-    private String Email;
-    private String Password;
+    protected String Email;
+    protected String Password;
+    private ArrayList<Passenger> p = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String email, String password) {
+    public User(String email, String password, ArrayList<Passenger> p) {
         Email = email;
         Password = password;
-
+        this.p = p;
     }
 
     public String getEmail() {
@@ -29,4 +32,14 @@ public class User {
         Password = password;
     }
 
+    public ArrayList<Passenger> getP() {
+        return p;
+    }
+
+    public void setP(ArrayList<Passenger> p) {
+        this.p = p;
+    }
+    public void addPassenger(Passenger passenger) {
+        this.p  .add(passenger);
+    }
 }
