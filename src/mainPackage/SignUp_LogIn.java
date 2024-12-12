@@ -10,6 +10,8 @@ public class SignUp_LogIn {
     Admin a=new Admin();
     Booking b =new Booking ();
     //FlightService f = new FlightService();
+
+    private int thisUserIndex = -1;
     private static Scanner scanner = new Scanner(System.in);
 
     public boolean SignUp() {
@@ -159,10 +161,18 @@ public class SignUp_LogIn {
             }
         }
 
+
         System.out.println("Invalid Email or Password. Please Try Again.");
         return false;
     }
-
+    public void setLoggedInUserIndex(int userID) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUserID()==userID) {
+                thisUserIndex = i;
+                break;
+            }
+        }
+    }
     public void MainMenu() {
         while (true) {
             System.out.println("\nWelcome to the Flight Booking System");

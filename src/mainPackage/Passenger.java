@@ -6,6 +6,7 @@ public class Passenger {
     private int PhoneNumber;
     private String DateOfBirth;
     private int PId;
+    private Seat seat;
 
 
 
@@ -59,7 +60,12 @@ public class Passenger {
     public void setPId(int PId) {
         this.PId = PId;
     }
-/*
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
+
+    /*
     public String getEmail() {
         return Email;
     }

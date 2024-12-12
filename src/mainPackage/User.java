@@ -6,6 +6,8 @@ public class User {
     protected String Email;
     protected String Password;
     private ArrayList<Passenger> p = new ArrayList<>();
+    private ArrayList<Booking> bookings = new ArrayList<>();
+    private Flight SelectedFlight;
     private int User_Id;
     public static int UserCount=0;
 
@@ -30,6 +32,10 @@ public class User {
         User_Id = ++UserCount;
     }
 
+    public int getUserID() {
+        return User_Id;
+    }
+
     public String getEmail() {
         return Email;
     }
@@ -46,8 +52,16 @@ public class User {
         Password = password;
     }
 
+    public Flight getSelectedFlight() {
+        return SelectedFlight;
+    }
+
     public ArrayList<Passenger> getP() {
         return p;
+    }
+
+    public ArrayList<Booking> getBookings() {
+        return bookings;
     }
 
     public void setP(ArrayList<Passenger> p) {
