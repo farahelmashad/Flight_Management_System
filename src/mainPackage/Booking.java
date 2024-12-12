@@ -15,10 +15,14 @@ public class Booking {
     private User currentUser;
     private String bookingStatus ;
     private static int bookingCounter = 0;
-    private int EconomySeats;
-    private int BusinessSeats;
-    private int FirstClassSeats;
-
+    private int EconomySeats=0;
+    private int BusinessSeats=0;
+    private int FirstClassSeats=0;
+    private int numberOfSeats;
+    private boolean hasWheelchair;
+    private boolean hasLounge;
+    private boolean hasSpecialMeal;
+    private boolean hasPet;
 
 
     //    ArrayList<Airline> Airlines = Airline.getAirlines();
@@ -86,6 +90,22 @@ public class Booking {
         return FirstClassSeats;
     }
 
+    public boolean HasWheelchair() {
+        return hasWheelchair;
+    }
+
+    public boolean HasLounge() {
+        return hasLounge;
+    }
+
+    public boolean HasSpecialMeal() {
+        return hasSpecialMeal;
+    }
+
+    public boolean HasPet() {
+        return hasPet;
+    }
+
     public Flight getFlight() {
         return flight;
     }
@@ -106,6 +126,9 @@ public class Booking {
         return bookings;
     }
 
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
 
     public Booking(User currentUser){
         this.currentUser=currentUser;
@@ -186,18 +209,22 @@ public class Booking {
                 switch (choice) {
                     case 1:
                         specialMeal = true;
+                        this.hasSpecialMeal=true;
                         System.out.println("Special Meal Requests Selected");
                         break;
                     case 2:
                         petTravel = true;
+                        this.hasPet=true;
                         System.out.println("Pet Travel Selected");
                         break;
                     case 3:
                         wheelchair = true;
+                        this.hasWheelchair=true;
                         System.out.println("Wheelchair Accessibility Selected");
                         break;
                     case 4:
                         loungeAccess = true;
+                        this.hasLounge=true;
                         System.out.println("Lounge Access Selected");
                         break;
                     case 5:
@@ -316,6 +343,7 @@ public class Booking {
             number=in.nextInt();
             in.nextLine();
         }
+        this.numberOfSeats=number;
         displaySeats(flight);
         for (int i = 0; i < number; i++) {
             Seat chosenSeat = null;
@@ -358,9 +386,15 @@ public class Booking {
                     continue;
                 }
 
+                if(chosenSeat.getSeatClass().trim().equalsIgnoreCase("First Class"))
+                    this.FirstClassSeats++;
+                else if(chosenSeat.getSeatClass().trim().equalsIgnoreCase("Business Class"))
+                    this.BusinessSeats++;
+                else
+                    this.EconomySeats++;
 
                 chosenSeat.setAvailable(false);
-                flight.getSeatAvailability()[seatindex]=false;
+                flight.getSeatAvailability()[seatindex]=false; //hasa feh haga ghalat need to check this part
                 System.out.println("Seat chosen successfully!");
                 chosenSeats.add(chosenSeat);
                 validSeatChosen = true;
@@ -450,14 +484,7 @@ public class Booking {
         }
         return false;
     }
-    //    public Airline findAirlineByCode(String airlineCode) {
-//        for (Airline airline : Airlines) {
-//            if (airline.getAirlineCode().equalsIgnoreCase(airlineCode)) {
-//                return airline; // will return el airline ely feha this flight
-//            }
-//        }
-//        return null; //law mala2etsh elairline
-//    }
+
     public void getPassengerInformation(Passenger passenger){
         Scanner in=new Scanner(System.in);
         System.out.println("Enter the number of passengers to book for: ");
