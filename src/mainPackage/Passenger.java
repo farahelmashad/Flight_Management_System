@@ -64,6 +64,11 @@ public class Passenger {
     public void setSeat(Seat seat) {
         this.seat = seat;
     }
+    public void assignSeatToPassenger(Seat chosenSeat) {
+        this.seat = chosenSeat;
+        chosenSeat.setAvailable(false); // Mark seat as unavailable
+        System.out.println("Seat " + chosenSeat.getSeatNumber() + " assigned to " + this.Name);
+    }
 
     /*
     public String getEmail() {
@@ -83,4 +88,3 @@ public class Passenger {
     }
 */
 }
-

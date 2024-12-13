@@ -10,6 +10,7 @@ public class User {
     private Flight SelectedFlight;
     private int User_Id;
     public static int UserCount=0;
+    private boolean loggedIn=false;
 
     public User() {
     }
@@ -69,5 +70,13 @@ public class User {
     }
     public void addPassenger(Passenger passenger) {
         this.p  .add(passenger);
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
     }
 }

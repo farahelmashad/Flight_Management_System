@@ -157,6 +157,7 @@ public class SignUp_LogIn {
         for (User u : users) {
             if (email.equals(u.getEmail()) && password.equals(u.getPassword())) {
                 System.out.println("Log-In Successful! Welcome back, " );
+                u.setLoggedIn(true);
                 return true;
             }
         }

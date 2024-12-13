@@ -9,7 +9,7 @@ import java.util.Scanner;
 //white space issues // to be dealt with later!!
 public class Booking {
     private int bookingID;
-    private ArrayList<Passenger> passengers;
+//    private ArrayList<Passenger> passengers;
     private Flight flight;
     private Seat seat;
     private User currentUser;
@@ -24,6 +24,7 @@ public class Booking {
     private boolean hasSpecialMeal;
     private boolean hasPet;
 
+    ArrayList<Passenger> passengers = new ArrayList<>();
 
     //    ArrayList<Airline> Airlines = Airline.getAirlines();
     ArrayList<Airport> Airports = Airport.getAirports();
@@ -31,7 +32,7 @@ public class Booking {
     public ArrayList<Flight> Flights=new ArrayList<Flight>();
     //    ArrayList<Seat> seat = Flight.Seats;
     private static ArrayList<Booking> bookings = new ArrayList<>();
-
+    public ArrayList<User>users=new ArrayList<User>();
     public Booking() {
     }
     public Booking(int bookingID, Flight flight, Seat seat, String bookingStatus){
@@ -64,6 +65,11 @@ public class Booking {
     public void setPassenger(ArrayList<Passenger> passengers) {
         this.passengers = passengers;
     }
+
+    public void addPassenger(Passenger passenger) {
+        this.passengers.add(passenger);
+    }
+
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
@@ -326,13 +332,13 @@ public class Booking {
                 }
             }
             SeatSelection(foundFlight);
-            flight=foundFlight;
+            this.flight=foundFlight;
         }
     }
     public void SeatSelection(Flight flight){
         ArrayList<Seat> flightSeats=flight.getSeats();
         int seatindex=-1;
-        ArrayList<Seat> chosenSeats=new ArrayList<>();
+        //ArrayList<Seat> chosenSeats=new ArrayList<>();
         Scanner in=new Scanner(System.in);
         System.out.println("How many seats do you want to choose: ");
         int number=in.nextInt();
@@ -396,13 +402,12 @@ public class Booking {
                 chosenSeat.setAvailable(false);
                 flight.getSeatAvailability()[seatindex]=false; //hasa feh haga ghalat need to check this part
                 System.out.println("Seat chosen successfully!");
-                chosenSeats.add(chosenSeat);
+                // chosenSeats.add(chosenSeat);
                 validSeatChosen = true;
 //                    displaySeats();
 
             }
-            Passenger passenger = new Passenger();
-            getPassengerInformation(passenger);
+
 //                passenger.setSeat(chosenSeat);
 
         }
@@ -412,29 +417,32 @@ public class Booking {
     }
 
 
-    /*
-    public void bookFlight(ArrayList<Flight> availableFlights , User currentUser ){
-        Scanner input = new Scanner(System.in);
+    public void bookFlight(ArrayList<Flight> availableFlights , User currentUser , ArrayList<Seat> chosenSeats ){
+        flightSearch();
+        for(User u:users){
+            if(u.isLoggedIn()==true){
+                this.currentUser=u;
+                break;
+            }
+        }
 
-        FlightSelection(availableFlights,currentUser);
+        for (int i = 0; i < numberOfSeats; i++) {
+            Passenger passenger = new Passenger();
+            getPassengerInformation();
+            passenger.assignSeatToPassenger(chosenSeats.get(i));
+            passengers.add(passenger);
 
-        SeatSelection(currentUser.getSelectedFlight());
-
+        }
         Booking booking = new Booking();
         booking.setBookingID(bookingCounter++);
         booking.setFlight(currentUser.getSelectedFlight());
         booking.setCurrentUser(currentUser);
         booking.setBookingStatus("Confirmed");
 
-        for (Seat seat : booking.SeatSelection()) {
-            Passenger passenger = new Passenger();
-            getPassengerInformation(passenger);
-            passenger.setSeat(seat);  // Link each passenger with a chosen seat
-            booking.addPassenger(passenger);
-        }
     }
 
-*/
+
+
     public void displaySeats(Flight flight) {
         ArrayList<Seat> seat = flight.getSeats();
         for (int i = 0; i < seat.size(); i++) {
@@ -485,11 +493,11 @@ public class Booking {
         return false;
     }
 
-    public void getPassengerInformation(Passenger passenger){
+    public Passenger getPassengerInformation(){
         Scanner in=new Scanner(System.in);
         System.out.println("Enter the number of passengers to book for: ");
         int NoPass = in.nextInt();
-
+        Passenger passenger = new Passenger();
 
         for (int i = 0; i < NoPass; i++) {
             System.out.println("Please enter passenger's name: ");
@@ -505,15 +513,11 @@ public class Booking {
             passenger.setPId(in.nextInt());
             in.nextLine();
 //        passenger.setUserEmail(currentUser.getEmail()); //momken akhaly eluser ydakhal elemail bta3o abl ma ybda2 ydakhal elpassengers w astakhdem this email for getting the user ba w arboto blpassengers wkeda
+            passenger.assignSeatToPassenger();
             Passengers.add(passenger);
             // input handling+ special services w notes wlklam da
         }
-    }
-
-    public void bookFlight(String FlightNo, String PassengerID){
-
-
-
+        return passenger;
     }
 
 
