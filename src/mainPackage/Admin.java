@@ -60,8 +60,8 @@ public class Admin extends User {
         System.out.println("Enter Airline Code: ");
         String AirlineCode=input.next().trim();
         boolean []availability=new boolean[60];
-       // Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare,AirlineCode,availability);
-       // flights.add(flight);
+      Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare,AirlineCode,availability);
+      flights.add(flight);
         System.out.println("flight " + FlightNumber + " added successfully");
     }
 

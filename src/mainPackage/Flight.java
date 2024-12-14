@@ -76,6 +76,9 @@ public class Flight {
     public Flight(String fl123, String jfk, String lax, String arrivalTime, String departureTime) {
     }
 
+  public Flight(String flightNumber, String departureAirport, String arrivalAirport, String arrivalTime, String departureTime, Double baseFare, String airlineCode, boolean[] availability) {
+  }
+
 //getters ans setters
 
   public int getBaggageAllowance() {
