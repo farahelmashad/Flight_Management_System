@@ -65,6 +65,10 @@ public class User {
         return bookings;
     }
 
+   public void addBooking (Booking booking){
+        bookings.add(booking);
+   }
+
     public void setP(ArrayList<Passenger> p) {
         this.p = p;
     }
