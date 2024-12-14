@@ -15,7 +15,7 @@ public class ApplePay implements PaymentMethod {
     public ApplePay(String email, double baseFare, double amount, Flight flight, PaymentPreProcessing subTotal) {
         this.email = email;
         this.baseFare = baseFare;
-        this.amount = subTotal.calculateSubTotal();
+//        this.amount = subTotal.calculateSubTotal();
         this.flight = flight;
         this.subTotal = subTotal;
     }

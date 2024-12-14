@@ -21,7 +21,7 @@ public class Card implements PaymentMethod{
         this.expirationDate = expirationDate;
         this.cvv = cvv;
         this.baseFare = baseFare;
-        this.amount = subTotal.calculateSubTotal();
+//        this.amount = subTotal.calculateSubTotal();
         this.flight = flight;
     }
 

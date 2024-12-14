@@ -21,26 +21,26 @@ public class PaymentPreProcessing {
         this.firstClassSeats = booking.getFirstClassSeats();
     }
 
-    public double calculateSubTotal() {
-        double businessBaseFare = economyBaseFare * 2;
-        double firstClassBaseFare = economyBaseFare * 3;
-
-        double totalEconomyFare = economySeats * economyBaseFare;
-        double totalBusinessFare = businessSeats * businessBaseFare;
-        double totalFirstClassFare = firstClassSeats * firstClassBaseFare;
-
-        double baseFareTotal = totalEconomyFare + totalBusinessFare + totalFirstClassFare;
-        double taxes = baseFareTotal * taxRate;
-
-        int additionalCost = 0;
-        for (boolean service : additionalServices) {
-            if (service) {
-                additionalCost += 1000;
-            }
-        }
-
-        return baseFareTotal + taxes + additionalCost * (booking.getTotalSeats());
-    }
+//    public double calculateSubTotal() {
+//        double businessBaseFare = economyBaseFare * 2;
+//        double firstClassBaseFare = economyBaseFare * 3;
+//
+//        double totalEconomyFare = economySeats * economyBaseFare;
+//        double totalBusinessFare = businessSeats * businessBaseFare;
+//        double totalFirstClassFare = firstClassSeats * firstClassBaseFare;
+//
+//        double baseFareTotal = totalEconomyFare + totalBusinessFare + totalFirstClassFare;
+//        double taxes = baseFareTotal * taxRate;
+//
+//        int additionalCost = 0;
+//        for (boolean service : additionalServices) {
+//            if (service) {
+//                additionalCost += 1000;
+//            }
+//        }
+//
+//        return baseFareTotal + taxes + additionalCost * (booking.getTotalSeats());
+//    }
 
     public void setAdditionalServices(boolean[] additionalServices) {
         if (additionalServices.length == 4) {
@@ -53,7 +53,7 @@ public class PaymentPreProcessing {
     public void acceptPayment() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Total amount: $" + this.calculateSubTotal());
+//        System.out.println("Total amount: $" + this.calculateSubTotal());
 
         boolean running = true;
         while (running) {
