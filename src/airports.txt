@@ -1,0 +1,2 @@
+LAX,Los Angeles International Airport,Los Angeles, USA
+SFO,San Francisco International Airport,San Francisco, USA

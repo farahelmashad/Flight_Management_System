@@ -9,13 +9,28 @@ public class Main {
         List<User> users = Filereader.readUsers("src/users.txt");
         List<Booking> bookings = Filereader.readBookings("src/bookings.txt");
         List<Passenger> passengers = Filereader.readPassengers("src/passengers.txt");
+        ArrayList<Flight> flights = Filereader.readFlightsFromFile("src/flights.txt");
+        ArrayList<Airport> airports = Filereader.readAirports("src/airports.txt");  // Read airports
 
         System.out.println("==== Data Loaded From Files ====");
         System.out.println("Users: " + users.size());
         System.out.println("Bookings: " + bookings.size());
         System.out.println("Passengers: " + passengers.size());
+        System.out.println("Flights: " + flights.size());
+        System.out.println("Airports: " + airports.size());  // Display number of airports loaded
         System.out.println();
-        // Perform operations (e.g., user logs in, a booking is made, etc.)
+
+        // Check if the flights list is not empty before proceeding
+        if (!flights.isEmpty()) {
+            Flight firstFlight = flights.get(0);
+            System.out.println("First flight details:");
+            System.out.println("Flight ID: " + firstFlight.getFlightNumber());
+            System.out.println("Departure: " + firstFlight.getDepartureAirport() + " -> " + firstFlight.getArrivalAirport());
+            System.out.println("Departure Time: " + firstFlight.getDepartureTime());
+            System.out.println("Arrival Time: " + firstFlight.getArrivalTime());
+        } else {
+            System.out.println("No flights available.");
+        }
 
         // Example operations to test functionality
         System.out.println("==== Performing Operations ====");
@@ -42,7 +57,23 @@ public class Main {
         newUser.addBooking(newBooking);
         System.out.println("Assigned booking to user: " + newUser.getEmail());
 
-        System.out.println();
+        // Add new admins to the admin list
+        System.out.println("==== Adding New Admins ====");
+        List<Admin> admins = new ArrayList<>();
+        admins.add(new Admin("admin1@example.com", "password1"));
+        admins.add(new Admin("admin2@example.com", "password2"));
+        addNewAdminsAndSave("src/admins.txt", admins);  // Add the admins and save to file
+        System.out.println("Admins added and saved to file.");
+
+        // 5. Add new airports to the airport list
+        System.out.println("==== Adding New Airports ====");
+        Airport newAirport1 = new Airport("LAX", "Los Angeles International Airport", "Los Angeles, USA");
+        Airport newAirport2 = new Airport("SFO", "San Francisco International Airport", "San Francisco, USA");
+        airports.add(newAirport1);
+        airports.add(newAirport2);
+        System.out.println("Added new airports: ");
+        System.out.println(newAirport1.getAirportInfo());
+        System.out.println(newAirport2.getAirportInfo());
 
         // Display updated data
         System.out.println("==== Updated Data ====");
@@ -52,13 +83,21 @@ public class Main {
         }
         System.out.println("Bookings: " + bookings.size());
         System.out.println("Passengers: " + passengers.size());
+        System.out.println("Airports: " + airports.size());
 
         System.out.println();
         // After operations, write the updated data back to the files
         fileWriter.writeUsers("src/users.txt", users);
         fileWriter.writeBookings("src/bookings.txt", bookings);
         fileWriter.writePassengers("src/passengers.txt", passengers);
+        fileWriter.writeAirports("src/airports.txt", airports);  // Write updated airports to file
         System.out.println("==== Data Saved Back to Files ====");
+    }
 
+    // Method to add new admins to the existing list and save to file
+    public static void addNewAdminsAndSave(String adminFilePath, List<Admin> newAdmins) {
+        List<Admin> admins = Filereader.readAdmins(adminFilePath); // Read the existing admins from the file
+        admins.addAll(newAdmins); // Add the new admins to the list
+        fileWriter.writeAdminsToFile(adminFilePath, admins);  // Write the updated list back to the file
     }
 }
