@@ -1,5 +1,0 @@
-CAI,Cairo International Airport,Cairo
-DXB,Dubai International Airport,Dubai
-CDG,Charles de Gaulle Airport,Paris
-LHR,Heathrow Airport,London
-FCO,Leonardo da Vinci Airport,Italy

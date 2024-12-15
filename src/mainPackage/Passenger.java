@@ -18,7 +18,14 @@ public class Passenger {
         this.PhoneNumber = PhoneNumber;
         this.DateOfBirth = DateOfBirth;
     }
-
+    public Passenger(String Name, String Gender, int PhoneNumber,String DateOfBirth,int PId,Seat seat) {
+        this.Name = Name;
+        this.Gender = Gender;
+        this.PhoneNumber = PhoneNumber;
+        this.DateOfBirth = DateOfBirth;
+        this.seat=seat;
+        this.PId=PId;
+    }
 
 
     public String getName() {
@@ -64,10 +71,14 @@ public class Passenger {
     public void setSeat(Seat seat) {
         this.seat = seat;
     }
+
     public void assignSeatToPassenger(Seat chosenSeat) {
         this.seat = chosenSeat;
         chosenSeat.setAvailable(false); // Mark seat as unavailable
         System.out.println("Seat " + chosenSeat.getSeatNumber() + " assigned to " + this.Name);
+    }
+    public Seat getSeat() {
+        return this.seat;
     }
 
     /*

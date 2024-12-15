@@ -14,7 +14,9 @@ public class User {
 
     public User() {
     }
-
+    public void addBooking(Booking booking){
+        this.bookings.add(booking);
+    }
     public User(String email, String password) {
         Email = email;
         Password = password;

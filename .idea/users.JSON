@@ -1,0 +1,52 @@
+[
+  {
+    "email": "user1@example.com",
+    "password": "password123",
+    "bookings": ["1", "2"]
+  },
+  {
+    "email": "user2@example.com",
+    "password": "securepass456",
+    "bookings": ["3"]
+  },
+  {
+    "email": "user3@example.com",
+    "password": "mypassword789",
+    "bookings": ["4", "5"]
+  },
+  {
+    "email": "user4@example.com",
+    "password": "password321",
+    "bookings": ["6"]
+  },
+  {
+    "email": "user5@example.com",
+    "password": "secretpass987",
+    "bookings": ["7"]
+  },
+  {
+    "email": "user6@example.com",
+    "password": "123456789",
+    "bookings": ["8", "9"]
+  },
+  {
+    "email": "user7@example.com",
+    "password": "adminpassword",
+    "bookings": ["10"]
+  },
+  {
+    "email": "user8@example.com",
+    "password": "welcome123",
+    "bookings": ["11", "12"]
+  },
+  {
+    "email": "user9@example.com",
+    "password": "qwerty098",
+    "bookings": ["13"]
+  },
+  {
+    "email": "user10@example.com",
+    "password": "randompass456",
+    "bookings": ["14", "15"]
+  }
+]
