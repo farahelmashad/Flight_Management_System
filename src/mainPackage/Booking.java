@@ -466,8 +466,8 @@ public class Booking {
 
         bookings.add(booking);
         currentUser.addBooking(booking);
-
-        System.out.println("Booking confirmed! Your booking ID is " + booking.getBookingID());
+        BookingConfirmation(booking);
+        //System.out.println("Booking confirmed! Your booking ID is " + booking.getBookingID());
     }
 
 
