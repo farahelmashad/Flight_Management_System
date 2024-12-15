@@ -106,6 +106,7 @@ public class Flight {
     this.DepartureAirport = departureAirport;
   }
 
+
   public String getArrivalAirport() {
     return ArrivalAirport;
   }

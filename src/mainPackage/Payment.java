@@ -8,6 +8,9 @@ public class Payment {
     private String paymentStatus;
     private PaymentMethod paymentMethod;
 
+    public Payment(){
+
+    }
     public Payment(int paymentID, double paymentAmount, double baseFare , String paymentStatus, PaymentMethod paymentMethod) {
         this.paymentID = ++paymentsCount;
         this.paymentAmount = paymentMethod.calculateTotalCost(baseFare);
@@ -22,6 +25,10 @@ public class Payment {
 
     public double getPaymentAmount() {
         return paymentAmount;
+    }
+
+    public double getBaseFare() {
+        return baseFare;
     }
 
     public PaymentMethod getPaymentMethod() {

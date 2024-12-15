@@ -39,7 +39,7 @@ public class PaymentPreProcessing {
             }
         }
 
-        return baseFareTotal + taxes + additionalCost * (booking.getTotalSeats());
+        return baseFareTotal + taxes + additionalCost * (booking.getNumberOfSeats());
     }
 
     public void setAdditionalServices(boolean[] additionalServices) {
