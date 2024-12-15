@@ -21,7 +21,7 @@ public class Flight {
   private ArrayList<Seat> seats; // Instance-level seats list
   private static ArrayList<Seat> seatTemplate = new ArrayList<>(60);
   private boolean[] seatAvailability;
-  private int baggageAllowance;
+  private int baggageAllowance=2;
 
   static {
     initializeSeats();

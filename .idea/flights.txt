@@ -42,4 +42,3 @@ BA014, Rome International Airport, Jeddah International Airport, 04-01-2025 12:0
 EK015, Heathrow Airport, Dubai International Airport, 05-01-2025 16:30, 05-01-2025 19:00, 2600.00, Emirates Airlines, 111111111111111111100000000111111111111111111111111111111111, true, true, false, false
 EGY016, Cairo International Airport, Rome International Airport, 06-01-2025 10:15, 06-01-2025 12:30, 2300.00, Egypt Airlines, 111111111111111111111111000000000111111111111111111111111111, true, true, true, true
 BA015, Dubai International Airport, Jeddah International Airport, 07-01-2025 09:30, 07-01-2025 12:00, 2150.00, British Airways, 111111111111111111110000000000111111111111111111111111111111, true, false, false, true
-EK016, Rome International Airport, Cairo International Airport, 08-01-2025 07:00, 08-01-2025 09:30, 2500.00, Emirates Airlines, 111111111111111111111111111100000111111111111111111111111111, t

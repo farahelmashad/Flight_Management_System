@@ -9,12 +9,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AirportFileHandler {
 
-    // This method reads flight data from the file and adds them to the ArrayList
     public static ArrayList<Flight> readFlightsFromFile(String filename) {
         ArrayList<Flight> flights = new ArrayList<>();
 
@@ -28,7 +26,6 @@ public class AirportFileHandler {
                     continue;
                 }
 
-                // Extracting flight details from the data array
                 String flightID = data[0].trim();
                 String departureAirport = data[1].trim();
                 String arrivalAirport = data[2].trim();
@@ -56,19 +53,19 @@ public class AirportFileHandler {
                 flights.add(flight);
 
                 // Debugging: Print the flight details to ensure they're correct
-                System.out.println("Flight ID: " + flightID);
-                System.out.println("Departure Airport: " + departureAirport);
-                System.out.println("Arrival Airport: " + arrivalAirport);
-                System.out.println("Departure Date: " + departureDate);
-                System.out.println("Arrival Date: " + arrivalDate);
-                System.out.println("Price: " + price);
-                System.out.println("Airline: " + airline);
-                System.out.println("Seat Availability: " + Arrays.toString(seatAvailability));
-                System.out.println("Service 1: " + service1);
-                System.out.println("Service 2: " + service2);
-                System.out.println("Service 3: " + service3);
-                System.out.println("Service 4: " + service4);
-                System.out.println(); // Blank line between flights
+//                System.out.println("Flight ID: " + flightID);
+//                System.out.println("Departure Airport: " + departureAirport);
+//                System.out.println("Arrival Airport: " + arrivalAirport);
+//                System.out.println("Departure Date: " + departureDate);
+//                System.out.println("Arrival Date: " + arrivalDate);
+//                System.out.println("Price: " + price);
+//                System.out.println("Airline: " + airline);
+//                System.out.println("Seat Availability: " + Arrays.toString(seatAvailability));
+//                System.out.println("Service 1: " + service1);
+//                System.out.println("Service 2: " + service2);
+//                System.out.println("Service 3: " + service3);
+//                System.out.println("Service 4: " + service4);
+//                System.out.println(); // Blank line between flights
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -131,15 +128,15 @@ public class AirportFileHandler {
             for (BookingJson bookingJson : bookingJsonList) {
                 bookingJson.bookingId = bookingIDCounter++;  // Increment bookingID for each booking
 
-                System.out.println("Processing Booking ID: " + bookingJson.bookingId);  // Debug: Show the booking being processed
+//                System.out.println("Processing Booking ID: " + bookingJson.bookingId);  // Debug: Show the booking being processed
 
                 // Step 1: Search for the user based on the bookingID
                 User user = null;
                 for (User u : users) {
-                    System.out.println("Checking User: " + u.getEmail());  // Debug: Show user being checked
+//                    System.out.println("Checking User: " + u.getEmail());  // Debug: Show user being checked
                     // Loop through each booking of the user
                     for (Booking userBooking : u.getBookings()) {
-                        System.out.println("User Booking ID: " + userBooking.getBookingID());  // Debug: Show user booking ID
+//                        System.out.println("User Booking ID: " + userBooking.getBookingID());  // Debug: Show user booking ID
                         if (userBooking.getBookingID() == bookingJson.bookingId) {
                             user = u;  // User found, break out of the loop
                             break;
@@ -195,9 +192,13 @@ public class AirportFileHandler {
                     booking.setBusinessSeats(bookingJson.businessSeats);
                     booking.setFirstClassSeats(bookingJson.firstClassSeats);
                     booking.setFlightNum(bookingJson.flightNumber);
+                    booking.setCurrentUser(user);
+                    booking.setBookingStatus("Confirmed");
+                    booking.setFlight(booking.getFlightNumber());
                 }
 
                 // Step 4: Add passengers to the booking (either new or existing)
+                int first=0,bus=0,econ=0;
                 if (bookingJson.passengers != null) {
                     for (PassengerJson passengerJson : bookingJson.passengers) {
                         Seat seat = new Seat(
@@ -213,13 +214,29 @@ public class AirportFileHandler {
                                 seat
                         );
                         booking.addPassenger(passenger);  // Add the passenger to the booking
+                        if(passengerJson.seat.seatClass.equalsIgnoreCase("First Class"))
+                        {
+                            first++;
+                        }
+                       else if(passengerJson.seat.seatClass.equalsIgnoreCase("Business Class"))
+                        {
+                            bus++;
+                        } if(passengerJson.seat.seatClass.equalsIgnoreCase("Economy Class"))
+                        {
+                            econ++;
+                        }
                     }
+                    booking.setEconomySeats(econ);
+                    booking.setBusinessSeats(bus);
+                    booking.setFirstClassSeats(first);
+                    booking.setNumberOfSeats(econ+bus+first);
+
+
                 } else {
                     System.out.println("No passengers for booking ID: " + bookingJson.bookingId);
                 }
 
-                // Add the booking to the main bookingData list (optional)
-                bookingData.add(booking);
+                bookingData.add(booking);//msh lazem bas for double checking aal bookings aamtan
 
             }
 
@@ -271,5 +288,43 @@ public class AirportFileHandler {
         private String seatClass;
 
         // Add getters and setters here if needed
+    }
+    public static ArrayList<Airport> readAirportsFromFile(String fileName) {
+        ArrayList<Airport> airports = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Split the line into parts
+                String[] parts = line.split(",\\s*");
+                if (parts.length == 3) {
+                    // Create an Airport object and add it to the list
+                    airports.add(new Airport(parts[0], parts[1], parts[2]));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+        }
+        return airports;
+    }
+    public static ArrayList<Admin> readAdminsFromFile(String filename) {
+        ArrayList<Admin> admins = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2) { // Ensure the format is correct
+                    String email = parts[0].trim();
+                    String password = parts[1].trim();
+                    admins.add(new Admin(email, password));
+                } else {
+                    System.out.println("Invalid line format: " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+
+        return admins;
     }
 }

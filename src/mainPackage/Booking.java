@@ -9,7 +9,6 @@ import java.util.Scanner;
 //white space issues // to be dealt with later!!
 public class Booking {
     private int bookingID;
-    //    private ArrayList<Passenger> passengers;
     private Flight flight;
     private String flightNum;
     // private Seat seat;
@@ -24,18 +23,17 @@ public class Booking {
     private boolean hasLounge;
     private boolean hasSpecialMeal;
     private boolean hasPet;
+    public ArrayList<Passenger>Passengers=new ArrayList<>();
 
-    ArrayList<Passenger> passengers = new ArrayList<>();
+    ArrayList<Passenger> passengers = new ArrayList<>();//eh elfar2?
      public Booking(int bookingID){
          this.bookingID=bookingID;
      }
-    //    ArrayList<Airline> Airlines = Airline.getAirlines();
-    ArrayList<Airport> Airports = Airport.getAirports();
-    public ArrayList<Passenger>Passengers=new ArrayList<>();
-    public ArrayList<Flight> Flights=new ArrayList<Flight>();
-    //    ArrayList<Seat> seat = Flight.Seats;
+
+    ArrayList<Airport> Airports = GlobalData.airports;
+    public ArrayList<Flight> Flights=GlobalData.flights;
     private static ArrayList<Booking> bookings = new ArrayList<>();
-    public ArrayList<User>users=new ArrayList<User>();
+    public ArrayList<User>users=GlobalData.users;
     public Booking() {
     }
     public Booking(int bookingID, Flight flight,  String bookingStatus){
@@ -43,6 +41,7 @@ public class Booking {
         this.passengers = new ArrayList<>();
         this.flight = flight;
         this.bookingStatus = "Confirmed";
+        bookingCounter++;
 
     }
 
@@ -58,10 +57,15 @@ public class Booking {
         BusinessSeats = businessSeats;
         FirstClassSeats = firstClassSeats;
         this.flightNum = flightNum;
+        bookingCounter++;
     }
 
     public int getBookingID(){
         return bookingID;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     public void setBookingID(int bookingID) {
@@ -201,6 +205,10 @@ public class Booking {
         this.passengers = new ArrayList<>();
     }
 
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+
     public void flightSearch() {
 
         System.out.println("Flight Search");
@@ -312,11 +320,14 @@ public class Booking {
             if((Flights.get(i).getSpecialMealRequest()==specialMeal)&&(Flights.get(i).getHasPetTravel()==petTravel)&&(Flights.get(i).getHasLoungeAccess()==loungeAccess)&&(Flights.get(i).getHaswheelchair()==wheelchair)){
                 for(Flight F:Flights){
                     if((F.getDepartureAirport().equalsIgnoreCase(departureAirport))&&(F.getArrivalAirport().equalsIgnoreCase(arrivalAirport))){
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
                         String date= F.getDepartureTime();
                         LocalDateTime dateWithTime = LocalDateTime.parse(date, formatter);
                         LocalDate flightDepartDate = dateWithTime.toLocalDate();
-                        if(deptTime.equals(flightDepartDate)){
+                        DateTimeFormatter formatt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                        String formattedDate = flightDepartDate.format(formatt);
+
+                        if(depDate.equals(formattedDate)){
                             AvailableFlights.add(F);
                         }
 
@@ -478,12 +489,15 @@ public class Booking {
     }
 
     public Flight getFlightNumber(){
+        Flight flight1 = null;
         for(Flight f : Flights){
             if(f.getFlightNumber().equalsIgnoreCase(flightNum)){
-                return f;
+                flight1=f;
+                break;
             }
+
         }
-        return null;
+        return flight1 ;
     }
     public void bookFlight(ArrayList<Flight> availableFlights , User currentUser , ArrayList<Seat> chosenSeats ){
         flightSearch();
