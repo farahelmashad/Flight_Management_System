@@ -315,26 +315,40 @@ public class Booking {
         }
 //        FlightSelection( departureAirport,arrivalAirport,deptTime,specialMeal,petTravel,wheelchair,loungeAccess);
         //flights search
-        ArrayList<Flight> AvailableFlights=new ArrayList<>();
-        for(int i=0;i<Flights.size();i++){
-            if((Flights.get(i).getSpecialMealRequest()==specialMeal)&&(Flights.get(i).getHasPetTravel()==petTravel)&&(Flights.get(i).getHasLoungeAccess()==loungeAccess)&&(Flights.get(i).getHaswheelchair()==wheelchair)){
-                for(Flight F:Flights){
-                    if((F.getDepartureAirport().equalsIgnoreCase(departureAirport))&&(F.getArrivalAirport().equalsIgnoreCase(arrivalAirport))){
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-                        String date= F.getDepartureTime();
-                        LocalDateTime dateWithTime = LocalDateTime.parse(date, formatter);
-                        LocalDate flightDepartDate = dateWithTime.toLocalDate();
-                        DateTimeFormatter formatt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                        String formattedDate = flightDepartDate.format(formatt);
+        ArrayList<Flight> AvailableFlights = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-                        if(depDate.equals(formattedDate)){
-                            AvailableFlights.add(F);
-                        }
+// Loop through each flight in the Flights list
+        for (Flight flight : Flights) {
+            // Check the special service conditions
+            boolean matchesServices = (flight.getSpecialMealRequest() == specialMeal) ||
+                    (flight.getHasPetTravel() == petTravel) ||
+                    (flight.getHasLoungeAccess() == loungeAccess) ||
+                    (flight.getHaswheelchair() == wheelchair);
 
-                    }
-                }
+            // Check if departure and arrival airports match
+            boolean matchesAirports = flight.getDepartureAirport().equalsIgnoreCase(departureAirport) &&
+                    flight.getArrivalAirport().equalsIgnoreCase(arrivalAirport);
+
+            // Parse and format the departure time of the flight
+            LocalDateTime flightDateTime = LocalDateTime.parse(flight.getDepartureTime(), formatter);
+            LocalDate flightDepartureDate = flightDateTime.toLocalDate(); // Get only the date part
+            String formattedFlightDate = flightDepartureDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+            // Format the provided departure date
+            String formattedDepDate = deptTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+            // Check if the flight matches all criteria
+            if (matchesServices && matchesAirports && formattedDepDate.equals(formattedFlightDate)) {
+                AvailableFlights.add(flight);
             }
         }
+
+// Debug: Print the available flights
+        for (Flight flight : AvailableFlights) {
+            System.out.println(flight.getFlightNumber());
+        }
+
         FlightSelection(AvailableFlights, currentUser);
     }
     public void FlightSelection(ArrayList<Flight> f, User currentUser){
@@ -349,27 +363,25 @@ public class Booking {
         else{
             System.out.println("--------------------Available Flights----------------------");
             for(int i=0;i<f.size();i++){
-                if(f.get(i).numberOfAvailableSeats()==0){
-                    continue; //no available seats on this flight, check the next flight
-                }
+                if(f.get(i).numberOfAvailableSeats()>0){
                 System.out.println("---------------------------------------------------------------------------");
                 f.get(i).displayFlightDetails();
-                System.out.println("Special Services offered by the Airline: "+ f.get(i).getAirlineName());
+                System.out.println("Special Services offered by the Airline "+ f.get(i).getAirlineName()+":");
                 boolean offersServices=false;
                 if(f.get(i).getSpecialMealRequest()){
-                    System.out.println("Special Meal Requests");
+                    System.out.println("-Special Meal Requests");
                     offersServices=true;
                 }
                 if(f.get(i).getHaswheelchair()){
-                    System.out.println("Wheelchair Accessibility");
+                    System.out.println("-Wheelchair Accessibility");
                     offersServices=true;
                 }
                 if(f.get(i).getHasPetTravel()){
-                    System.out.println("Pet Travel");
+                    System.out.println("-Pet Travel");
                     offersServices=true;
                 }
                 if(f.get(i).getHasLoungeAccess()){
-                    System.out.println("Lounge Access");
+                    System.out.println("-Lounge Access");
                     offersServices=true;
                 }
                 if(offersServices==false){
@@ -378,7 +390,8 @@ public class Booking {
                 System.out.println("Baggage allowance (maximum number of bags per passenger) : "+f.get(i).getBaggageAllowance());
                 System.out.println("Number of available seats : "+f.get(i).numberOfAvailableSeats());
 
-            }
+
+                } }
             System.out.print("Please enter the flight number of your preferred flight ( ");
             for(Flight fl:f ){
                 System.out.print( fl.getFlightNumber()+" ");
@@ -410,7 +423,7 @@ public class Booking {
     public void SeatSelection(Flight flight){
         ArrayList<Seat> flightSeats=flight.getSeats();
         int seatindex=-1;
-        //ArrayList<Seat> chosenSeats=new ArrayList<>();
+       ArrayList<Seat> chosenSeats=new ArrayList<>();
         Scanner in=new Scanner(System.in);
         System.out.println("How many seats do you want to choose: ");
         int number=in.nextInt();
@@ -474,7 +487,7 @@ public class Booking {
                 chosenSeat.setAvailable(false);
                 flight.getSeatAvailability()[seatindex]=false; //hasa feh haga ghalat need to check this part
                 System.out.println("Seat chosen successfully!");
-                // chosenSeats.add(chosenSeat);
+                chosenSeats.add(chosenSeat);
                 validSeatChosen = true;
 //                    displaySeats();
 
@@ -485,7 +498,7 @@ public class Booking {
         }
 //            getUserInformation(chosenSeats,number); when the method is added , hab3at elchosen seats w the number of chosen seats, n loop aala aadad el number of seats aashan
         //w n display for each seat : passenger details for seat no. (chosenSeats.get(i).getSeatNumber())
-
+    bookFlight(chosenSeats);
     }
 
     public Flight getFlightNumber(){
@@ -499,8 +512,17 @@ public class Booking {
         }
         return flight1 ;
     }
-    public void bookFlight(ArrayList<Flight> availableFlights , User currentUser , ArrayList<Seat> chosenSeats ){
-        flightSearch();
+    public void getLoggedInUser(){
+        for(User u:users){
+            if(u.isLoggedIn()==true){
+                this.currentUser=u;
+                break;
+            }
+        }
+
+    }
+    public void bookFlight( ArrayList<Seat> chosenSeats ){
+        //flightSearch();
         for(User u:users){
             if(u.isLoggedIn()==true){
                 this.currentUser=u;
@@ -660,30 +682,40 @@ public class Booking {
             }
         }
     }
-    public static void listAllBookings(){ //3ayza a5aleeha ta5od el user id men el sign up class 3shan t list el booking bt3t el user da
-        if(bookings.isEmpty()){
+    public void listAllBookings(){//3ayza a5aleeha ta5od el user id men el sign up class 3shan t list el booking bt3t el user da
+        getLoggedInUser();
+
+        if(currentUser.getBookings().isEmpty()){
             System.out.println("No bookings exist");
 
+        } else {
+            System.out.println("All Bookings: ");
+            for (Booking b : currentUser.getBookings()) {
+                b.BookingConfirmation(b);
+            }
         }
-        System.out.println("All Bookings: ");
-        for(Booking b : bookings){
-            b.BookingConfirmation();
-        }
-
     }
 
-    public void BookingConfirmation(){
-        System.out.println("Booking Details: ");
-        System.out.println("Booking ID : " + bookingID);
-        System.out.println("Passengers: ");
-        for (Passenger passenger : passengers) {
+    public void BookingConfirmation(Booking booking) {
+        if (flight == null || booking == null) {
+            System.out.println("Booking confirmation failed: Missing flight or booking information.");
+            return;
+        }
+
+        // Step 1: Initialize PaymentPreProcessing
+        PaymentPreProcessing paymentProcessor = new PaymentPreProcessing(flight, booking);
+
+        // Step 2: Display booking and payment details
+        System.out.println("========== Booking Confirmation ==========");
+        System.out.println("Booking ID          : " + booking.getBookingID());
+        flight.displayFlightDetails();
+        System.out.println("Booking Status      : " + booking.getBookingStatus());
+        System.out.println("------------------------------------------");
+        System.out.println("Total Cost (Incl. Services): " + paymentProcessor.calculateSubTotal());
+        System.out.println("------------------------------------------");
+        System.out.println("Passengers:");
+        for (Passenger passenger : booking.getPassenger()) {
             System.out.println("- " + passenger.getName());
         }
-        System.out.println("Flight Number : " + flightNum);
-        System.out.println("Departure : " + flight.getDepartureAirport());
-        System.out.println("Arrival : " + flight.getArrivalAirport());
-        System.out.println("Departure Time : " + flight.getDepartureTime());
-        System.out.println("Arrival Time : " + flight.getArrivalTime());
-        System.out.println("Booking status : " + bookingStatus);
-    }
-}
+        System.out.println("==========================================");
+    }}

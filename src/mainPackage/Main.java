@@ -58,10 +58,11 @@ public static void main(String[] args) {
 //    }
 //
 //cairo international airport
-
-          Booking booking=new Booking();
-          booking.flightSearch();
-
+    SignUp_LogIn s=new SignUp_LogIn();
+    s.MainMenu();
+//          Booking booking=new Booking();
+//          booking.flightSearch();
+//
     }
 }
 
