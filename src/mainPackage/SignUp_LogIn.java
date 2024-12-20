@@ -138,7 +138,7 @@ public class SignUp_LogIn {
 
 
         users.add(newUser);
-
+       AirportFileWriter.writeUsersToFile();
         System.out.println("Sign Up Successfully!");
         System.out.println("Please Log In.");
         return true;

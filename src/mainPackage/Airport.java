@@ -65,6 +65,7 @@ public class Airport {
 
     public static void addAirport(Airport airport) {
         airports.add(airport);
+        AirportFileWriter.writeAirportsToFile();
     }
 
     public static Airport AirportSearch(String searchValue) {

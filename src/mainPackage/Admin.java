@@ -40,7 +40,7 @@ public class Admin extends User {
     }
 
     private void Addflight() {
-        AirportFileWriter.writeBookingsToFile();
+
         try{
             System.out.println("enter flight number");
             String FlightNumber = input.next();
@@ -120,6 +120,7 @@ public class Admin extends User {
 
             Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport,Flight.dateFormat.format(arrivalDate), Flight.dateFormat.format(departureDate), BaseFare,AirlineCode,availability,hasLounge,hasWheel,hasPet,hasMeal);
             flights.add(flight);
+            AirportFileWriter.writeFlightsToFile();
             System.out.println("flight " + FlightNumber + " added successfully");
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
@@ -128,7 +129,6 @@ public class Admin extends User {
 
 
     private void UpdateFlightschedule() {
-        AirportFileWriter.writeBookingsToFile();
         try {
             System.out.println("enter flight number");
             String FlightNumber = input.next();
@@ -162,6 +162,7 @@ public class Admin extends User {
             }
             flight.setDepartureTime(Flight.dateFormat.format(departureDate));
             flight.setArrivalTime(Flight.dateFormat.format(arrivalDate));
+            AirportFileWriter.writeFlightsToFile();
             System.out.println("Flight " + FlightNumber + " updated successfully!");
 
         }
@@ -173,7 +174,7 @@ public class Admin extends User {
 
 
     private void Cancelsaetbooking() {
-        AirportFileWriter.writeBookingsToFile();
+
         System.out.print("Enter Flight Number: ");
         String flightNumber = input.nextLine().trim();
 
@@ -204,6 +205,7 @@ public class Admin extends User {
             // Proceed to cancel the booking
             System.out.println("Canceling booking for seat: " + seat.getSeatNumber());
             seat.cancelBooking();
+            AirportFileWriter.writeBookingsToFile();
             System.out.println("Booking canceled successfully for seat number: " + seat.getSeatNumber());
         }
     }
@@ -264,7 +266,7 @@ public class Admin extends User {
 
         // Remove the flight from the system
         flights.remove(flight);
-
+       AirportFileWriter.writeFlightsToFile();
         System.out.println("Flight " + flightNumber + " and all associated bookings have been successfully deleted.");
     }
 

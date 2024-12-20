@@ -56,6 +56,8 @@ public class Seat {
    {
         if (!IsAvailable) {
             IsAvailable = true;
+            AirportFileWriter.writeFlightsToFile();
+            AirportFileWriter.writeBookingsToFile();
             System.out.println("Booking for seat " + SeatNumber + " has been canceled.");
         } else {
             System.out.println("Seat " + SeatNumber + " is already available.");

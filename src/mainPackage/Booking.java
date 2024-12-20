@@ -495,7 +495,6 @@ public class Booking {
 
     }
     public void bookFlight( ArrayList<Seat> chosenSeats ){
-        AirportFileWriter.writeBookingsToFile();
         //flightSearch();
         for(User u:users){
             if(u.isLoggedIn()==true){
@@ -525,7 +524,7 @@ public class Booking {
 
         // bookings.add(booking);
         currentUser.addBooking(this);
-
+        AirportFileWriter.writeBookingsToFile();
         System.out.println("Booking confirmed! ");
         BookingConfirmation();
     }
@@ -635,7 +634,7 @@ public class Booking {
 
 
     public void cancelBooking(){
-        AirportFileWriter.writeBookingsToFile();
+
         getLoggedInUser();
 
         for (Booking b : currentUser.getBookings()) {
@@ -660,6 +659,7 @@ public class Booking {
                         seat.setAvailable(true);
                     }
                 }
+                AirportFileWriter.writeBookingsToFile();
                 System.out.println("Your booking has been cancelled successfully. ");
             }
         }
@@ -716,6 +716,8 @@ public class Booking {
             for (Seat s : flight.getSeats()) {
                 if (s.getSeatNumber().equalsIgnoreCase(NewSeatNo) && s.isAvailable()) {
                     CurrPass.assignSeatToPassenger(s);
+                    AirportFileWriter.writeBookingsToFile();
+                    AirportFileWriter.writeFlightsToFile();
                     System.out.println("Seat for " + CurrPass.getName() + " successfully changed to: " + s.getSeatNumber());
                     validSwitch = true;
                     break;
