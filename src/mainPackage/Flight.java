@@ -1,10 +1,10 @@
 package mainPackage;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.lang.String;
 public class Flight {
   private String FlightNumber;
   private String DepartureAirport;
@@ -22,6 +22,7 @@ public class Flight {
   private static ArrayList<Seat> seatTemplate = new ArrayList<>(60);
   private boolean[] seatAvailability;
   private int baggageAllowance=2;
+  public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
   static {
     initializeSeats();

@@ -5,15 +5,18 @@ public class Payment {
     private int paymentID;
     private double paymentAmount;
     private double baseFare;
-    private String paymentStatus;
+    private String paymentStatus = "Completed";
     private PaymentMethod paymentMethod;
 
-    public Payment(int paymentID, double paymentAmount, double baseFare , String paymentStatus, PaymentMethod paymentMethod) {
+    public Payment(int paymentID, double baseFare , String paymentStatus) {
         this.paymentID = ++paymentsCount;
-        this.paymentAmount = paymentMethod.calculateTotalCost(baseFare);
         this.baseFare = baseFare;
-        this.paymentStatus = "Completed";
+        this.paymentStatus = paymentStatus;
+    }
+
+    public Payment(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+        this.paymentAmount = paymentMethod.calculateTotalCost();
     }
 
     public int getPaymentID() {
