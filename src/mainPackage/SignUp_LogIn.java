@@ -273,7 +273,7 @@ public class SignUp_LogIn {
         while (true) {
             System.out.println("\nWelcome To Our Flight Management System");
             System.out.println("1. Search And Book A Flight");
-            System.out.println("2. Modify Your Flight");
+            System.out.println("2. change your seat");
             System.out.println("3. List All Bookings");
             System.out.println("4. Cancel Your Booking");
             System.out.println("5. Exit");
