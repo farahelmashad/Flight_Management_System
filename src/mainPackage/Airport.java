@@ -62,7 +62,17 @@ public class Airport {
                 "Airport Name: " + airportName + "\n" +
                 "Location: " + airportLocation;
     }
+    // Method to read airports from a file
+    public static void loadAirportsFromFile(String filename) {
+        // Use AirportFileHandler to read from file and populate the airports list
+        airports = AirportFileHandler.readAirportsFromFile(filename);
+    }
 
+    // Method to write airports to a file
+    public static void saveAirportsToFile(String filename) {
+        // Use AirportFileHandler to write the airports list to the file
+        AirportFileWriter.writeAirportsToFile(airports, filename);
+    }
     public static void addAirport(Airport airport) {
         airports.add(airport);
     }

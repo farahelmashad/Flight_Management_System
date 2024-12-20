@@ -1,0 +1,27 @@
+[
+  {
+    "bookingID": 1,
+    "flightNum": "ABC123",
+    "hasLounge": true,
+    "hasSpecialMeal": false,
+    "hasPet": false,
+    "hasWheelchair": true,
+    "numberOfSeats": 2,
+    "economySeats": 1,
+    "businessSeats": 1,
+    "firstClassSeats": 0,
+    "passengers": [
+      {
+        "name": "John Doe",
+        "gender": "Male",
+        "phoneNumber": 123456789,
+        "dateOfBirth": "1990-01-01",
+        "pId": 1234,
+        "seat": {
+          "seatNumber": "12A",
+          "seatClass": "Economy"
+        }
+      }
+    ]
+  }
+]

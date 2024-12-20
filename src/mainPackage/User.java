@@ -1,16 +1,42 @@
 package mainPackage;
 
+import java.util.ArrayList;
+
 public class User {
-    private String Email;
-    private String Password;
+    protected String Email;
+    protected String Password;
+    private ArrayList<Passenger> p = new ArrayList<>();
+    private ArrayList<Booking> bookings = new ArrayList<>();
+    private Flight SelectedFlight;
+    private int User_Id;
+    public static int UserCount=0;
+    private boolean loggedIn=false;
 
     public User() {
     }
-
+    public void addBooking(Booking booking){
+        this.bookings.add(booking);
+    }
     public User(String email, String password) {
         Email = email;
         Password = password;
+    }
 
+    public User(String email, String password, ArrayList<Passenger> p) {
+        Email = email;
+        Password = password;
+        this.p = p;
+    }
+
+    public User(String email, String password, ArrayList<Passenger> p, int user_Id) {
+        Email = email;
+        Password = password;
+        this.p = p;
+        User_Id = ++UserCount;
+    }
+
+    public int getUserID() {
+        return User_Id;
     }
 
     public String getEmail() {
@@ -29,4 +55,30 @@ public class User {
         Password = password;
     }
 
+    public Flight getSelectedFlight() {
+        return SelectedFlight;
+    }
+
+    public ArrayList<Passenger> getP() {
+        return p;
+    }
+
+    public ArrayList<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setP(ArrayList<Passenger> p) {
+        this.p = p;
+    }
+    public void addPassenger(Passenger passenger) {
+        this.p  .add(passenger);
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
 }

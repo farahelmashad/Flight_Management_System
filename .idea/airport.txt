@@ -1,0 +1,6 @@
+CAI,Cairo International Airport,Cairo
+DXB,Dubai International Airport,Dubai
+JED,Jeddah International Airport,Jeddah
+LHR,Heathrow Airport,London
+ROM,Rome International Airport,Rome
+LAX,Los Angeles International Airport,Los Angeles, CA

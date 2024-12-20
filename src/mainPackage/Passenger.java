@@ -1,24 +1,32 @@
 package mainPackage;
 
-public class Passenger extends User{
+public class Passenger {
     private String Name;
     private String Gender;
     private int PhoneNumber;
     private String DateOfBirth;
     private int PId;
+    private Seat seat;
 
 
-    public Passenger() {
+
+    public Passenger(){
+    }
+    public Passenger(String Name, String Gender, int PhoneNumber, String DateOfBirth) {
+        this.Name = Name;
+        this.Gender = Gender;
+        this.PhoneNumber = PhoneNumber;
+        this.DateOfBirth = DateOfBirth;
+    }
+    public Passenger(String Name, String Gender, int PhoneNumber,String DateOfBirth,int PId,Seat seat) {
+        this.Name = Name;
+        this.Gender = Gender;
+        this.PhoneNumber = PhoneNumber;
+        this.DateOfBirth = DateOfBirth;
+        this.seat=seat;
+        this.PId=PId;
     }
 
-    public Passenger(String email, String password, String name, String gender, int phoneNumber, String dateOfBirth ,int id) {
-        super(email, password);
-        Name = name;
-        Gender = gender;
-        PhoneNumber = phoneNumber;
-        DateOfBirth = dateOfBirth;
-        PId=id;
-    }
 
     public String getName() {
         return Name;
@@ -60,6 +68,34 @@ public class Passenger extends User{
         this.PId = PId;
     }
 
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
 
+    public void assignSeatToPassenger(Seat chosenSeat) {
+        this.seat = chosenSeat;
+        chosenSeat.setAvailable(false); // Mark seat as unavailable
+        System.out.println("Seat " + chosenSeat.getSeatNumber() + " assigned to " + this.Name);
+    }
+    public Seat getSeat() {
+        return this.seat;
+    }
 
+    /*
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+*/
 }
