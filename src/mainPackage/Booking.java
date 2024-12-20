@@ -14,7 +14,7 @@ public class Booking {
     // private Seat seat;
     private User currentUser;
     private String bookingStatus ;
-    private static int bookingCounter = 0;
+    private static int bookingCounter = 1;
     private int EconomySeats=0;
     private int BusinessSeats=0;
     private int FirstClassSeats=0;
@@ -26,13 +26,13 @@ public class Booking {
     public ArrayList<Passenger>Passengers=new ArrayList<>();
 
     ArrayList<Passenger> passengers = new ArrayList<>();//eh elfar2?
-     public Booking(int bookingID){
-         this.bookingID=bookingID;
-     }
+    public Booking(int bookingID){
+        this.bookingID=bookingID;
+    }
 
     ArrayList<Airport> Airports = GlobalData.airports;
     public ArrayList<Flight> Flights=GlobalData.flights;
-    private static ArrayList<Booking> bookings = new ArrayList<>();
+    // private static ArrayList<Booking> bookings = new ArrayList<>();
     public ArrayList<User>users=GlobalData.users;
     public Booking() {
     }
@@ -192,9 +192,6 @@ public class Booking {
         return bookingCounter;
     }
 
-    public static ArrayList<Booking> getBookings() {
-        return bookings;
-    }
 
     public int getNumberOfSeats() {
         return numberOfSeats;
@@ -208,315 +205,149 @@ public class Booking {
     public void setFlight(Flight flight) {
         this.flight = flight;
     }
+
     public void flightSearch() {
-        System.out.println("\n===== Flight Search =====\n");
+
+        System.out.println("Flight Search");
         Scanner in = new Scanner(System.in);
 
-// Prompt for departure airport
-        System.out.println("Please enter your departure airport from the following list: ");
-        System.out.print("[ ");
+        System.out.print("Please enter your departure airport: [ ");
         for (Airport a : Airports) {
             System.out.print(a.getAirportName() + " - ");
         }
-        System.out.println("]\n");
+        System.out.println("]");
 
-        String departureAirport = in.nextLine().toLowerCase();
+        String departureAirport = in.nextLine();
+        departureAirport = departureAirport.toLowerCase();
 
         while (!isValidAirportName(departureAirport)) {
-            System.out.println("\nInvalid Airport name. Please enter a valid airport from the list: ");
-            System.out.print("[ ");
+            System.out.print("Invalid Airport name. Please enter one of the following airports: [ ");
             for (Airport a : Airports) {
                 System.out.print(a.getAirportName() + " - ");
             }
-            System.out.println("]\n");
-            departureAirport = in.nextLine().toLowerCase();
-        }
+            System.out.println("]");
 
-// Prompt for arrival airport
-        System.out.println("\nPlease enter your arrival airport from the following list: ");
-        System.out.print("[ ");
+            departureAirport = in.nextLine();
+        }
+        System.out.print("Please enter your arrival airport: [ ");
         for (Airport a : Airports) {
             System.out.print(a.getAirportName() + " - ");
         }
-        System.out.println("]\n");
+        System.out.print("]");
 
-        String arrivalAirport = in.nextLine().toLowerCase();
-
-// Ensure arrival and departure airports are different
-//        while (arrivalAirport.replaceAll("\\s", "").equals(departureAirport.replaceAll("\\s", ""))) {
-//            System.out.println("The arrival airport cannot be the same as the departure airport. Please enter another airport: ");
-//            arrivalAirport = in.nextLine().toLowerCase();
-//        }
-                while (arrivalAirport.replaceAll("\\s", "").equals(departureAirport.replaceAll("\\s", ""))) {
+        String arrivalAirport = in.nextLine();
+        arrivalAirport = arrivalAirport.toLowerCase();
+        while (arrivalAirport.replaceAll("\\s", "").equals(departureAirport.replaceAll("\\s", ""))) {
             System.out.println("The arrival airport can't be the same as the departure airport, please enter another airport: ");
             arrivalAirport = in.nextLine();
             arrivalAirport = arrivalAirport.toLowerCase();
         }
-
-
         while (!isValidAirportName(arrivalAirport)) {
-            System.out.println("\nInvalid Airport name. Please enter a valid airport from the list: ");
-            System.out.print("[ ");
+            System.out.println("Invalid Airport name. Please enter one of the following airports: [ ");
             for (Airport a : Airports) {
                 System.out.print(a.getAirportName() + " - ");
             }
-            System.out.println("]\n");
-            arrivalAirport = in.nextLine().toLowerCase();
+            System.out.println("]");
+
+            arrivalAirport = in.nextLine();
+            arrivalAirport = arrivalAirport.toLowerCase();
         }
 
-        // Input the departure date
+        //Input the date
         LocalDate today = LocalDate.now();
-        System.out.println("\nPlease enter your departure date (dd-mm-yyyy): ");
-        String depDate = in.nextLine();
+        System.out.println("Please enter your departure date: (dd-mm-yyyy) ");
+        String depDate;
+        depDate = in.nextLine();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate deptTime = LocalDate.parse(depDate, format);
-        LocalDate week = today.plusDays(7);
-
-        while ((deptTime.compareTo(week) > 0) || deptTime.compareTo(today) < 0) {
-            System.out.println("\nInvalid date. You can only book flights within the next 7 days. Please try again: ");
+        LocalDate week=today.plusDays(7);
+        while((deptTime.compareTo(week)>1)||deptTime.compareTo(today)<0){
+            System.out.println("You can't book flights that aren't within a week, please enter a date that is less than a week from now: ");
             depDate = in.nextLine();
             deptTime = LocalDate.parse(depDate, format);
+
         }
-
-        // Additional services prompt
-        boolean specialMeal = false, petTravel = false, wheelchair = false, loungeAccess = false;
-
-        System.out.println("\nWould you like to add any special services? (y/n)");
-        String answer = in.nextLine();
-
-        if (answer.equalsIgnoreCase("y")) {
+        //special services by airlines
+        boolean specialMeal=false, petTravel=false, wheelchair=false, loungeAccess=false;
+        System.out.println("Would you like any additional services offered by the different airlines? (y/n)");
+        String answer=in.nextLine();
+        if(answer.equalsIgnoreCase("y")){
             do {
-                System.out.println("\n--- Services Offered ---");
-                System.out.println("1 - Special Meal Requests");
-                System.out.println("2 - Pet Travel");
-                System.out.println("3 - Wheelchair Accessibility");
-                System.out.println("4 - Lounge Access");
-                System.out.println("5 - None (Finish Selecting)");
-                System.out.print("Please enter your choice: ");
 
+                System.out.println("Services offered by the airlines: " + "\n" + "1-Special Meal Requests" + "\n" + "2-Pet Travel" + "\n" + "3-Wheelchair Accessibility" + "\n" + "4-Lounge Access" + "5-None (Finish Selecting)");
                 int choice = in.nextInt();
-                in.nextLine(); // Consume newline character
-
+                in.nextLine();
                 switch (choice) {
                     case 1:
                         specialMeal = true;
-                        this.hasSpecialMeal = true;
-                        System.out.println("✓ Special Meal Requests Selected");
+                        this.hasSpecialMeal=true;
+                        System.out.println("Special Meal Requests Selected");
                         break;
                     case 2:
                         petTravel = true;
-                        this.hasPet = true;
-                        System.out.println("✓ Pet Travel Selected");
+                        this.hasPet=true;
+                        System.out.println("Pet Travel Selected");
                         break;
                     case 3:
                         wheelchair = true;
-                        this.hasWheelchair = true;
-                        System.out.println("✓ Wheelchair Accessibility Selected");
+                        this.hasWheelchair=true;
+                        System.out.println("Wheelchair Accessibility Selected");
                         break;
                     case 4:
                         loungeAccess = true;
-                        this.hasLounge = true;
-                        System.out.println("✓ Lounge Access Selected");
+                        this.hasLounge=true;
+                        System.out.println("Lounge Access Selected");
                         break;
                     case 5:
-                        System.out.println("Finished selecting services.");
                         break;
                     default:
-                        System.out.println("Invalid choice. Please try again.");
+                        System.out.println("Invalid choice");
+                        break;
                 }
+                System.out.println("Would you like to choose another service? (y/n)");
+                answer = in.nextLine();
+            }
+            while(answer.equalsIgnoreCase("y"));
 
-                if (choice != 5) {
-                    System.out.println("\nWould you like to choose another service? (y/n)");
-                    answer = in.nextLine();
-                } else {
-                    answer = "n";
-                }
-            } while (answer.equalsIgnoreCase("y"));
         }
-
-        // Flights search
+//        FlightSelection( departureAirport,arrivalAirport,deptTime,specialMeal,petTravel,wheelchair,loungeAccess);
+        //flights search
         ArrayList<Flight> AvailableFlights = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
+// Loop through each flight in the Flights list
         for (Flight flight : Flights) {
+            // Check the special service conditions
             boolean matchesServices = (flight.getSpecialMealRequest() == specialMeal) ||
                     (flight.getHasPetTravel() == petTravel) ||
                     (flight.getHasLoungeAccess() == loungeAccess) ||
                     (flight.getHaswheelchair() == wheelchair);
 
+            // Check if departure and arrival airports match
             boolean matchesAirports = flight.getDepartureAirport().equalsIgnoreCase(departureAirport) &&
                     flight.getArrivalAirport().equalsIgnoreCase(arrivalAirport);
 
+            // Parse and format the departure time of the flight
             LocalDateTime flightDateTime = LocalDateTime.parse(flight.getDepartureTime(), formatter);
-            LocalDate flightDepartureDate = flightDateTime.toLocalDate();
+            LocalDate flightDepartureDate = flightDateTime.toLocalDate(); // Get only the date part
             String formattedFlightDate = flightDepartureDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+            // Format the provided departure date
             String formattedDepDate = deptTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
+            // Check if the flight matches all criteria
             if (matchesServices && matchesAirports && formattedDepDate.equals(formattedFlightDate)) {
                 AvailableFlights.add(flight);
             }
         }
 
-        System.out.println("\nSearching for available flights...");
-        System.out.println("---------------------------------");
-
-        if (AvailableFlights.isEmpty()) {
-            System.out.println("No flights match your criteria. Please try again with different options.\n");
-        } else {
-            System.out.println("Available Flights:");
-            for (Flight flight : AvailableFlights) {
-                System.out.println("Flight Number: " + flight.getFlightNumber() +
-                        " | Departure: " + flight.getDepartureAirport() +
-                        " | Arrival: " + flight.getArrivalAirport() +
-                        " | Time: " + flight.getDepartureTime());
-            }
+// Debug: Print the available flights
+        for (Flight flight : AvailableFlights) {
+            System.out.println(flight.getFlightNumber());
         }
 
         FlightSelection(AvailableFlights, currentUser);
-        System.out.println("---------------------------------");
     }
-//    public void flightSearch() {
-//
-//        System.out.println("Flight Search");
-//        Scanner in = new Scanner(System.in);
-//
-//        System.out.print("Please enter your departure airport: [ ");
-//        for (Airport a : Airports) {
-//            System.out.print(a.getAirportName() + " - ");
-//        }
-//        System.out.println("]");
-//
-//        String departureAirport = in.nextLine();
-//        departureAirport = departureAirport.toLowerCase();
-//
-//        while (!isValidAirportName(departureAirport)) {
-//            System.out.print("Invalid Airport name. Please enter one of the following airports: [ ");
-//            for (Airport a : Airports) {
-//                System.out.print(a.getAirportName() + " - ");
-//            }
-//            System.out.println("]");
-//
-//            departureAirport = in.nextLine();
-//        }
-//        System.out.print("Please enter your arrival airport: [ ");
-//        for (Airport a : Airports) {
-//            System.out.print(a.getAirportName() + " - ");
-//        }
-//        System.out.print("]");
-//
-//        String arrivalAirport = in.nextLine();
-//        arrivalAirport = arrivalAirport.toLowerCase();
-//        while (arrivalAirport.replaceAll("\\s", "").equals(departureAirport.replaceAll("\\s", ""))) {
-//            System.out.println("The arrival airport can't be the same as the departure airport, please enter another airport: ");
-//            arrivalAirport = in.nextLine();
-//            arrivalAirport = arrivalAirport.toLowerCase();
-//        }
-//        while (!isValidAirportName(arrivalAirport)) {
-//            System.out.println("Invalid Airport name. Please enter one of the following airports: [ ");
-//            for (Airport a : Airports) {
-//                System.out.print(a.getAirportName() + " - ");
-//            }
-//            System.out.println("]");
-//
-//            arrivalAirport = in.nextLine();
-//            arrivalAirport = arrivalAirport.toLowerCase();
-//        }
-//
-//        //Input the date
-//        LocalDate today = LocalDate.now();
-//        System.out.println("Please enter your departure date: (dd-mm-yyyy) ");
-//        String depDate;
-//        depDate = in.nextLine();
-//        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//        LocalDate deptTime = LocalDate.parse(depDate, format);
-//        LocalDate week=today.plusDays(7);
-//        while((deptTime.compareTo(week)>1)||deptTime.compareTo(today)<0){
-//            System.out.println("You can't book flights that aren't within a week, please enter a date that is less than a week from now: ");
-//            depDate = in.nextLine();
-//            deptTime = LocalDate.parse(depDate, format);
-//
-//        }
-//        //special services by airlines
-//        boolean specialMeal=false, petTravel=false, wheelchair=false, loungeAccess=false;
-//        System.out.println("Would you like any additional services offered by the different airlines? (y/n)");
-//        String answer=in.nextLine();
-//        if(answer.equalsIgnoreCase("y")){
-//            do {
-//
-//                System.out.println("Services offered by the airlines: " + "\n" + "1-Special Meal Requests" + "\n" + "2-Pet Travel" + "\n" + "3-Wheelchair Accessibility" + "\n" + "4-Lounge Access" + "5-None (Finish Selecting)");
-//                int choice = in.nextInt();
-//                in.nextLine();
-//                switch (choice) {
-//                    case 1:
-//                        specialMeal = true;
-//                        this.hasSpecialMeal=true;
-//                        System.out.println("Special Meal Requests Selected");
-//                        break;
-//                    case 2:
-//                        petTravel = true;
-//                        this.hasPet=true;
-//                        System.out.println("Pet Travel Selected");
-//                        break;
-//                    case 3:
-//                        wheelchair = true;
-//                        this.hasWheelchair=true;
-//                        System.out.println("Wheelchair Accessibility Selected");
-//                        break;
-//                    case 4:
-//                        loungeAccess = true;
-//                        this.hasLounge=true;
-//                        System.out.println("Lounge Access Selected");
-//                        break;
-//                    case 5:
-//                        break;
-//                    default:
-//                        System.out.println("Invalid choice");
-//                        break;
-//                }
-//                System.out.println("Would you like to choose another service? (y/n)");
-//                answer = in.nextLine();
-//            }
-//            while(answer.equalsIgnoreCase("y"));
-//
-//        }
-////        FlightSelection( departureAirport,arrivalAirport,deptTime,specialMeal,petTravel,wheelchair,loungeAccess);
-//        //flights search
-//        ArrayList<Flight> AvailableFlights = new ArrayList<>();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-//
-//// Loop through each flight in the Flights list
-//        for (Flight flight : Flights) {
-//            // Check the special service conditions
-//            boolean matchesServices = (flight.getSpecialMealRequest() == specialMeal) ||
-//                    (flight.getHasPetTravel() == petTravel) ||
-//                    (flight.getHasLoungeAccess() == loungeAccess) ||
-//                    (flight.getHaswheelchair() == wheelchair);
-//
-//            // Check if departure and arrival airports match
-//            boolean matchesAirports = flight.getDepartureAirport().equalsIgnoreCase(departureAirport) &&
-//                    flight.getArrivalAirport().equalsIgnoreCase(arrivalAirport);
-//
-//            // Parse and format the departure time of the flight
-//            LocalDateTime flightDateTime = LocalDateTime.parse(flight.getDepartureTime(), formatter);
-//            LocalDate flightDepartureDate = flightDateTime.toLocalDate(); // Get only the date part
-//            String formattedFlightDate = flightDepartureDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-//
-//            // Format the provided departure date
-//            String formattedDepDate = deptTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-//
-//            // Check if the flight matches all criteria
-//            if (matchesServices && matchesAirports && formattedDepDate.equals(formattedFlightDate)) {
-//                AvailableFlights.add(flight);
-//            }
-//        }
-//
-//// Debug: Print the available flights
-////        for (Flight flight : AvailableFlights) {
-////            System.out.println(flight.getFlightNumber());
-////        }
-//
-//        FlightSelection(AvailableFlights, currentUser);
-//    }
     public void FlightSelection(ArrayList<Flight> f, User currentUser){
         Scanner in=new Scanner(System.in);
         if(f.isEmpty()){
@@ -530,31 +361,31 @@ public class Booking {
             System.out.println("--------------------Available Flights----------------------");
             for(int i=0;i<f.size();i++){
                 if(f.get(i).numberOfAvailableSeats()>0){
-                System.out.println("---------------------------------------------------------------------------");
-                f.get(i).displayFlightDetails();
-                System.out.println("Special Services offered by the Airline "+ f.get(i).getAirlineName()+":");
-                boolean offersServices=false;
-                if(f.get(i).getSpecialMealRequest()){
-                    System.out.println("-Special Meal Requests");
-                    offersServices=true;
-                }
-                if(f.get(i).getHaswheelchair()){
-                    System.out.println("-Wheelchair Accessibility");
-                    offersServices=true;
-                }
-                if(f.get(i).getHasPetTravel()){
-                    System.out.println("-Pet Travel");
-                    offersServices=true;
-                }
-                if(f.get(i).getHasLoungeAccess()){
-                    System.out.println("-Lounge Access");
-                    offersServices=true;
-                }
-                if(offersServices==false){
-                    System.out.println("The airline doesn't offer special services");
-                }
-                System.out.println("Baggage allowance (maximum number of bags per passenger) : "+f.get(i).getBaggageAllowance());
-                System.out.println("Number of available seats : "+f.get(i).numberOfAvailableSeats());
+                    System.out.println("---------------------------------------------------------------------------");
+                    f.get(i).displayFlightDetails();
+                    System.out.println("Special Services offered by the Airline "+ f.get(i).getAirlineName()+":");
+                    boolean offersServices=false;
+                    if(f.get(i).getSpecialMealRequest()){
+                        System.out.println("-Special Meal Requests");
+                        offersServices=true;
+                    }
+                    if(f.get(i).getHaswheelchair()){
+                        System.out.println("-Wheelchair Accessibility");
+                        offersServices=true;
+                    }
+                    if(f.get(i).getHasPetTravel()){
+                        System.out.println("-Pet Travel");
+                        offersServices=true;
+                    }
+                    if(f.get(i).getHasLoungeAccess()){
+                        System.out.println("-Lounge Access");
+                        offersServices=true;
+                    }
+                    if(offersServices==false){
+                        System.out.println("The airline doesn't offer special services");
+                    }
+                    System.out.println("Baggage allowance (maximum number of bags per passenger) : "+f.get(i).getBaggageAllowance());
+                    System.out.println("Number of available seats : "+f.get(i).numberOfAvailableSeats());
 
 
                 } }
@@ -583,13 +414,15 @@ public class Booking {
             }
             SeatSelection(foundFlight);
 
-            this.flightNum=foundFlight.getFlightNumber();
+            flightNum=foundFlight.getFlightNumber();
+            flight=foundFlight;
+            System.out.println(flight.getAirlineName());
         }
     }
     public void SeatSelection(Flight flight){
         ArrayList<Seat> flightSeats=flight.getSeats();
         int seatindex=-1;
-       ArrayList<Seat> chosenSeats=new ArrayList<>();
+        ArrayList<Seat> chosenSeats=new ArrayList<>();
         Scanner in=new Scanner(System.in);
         System.out.println("How many seats do you want to choose: ");
         int number=in.nextInt();
@@ -664,7 +497,7 @@ public class Booking {
         }
 //            getUserInformation(chosenSeats,number); when the method is added , hab3at elchosen seats w the number of chosen seats, n loop aala aadad el number of seats aashan
         //w n display for each seat : passenger details for seat no. (chosenSeats.get(i).getSeatNumber())
-    bookFlight(chosenSeats);
+        bookFlight(chosenSeats);
     }
 
     public Flight getFlightNumber(){
@@ -696,28 +529,30 @@ public class Booking {
             }
         }
         for (int i = 0; i < numberOfSeats; i++) {
-            Passenger passenger = new Passenger();
-            getPassengerInformation();
+            //Passenger passenger = new Passenger();
+            Passenger passenger=getPassengerInformation();
             passenger.assignSeatToPassenger(chosenSeats.get(i));
             Passengers.add(passenger);
         }
-        Booking booking = new Booking();
-        booking.setBookingID(bookingCounter++);
-        booking.setFlightNum(flightNum);
-        booking.setPassenger(Passengers);
-        booking.setBusinessSeats(BusinessSeats);
-        booking.setEconomySeats(EconomySeats);
-        booking.setFirstClassSeats(FirstClassSeats);
-        booking.setHasLounge(hasLounge);
-        booking.setHasPet(hasPet);
-        booking.setHasSpecialMeal(hasSpecialMeal);
-        booking.setHasWheelchair(hasWheelchair);
-        booking.setBookingStatus("Confirmed");
 
-        bookings.add(booking);
-        currentUser.addBooking(booking);
+        //   Booking booking = new Booking();
+        setBookingID(bookingCounter++);
+        setFlightNum(flightNum);
+        setPassenger(Passengers);
+        setBusinessSeats(BusinessSeats);
+        setEconomySeats(EconomySeats);
+        setFirstClassSeats(FirstClassSeats);
+        setHasLounge(hasLounge);
+        setHasPet(hasPet);
+        setHasSpecialMeal(hasSpecialMeal);
+        setHasWheelchair(hasWheelchair);
+        setBookingStatus("Confirmed");
 
-        System.out.println("Booking confirmed! Your booking ID is " + booking.getBookingID());
+        // bookings.add(booking);
+        currentUser.addBooking(this);
+
+        System.out.println("Booking confirmed! ");
+        BookingConfirmation();
     }
 
 
@@ -774,81 +609,158 @@ public class Booking {
 
     public Passenger getPassengerInformation(){
         Scanner in=new Scanner(System.in);
-        System.out.println("Enter the number of passengers to book for: ");
-        int NoPass = in.nextInt();
         Passenger passenger = new Passenger();
 
-        for (int i = 0; i < NoPass; i++) {
-            System.out.println("Please enter passenger's name: ");
-            passenger.setName(in.nextLine());
+        System.out.println("Please enter passenger's name: ");
+        String PassName = in.nextLine();
+        passenger.setName(PassName);
+
+        String gender;
+        while(true) {
             System.out.println("Please enter passenger's gender (M/F)");
-            passenger.setGender(in.nextLine());
-            System.out.println("Please enter passenger's phone number : ");
-            passenger.setPhoneNumber(in.nextInt());
-            in.nextLine();
-            System.out.println("Please enter passenger's date of birth in the format (dd/mm/yyyy)");
-            passenger.setDateOfBirth(in.nextLine());
-            System.out.println("Please enter passenger's ID (SSN)");
-            passenger.setPId(in.nextInt());
-            in.nextLine();
-//        passenger.setUserEmail(currentUser.getEmail()); //momken akhaly eluser ydakhal elemail bta3o abl ma ybda2 ydakhal elpassengers w astakhdem this email for getting the user ba w arboto blpassengers wkeda
-            //passenger.assignSeatToPassenger();
-            Passengers.add(passenger);
-            // input handling+ special services w notes wlklam da
+            gender = in.nextLine().trim().toLowerCase();
+            if (gender.equals("m") || gender.equals("f")) {
+                passenger.setGender(gender);
+                break;
+            } else {
+                System.out.println("Invalid choice. Please enter 'm' or 'f'.");
+            }
         }
+        int phoneNo;
+        while(true) {
+            System.out.println("Please enter passenger's phone number : ");
+            String phoneInput = in.nextLine().trim();
+            if(phoneInput.matches("\\d{11}")){
+                phoneNo = Integer.parseInt(phoneInput);
+                passenger.setPhoneNumber(phoneNo);
+                break;
+            }else {
+                System.out.println("Invalid phone number. It must be exactly 11 digits.");
+            }
+        }
+        String DateOfBirth;
+        while(true){
+            System.out.println("Please enter passenger's date of birth in the format (dd/mm/yyyy)");
+            DateOfBirth = in.nextLine().trim();
+            if (DateOfBirth.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                passenger.setDateOfBirth(DateOfBirth);
+                break;
+            } else {
+                System.out.println("Invalid date of birth format. Please use (dd/mm/yyyy).");
+            }
+        }
+
+        System.out.println("Please enter passenger's ID (SSN)");
+        passenger.setPId(in.nextInt());
+        in.nextLine();
+        passengers.add(passenger);
         return passenger;
+
+//        passenger.setUserEmail(currentUser.getEmail()); //momken akhaly eluser ydakhal elemail bta3o abl ma ybda2 ydakhal elpassengers w astakhdem this email for getting the user ba w arboto blpassengers wkeda
+        //passenger.assignSeatToPassenger();
+
+        // input handling+ special services w notes wlklam da
+
     }
 
 
     public void cancelBooking(){
-        if(bookingStatus.equals("Cancelled")){
-            System.out.println("Your Booking is already cancelled");
-            return;
+        getLoggedInUser();
+
+        for (Booking b : currentUser.getBookings()) {
+            b.BookingConfirmation();
         }
-        for(Passenger passenger : Passengers){
-            Seat seat = passenger.getSeat();
-            if(seat != null){
-                seat.setAvailable(true);
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter the booking id of the booking you want to cancel :");
+        int bkId = in.nextInt();
+        Booking CurrBook=null;
+        for (Booking b : currentUser.getBookings()) {
+            if(b.bookingID==bkId) {
+                CurrBook=b;
             }
         }
-        bookingStatus = "Cancelled";
-        System.out.println("Your booking has been cancelled successfully. ");
+        if(CurrBook!=null) {
+            if (CurrBook.bookingStatus.equalsIgnoreCase("Confirmed")) {
+                currentUser.getBookings().remove(CurrBook);
+                // CurrBook.bookingStatus = "Cancelled";
+                for (Passenger passenger : CurrBook.Passengers) {
+                    Seat seat = passenger.getSeat();
+                    if (seat != null) {
+                        seat.setAvailable(true);
+                    }
+                }
+                System.out.println("Your booking has been cancelled successfully. ");
+            }
+        }
+        else{
+            System.out.println("Your Booking is already cancelled");
+        }
 
     }
 
     public void changeSeat(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Available seats for switching : ");
-        flight = getFlightNumber();
-        displaySeats(flight);
-        for (Passenger passenger : Passengers) {
-            if (passenger.getSeat() != null) {
-                System.out.println("Passenger " + passenger.getName() + " is currently assigned seat " + passenger.getSeat().getSeatNumber());
-            }
 
-            System.out.println("Enter the new seat number for " + passenger.getName() + ": ");
-            String NewSeatNo = scanner.nextLine();
+        getLoggedInUser();
+        for (Booking b : currentUser.getBookings()) {
+            b.BookingConfirmation();
+        }
+        System.out.println("Enter the id booking of the booking you want to modify :");
+        int bkId = scanner.nextInt();
+        Booking CurrBook=null;
+        for (Booking b : currentUser.getBookings()) {
+            if(b.bookingID==bkId) CurrBook=b;
+        }
+        if(CurrBook!=null){
+            System.out.println("Available seats for switching : ");
+            flight = CurrBook.getFlightNumber();
+            // Flights.get(0);
+
+            displaySeats(flight);
+            Scanner scanner1 = new Scanner(System.in);
+            System.out.println("Choose which passenger you want to change the seat for : ");
+            String PassName = scanner1.nextLine();
+
+            Passenger CurrPass = null;
+            for (Passenger passenger : CurrBook.passengers) {
+                if(passenger.getName().equalsIgnoreCase(PassName)){
+                    CurrPass = passenger;
+                }
+            }
+            System.out.println("Enter the new seat number to switch to : " );
+            String NewSeatNo = scanner1.nextLine();
 
             boolean validSwitch = false;
             for (Seat s : flight.getSeats()) {
                 if (s.getSeatNumber().equalsIgnoreCase(NewSeatNo) && s.isAvailable()) {
-                    if(passenger.getSeat()!=null){
-                        passenger.getSeat().setAvailable(true);
-                        System.out.println("Previous seat " + passenger.getSeat().getSeatNumber() + " is now available.");
+                    if(CurrPass.getSeat()!=null){
+                        CurrPass.getSeat().setAvailable(true);
+                        System.out.println("Previous seat " + CurrPass.getSeat().getSeatNumber() + " is now available.");
                     }
-                    passenger.assignSeatToPassenger(s);
+
                 }
 
-                System.out.println("Seat for " + passenger.getName() + " successfully changed to: " + s.getSeatNumber());
-                validSwitch = true;
                 break;
+            }
+            for (Seat s : flight.getSeats()) {
+                if (s.getSeatNumber().equalsIgnoreCase(NewSeatNo) && s.isAvailable()) {
+                    CurrPass.assignSeatToPassenger(s);
+                    System.out.println("Seat for " + CurrPass.getName() + " successfully changed to: " + s.getSeatNumber());
+                    validSwitch = true;
+                    break;
+                }
             }
             if (!validSwitch) {
                 System.out.println("Invalid or unavailable seat. Please try again. ");
             }
+
         }
+
     }
-    public void listAllBookings(){//3ayza a5aleeha ta5od el user id men el sign up class 3shan t list el booking bt3t el user da
+
+
+
+    public void listAllBookings(){
         getLoggedInUser();
 
         if(currentUser.getBookings().isEmpty()){
@@ -857,31 +769,33 @@ public class Booking {
         } else {
             System.out.println("All Bookings: ");
             for (Booking b : currentUser.getBookings()) {
-                b.BookingConfirmation(b);
+                b.BookingConfirmation();
             }
         }
     }
 
-    public void BookingConfirmation(Booking booking) {
-        if (flight == null || booking == null) {
+    public void BookingConfirmation() {
+        //getLoggedInUser();
+        // flight = getFlightNumber();
+        if (flight == null) {
             System.out.println("Booking confirmation failed: Missing flight or booking information.");
-            return;
-        }
 
-        // Step 1: Initialize PaymentPreProcessing
-        PaymentPreProcessing paymentProcessor = new PaymentPreProcessing(flight, booking);
-
-        // Step 2: Display booking and payment details
-        System.out.println("========== Booking Confirmation ==========");
-        System.out.println("Booking ID          : " + booking.getBookingID());
-        flight.displayFlightDetails();
-        System.out.println("Booking Status      : " + booking.getBookingStatus());
-        System.out.println("------------------------------------------");
-        System.out.println("Total Cost (Incl. Services): " + paymentProcessor.calculateSubTotal());
-        System.out.println("------------------------------------------");
-        System.out.println("Passengers:");
-        for (Passenger passenger : booking.getPassenger()) {
-            System.out.println("- " + passenger.getName());
         }
-        System.out.println("==========================================");
+        else {
+
+            PaymentPreProcessing paymentProcessor = new PaymentPreProcessing(flight, this);
+
+
+            System.out.println("Booking ID: " + getBookingID());
+            flight.displayFlightDetails();
+            System.out.println("Booking Status: " + getBookingStatus());
+            System.out.println("------------------------------------------");
+            System.out.println("Total Cost (Incl. Services): " + paymentProcessor.calculateSubTotal());
+            System.out.println("------------------------------------------");
+            System.out.println("Passengers:");
+            for (Passenger passenger : getPassenger()) {
+                System.out.println("- " + passenger.getName());
+            }
+            System.out.println("==========================================");
+        }
     }}

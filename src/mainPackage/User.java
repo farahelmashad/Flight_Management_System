@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class User {
     protected String Email;
     protected String Password;
+    private String Gender;
+    private int PhoneNumber;
+    private String name;
+    private String DateOfBirth;
     private ArrayList<Passenger> p = new ArrayList<>();
     private ArrayList<Booking> bookings = new ArrayList<>();
     private Flight SelectedFlight;
@@ -13,6 +17,7 @@ public class User {
     private boolean loggedIn=false;
 
     public User() {
+        User_Id = ++UserCount;
     }
     public void addBooking(Booking booking){
         this.bookings.add(booking);
@@ -32,7 +37,36 @@ public class User {
         Email = email;
         Password = password;
         this.p = p;
-        User_Id = ++UserCount;
+
+    }
+
+    public User(String email, String password, String gender, int phoneNumber, String name) {
+        Email = email;
+        Password = password;
+        Gender = gender;
+        PhoneNumber = phoneNumber;
+        this.name = name;
+    }
+
+    public User(String email, String password, String gender, int phoneNumber, String dateOfBirth, ArrayList<Passenger> p, ArrayList<Booking> bookings, Flight selectedFlight, int user_Id, boolean loggedIn) {
+        Email = email;
+        Password = password;
+        Gender = gender;
+        PhoneNumber = phoneNumber;
+        DateOfBirth = dateOfBirth;
+        this.p = p;
+        this.bookings = bookings;
+        SelectedFlight = selectedFlight;
+        User_Id = user_Id;
+        this.loggedIn = loggedIn;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getUserID() {
@@ -80,5 +114,29 @@ public class User {
 
     public boolean isLoggedIn() {
         return loggedIn;
+    }
+
+    public String getDateOfBirth() {
+        return DateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        DateOfBirth = dateOfBirth;
+    }
+
+    public int getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        PhoneNumber = phoneNumber;
+    }
+
+    public String getGender() {
+        return Gender;
+    }
+
+    public void setGender(String gender) {
+        Gender = gender;
     }
 }

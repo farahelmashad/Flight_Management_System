@@ -1,10 +1,10 @@
 package mainPackage;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.lang.String;
 public class Flight {
   private String FlightNumber;
   private String DepartureAirport;
@@ -22,6 +22,7 @@ public class Flight {
   private static ArrayList<Seat> seatTemplate = new ArrayList<>(60);
   private boolean[] seatAvailability;
   private int baggageAllowance=2;
+  public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
   static {
     initializeSeats();
@@ -31,7 +32,7 @@ public class Flight {
 
 
   //constructor
-  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String departureTime, String ArrivalTime, Double baseFare , String airlineName,boolean[] seatAvailability, boolean hasLoungeAccess,boolean haswheelchair,boolean hasPetTravel,boolean hasSpecialMealRequest) {
+  public Flight(String flightNumber, String departureAirport, String ArrivalAirport, String ArrivalTime, String departureTime, Double baseFare , String airlineName,boolean[] seatAvailability, boolean hasLoungeAccess,boolean haswheelchair,boolean hasPetTravel,boolean hasSpecialMealRequest) {
     this.FlightNumber = flightNumber;
     this.DepartureAirport = departureAirport;
     this.ArrivalAirport = ArrivalAirport;
@@ -40,17 +41,13 @@ public class Flight {
     this.BaseFare = baseFare;
     this.airlineName=airlineName;
     this.seatAvailability=seatAvailability;
-    this.hasLoungeAccess=hasLoungeAccess;
-    this.haswheelchair=haswheelchair;
-    this.hasPetTravel=hasPetTravel;
-    this.hasSpecialMealRequest=hasSpecialMealRequest;
     this.seats = new ArrayList<>(60);
     // Debugging output: Print availability array to ensure it's correct
-//    System.out.println("Seat availability array:");
-//    for (int i = 0; i < seatAvailability.length; i++) {
-//      System.out.print(seatAvailability[i] + " ");
-//    }
-//    System.out.println("\n");
+    System.out.println("Seat availability array:");
+    for (int i = 0; i < seatAvailability.length; i++) {
+      System.out.print(seatAvailability[i] + " ");
+    }
+    System.out.println("\n");
 
 
     for (int i = 0; i < 60; i++) {
@@ -58,7 +55,7 @@ public class Flight {
       Seat templateSeat = seatTemplate.get(i);   // Get seat template (number and class)
 
       // Debugging output: Print the seat availability
-//      System.out.println("Seat " + templateSeat.getSeatNumber() + " availability: " + isAvailable);
+      System.out.println("Seat " + templateSeat.getSeatNumber() + " availability: " + isAvailable);
 
       // Add the seat with the correct availability status
       this.seats.add(new Seat(templateSeat.getSeatNumber(), templateSeat.getSeatClass(), isAvailable));
@@ -202,7 +199,7 @@ public class Flight {
     System.out.print("Flight Duration: ");
     FlightDuration(toDateTime(DepartureTime),toDateTime(ArrivalTime));
     System.out.println("\n");
-    System.out.println("Flight Base Fare without additional services/baggage/etc..):$" + BaseFare);
+    System.out.println("Flight BaseFare without additional services/baggage/etc..):$" + BaseFare);
 
   }
   public static void initializeSeats() {

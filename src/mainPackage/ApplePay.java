@@ -1,23 +1,21 @@
 package mainPackage;
 import java.util.Scanner;
+
 public class ApplePay implements PaymentMethod {
 
     private String email;
     private final static float FEES_PERCENTAGE = 0.04f;
-    private double baseFare;
     private double amount;
-    private Flight flight;
     private PaymentPreProcessing subTotal;
 
-    public ApplePay() {
+    public ApplePay(String email, double amount) {
+        this.email = email;
+        this.amount = amount;
     }
 
-    public ApplePay(String email, double baseFare, double amount, Flight flight, PaymentPreProcessing subTotal) {
-        this.email = email;
-        this.baseFare = baseFare;
-        this.amount = subTotal.calculateSubTotal();
-        this.flight = flight;
+    public ApplePay(PaymentPreProcessing subTotal) {
         this.subTotal = subTotal;
+        this.amount = subTotal.calculateSubTotal();
     }
 
     public String getEmail() {
@@ -28,10 +26,6 @@ public class ApplePay implements PaymentMethod {
         this.email = email;
     }
 
-    public void setBaseFare(double baseFare) {
-        this.baseFare = flight.getBaseFare();
-    }
-
     public PaymentPreProcessing getSubTotal() {
         return subTotal;
     }
@@ -40,11 +34,11 @@ public class ApplePay implements PaymentMethod {
         this.subTotal = subTotal;
     }
 
-
     @Override
-    public double calculateTotalCost(double baseFare){
-        double fees = baseFare * FEES_PERCENTAGE;
-        return amount + fees;
+    public double calculateTotalCost(){
+        double fees = amount * FEES_PERCENTAGE;
+        double total = amount + fees;
+        return Double.parseDouble(String.format("%.2f", total));
     }
 
     @Override
@@ -65,7 +59,7 @@ public class ApplePay implements PaymentMethod {
 
     @Override
     public void process() {
-        System.out.println("Total cost : " + calculateTotalCost(baseFare));
+        System.out.println("Total cost : $" + calculateTotalCost());
     }
 
     @Override
