@@ -6,12 +6,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//white space issues // to be dealt with later!!
 public class Booking {
     private int bookingID;
     private Flight flight;
     private String flightNum;
-    // private Seat seat;
     private User currentUser;
     private String bookingStatus ;
     private static int bookingCounter = 1;
@@ -253,7 +251,6 @@ public class Booking {
             arrivalAirport = arrivalAirport.toLowerCase();
         }
 
-        //Input the date
         LocalDate today = LocalDate.now();
         System.out.println("Please enter your departure date: (dd-mm-yyyy) ");
         String depDate;
@@ -267,7 +264,6 @@ public class Booking {
             deptTime = LocalDate.parse(depDate, format);
 
         }
-        //special services by airlines
         boolean specialMeal=false, petTravel=false, wheelchair=false, loungeAccess=false;
         System.out.println("Would you like any additional services offered by the different airlines? (y/n)");
         String answer=in.nextLine();
@@ -310,38 +306,29 @@ public class Booking {
             while(answer.equalsIgnoreCase("y"));
 
         }
-//        FlightSelection( departureAirport,arrivalAirport,deptTime,specialMeal,petTravel,wheelchair,loungeAccess);
-        //flights search
         ArrayList<Flight> AvailableFlights = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-// Loop through each flight in the Flights list
         for (Flight flight : Flights) {
-            // Check the special service conditions
             boolean matchesServices = (flight.getSpecialMealRequest() == specialMeal) ||
                     (flight.getHasPetTravel() == petTravel) ||
                     (flight.getHasLoungeAccess() == loungeAccess) ||
                     (flight.getHaswheelchair() == wheelchair);
 
-            // Check if departure and arrival airports match
             boolean matchesAirports = flight.getDepartureAirport().equalsIgnoreCase(departureAirport) &&
                     flight.getArrivalAirport().equalsIgnoreCase(arrivalAirport);
 
-            // Parse and format the departure time of the flight
             LocalDateTime flightDateTime = LocalDateTime.parse(flight.getDepartureTime(), formatter);
-            LocalDate flightDepartureDate = flightDateTime.toLocalDate(); // Get only the date part
+            LocalDate flightDepartureDate = flightDateTime.toLocalDate(); 
             String formattedFlightDate = flightDepartureDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-            // Format the provided departure date
             String formattedDepDate = deptTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-            // Check if the flight matches all criteria
             if (matchesServices && matchesAirports && formattedDepDate.equals(formattedFlightDate)) {
                 AvailableFlights.add(flight);
             }
         }
 
-// Debug: Print the available flights
         for (Flight flight : AvailableFlights) {
             System.out.println(flight.getFlightNumber());
         }
@@ -355,7 +342,6 @@ public class Booking {
             String choice= in.nextLine();
             if(choice.equalsIgnoreCase("y"))
                 flightSearch();
-            //need else to the main menu
         }
         else{
             System.out.println("--------------------Available Flights----------------------");
@@ -448,14 +434,6 @@ public class Booking {
                 String seatno = in.nextLine();
 
                 boolean seatExists = false;
-//
-//                    for (Seat seat1 : flightSeats) {
-//                        if (seatno.equalsIgnoreCase(seat1.getSeatNumber())) {
-//                            seatExists = true;
-//                            chosenSeat =seat1 ;
-//                            break;
-//                        }
-//                    }
                 for(int j=0;j<flightSeats.size();j++){
                     if(seatno.equalsIgnoreCase(flightSeats.get(j).getSeatNumber())){
                         seatExists=true;
@@ -488,15 +466,11 @@ public class Booking {
                 System.out.println("Seat chosen successfully!");
                 chosenSeats.add(chosenSeat);
                 validSeatChosen = true;
-//                    displaySeats();
 
             }
 
-//                passenger.setSeat(chosenSeat);
 
         }
-//            getUserInformation(chosenSeats,number); when the method is added , hab3at elchosen seats w the number of chosen seats, n loop aala aadad el number of seats aashan
-        //w n display for each seat : passenger details for seat no. (chosenSeats.get(i).getSeatNumber())
         bookFlight(chosenSeats);
     }
 
@@ -656,11 +630,6 @@ public class Booking {
         in.nextLine();
         passengers.add(passenger);
         return passenger;
-
-//        passenger.setUserEmail(currentUser.getEmail()); //momken akhaly eluser ydakhal elemail bta3o abl ma ybda2 ydakhal elpassengers w astakhdem this email for getting the user ba w arboto blpassengers wkeda
-        //passenger.assignSeatToPassenger();
-
-        // input handling+ special services w notes wlklam da
 
     }
 
