@@ -1,16 +1,17 @@
 package mainPackage;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Admin extends User {
-   public  ArrayList<Flight> flights=GlobalData.flights;
+   public  List<Flight> flights;
     Scanner input;
     public Admin() {
         this.input = new Scanner(System.in);
-//        this.flights = new ArrayList<>();
-    }
-    public Admin(ArrayList<Flight> flights) {
+        this.flights = new ArrayList<>();
+    };
+    public Admin(List<Flight> flights) {
         if (flights == null)
         { // Check if flights is null
             throw new IllegalArgumentException("Flights list cannot be null.");
@@ -22,7 +23,7 @@ public class Admin extends User {
     public Admin(String email, String password) {
         super(email, password);
         this.input = new Scanner(System.in);
-       // this.flights = new ArrayList<>();
+        this.flights = new ArrayList<>();
     }
 
     private Flight findFlightByNumber(String flightNumber) {
@@ -56,44 +57,7 @@ public class Admin extends User {
         String DepartureTime = input.nextLine().trim();
         System.out.println("enter BaseFare: ");
         Double BaseFare = input.nextDouble();
-        System.out.println("Enter Airline Code: ");
-        String AirlineCode=input.next().trim();
-        boolean []availability=new boolean[60];
-        System.out.println("Does this flight include lounge access? (yes/no)");
-        boolean hasLounge;
-        String answer=input.nextLine();
-        if(answer.equalsIgnoreCase("yes")){
-            hasLounge=true;
-        }
-        else
-            hasLounge=false;
-        System.out.println("Does this flight include wheelchair access? (yes/no)");
-        boolean hasWheel;
-         answer=input.nextLine();
-        if(answer.equalsIgnoreCase("yes")){
-            hasWheel=true;
-        }
-        else
-            hasWheel=false;
-        System.out.println("Does this flight include pet access? (yes/no)");
-        boolean hasPet;
-         answer=input.nextLine();
-        if(answer.equalsIgnoreCase("yes")){
-            hasPet=true;
-        }
-        else
-            hasPet=false;
-        System.out.println("Does this flight include special meal requests? (yes/no)");
-        boolean hasMeal;
-         answer=input.nextLine();
-        if(answer.equalsIgnoreCase("yes")){
-            hasMeal=true;
-        }
-        else
-            hasMeal=false;
-
-
-        Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare,AirlineCode,availability,hasLounge,hasWheel,hasPet,hasMeal);
+        Flight flight = new Flight(FlightNumber, DepartureAirport, ArrivalAirport, ArrivalTime, DepartureTime, BaseFare);
         flights.add(flight);
         System.out.println("flight " + FlightNumber + " added successfully");
     }
@@ -159,7 +123,7 @@ public class Admin extends User {
             System.out.println("Flight not found. Please enter another flight number.");
             FlightNumber = input.nextLine().trim();
         }
-        for (Seat seat : flight.getSeats()) {
+        for (Seat seat : flight.Seats) {
             System.out.println("Seat " + seat.getSeatNumber() + ": " +
                     (seat.isAvailable() ? "Available" : "Booked"));
         }
