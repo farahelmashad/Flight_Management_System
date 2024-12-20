@@ -3,7 +3,11 @@ package mainPackage;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
+
+import static mainPackage.GlobalData.users;
+
 public class Admin extends User {
     public  ArrayList<Flight> flights=GlobalData.flights;
     Scanner input;
@@ -227,18 +231,43 @@ public class Admin extends User {
         }
     }
 
-    private void Deleteflight() {
-        AirportFileWriter.writeBookingsToFile();
-        System.out.println("enter the number of the flight you want to delete: ");
-        String FlightNumber = input.nextLine().trim();
-        Flight flight = findFlightByNumber(FlightNumber);
-        while ((flight == null)) {
-            System.out.println("Flight not found. Please enter another flight number.");
-            FlightNumber = input.nextLine().trim();
+    public void Deleteflight() {
+        System.out.println("Enter the flight number of the flight you want to delete: ");
+        String flightNumber = input.nextLine().trim();
+
+        // Find the flight by its number
+        Flight flight = findFlightByNumber(flightNumber);
+        if (flight == null) {
+            System.out.println("Flight not found. Please enter a valid flight number.");
+            return;
         }
+
+        // Cancel all bookings associated with this flight
+        System.out.println("Cancelling all bookings for flight " + flightNumber + "...");
+
+        // Assuming `users` is a list of all User objects
+
+        for (User user : users) {
+            List<Booking> bookingsToCancel = new ArrayList<>();
+
+            // Iterate through each user's bookings and check if the booking's flight matches the one being deleted
+            for (Booking booking : user.getBookings()) {
+                if (booking.getFlight().getFlightNumber().equalsIgnoreCase(flightNumber)) {
+                    booking.cancelBooking(); // Cancel the booking
+                    bookingsToCancel.add(booking); // Track bookings for removal
+                }
+            }
+
+            // Remove cancelled bookings from the user's bookings list
+            user.getBookings().removeAll(bookingsToCancel);
+        }
+
+        // Remove the flight from the system
         flights.remove(flight);
-        System.out.println("Flight with Flight Number " + FlightNumber + " has been deleted successfully.");
+
+        System.out.println("Flight " + flightNumber + " and all associated bookings have been successfully deleted.");
     }
+
     private void Displayflights()
     {
         if (flights.isEmpty()) {
