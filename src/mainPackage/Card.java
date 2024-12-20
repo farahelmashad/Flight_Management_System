@@ -1,32 +1,28 @@
 package mainPackage;
 import java.util.Scanner ;
+import java.util.Calendar;
 
 public class Card implements PaymentMethod{
     private String ownerName;
     private String number;
     private String expirationDate;
     private String cvv;
-    private double baseFare;
     private double amount;
     public static final float FEES_PERCENTAGE = 0.03f;
-    private Flight flight;
     private PaymentPreProcessing subTotal;
 
-    public Card() {
-    }
 
-    public Card(String ownerName, String number, String expirationDate, String cvv, double baseFare, double amount, Flight flight, PaymentPreProcessing subTotal) {
+    public Card(String ownerName, String number, String expirationDate, String cvv, double amount) {
         this.ownerName = ownerName;
         this.number = number;
         this.expirationDate = expirationDate;
         this.cvv = cvv;
-        this.baseFare = baseFare;
-        this.amount = subTotal.calculateSubTotal();
-        this.flight = flight;
+        this.amount = amount;
     }
 
-    public void setBaseFare(double baseFare) {
-        this.baseFare = flight.getBaseFare();
+    public Card(PaymentPreProcessing subTotal) {
+        this.subTotal = subTotal;
+        this.amount = subTotal.calculateSubTotal();
     }
 
     public String getOwnerName() {
@@ -62,14 +58,18 @@ public class Card implements PaymentMethod{
     }
 
     @Override
-    public double calculateTotalCost(double baseFare) {
-        double fees = baseFare * FEES_PERCENTAGE;
-        return amount + fees;
+    public double calculateTotalCost() {
+        double fees = amount * FEES_PERCENTAGE;
+        double total = amount + fees;
+        return Double.parseDouble(String.format("%.2f", total));
     }
 
     @Override
     public void getInfo () {
         Scanner input = new Scanner(System.in);
+        Calendar currentCalendar = Calendar.getInstance();
+        int currentYear = currentCalendar.get(Calendar.YEAR) % 100;
+        int currentMonth = currentCalendar.get(Calendar.MONTH) + 1;
 
         while (true) {
             System.out.println("Enter card holder name: ");
@@ -97,8 +97,15 @@ public class Card implements PaymentMethod{
             System.out.println("Enter expiration date (MM/YY): ");
             String date = input.next();
             if (date.matches("(0[1-9]|1[0-2])/\\d{2}")) {
-                this.expirationDate = date;
-                break;
+                String[] parts = date.split("/");
+                int month = Integer.parseInt(parts[0]);
+                int year = Integer.parseInt(parts[1]);
+                if (year < currentYear || (year == currentYear && month < currentMonth)) {
+                    System.out.println("Card is expired. Please enter a valid expiration date.");
+                } else {
+                    this.expirationDate = date;
+                    break;
+                }
             } else {
                 System.out.println("Invalid date. Please enter in the format MM/YY.");
             }
@@ -119,7 +126,7 @@ public class Card implements PaymentMethod{
 
     @Override
     public void process () {
-        System.out.println("Total cost : " + calculateTotalCost(baseFare));
+        System.out.println("Total cost : $" + calculateTotalCost());
     }
 
     @Override

@@ -1,7 +1,7 @@
 package mainPackage;
 
 public interface PaymentMethod {
-    double calculateTotalCost(double baseFare);
+    double calculateTotalCost();
     String getMethodName();
     void getInfo();
     void process();

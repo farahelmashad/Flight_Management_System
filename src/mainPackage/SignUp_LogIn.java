@@ -1,15 +1,22 @@
 package mainPackage;
 
 import java.io.Console;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
+
 
 public class SignUp_LogIn {
 
     ArrayList<Admin> admins = GlobalData.admins;
     ArrayList<User> users = GlobalData.users;
-    Admin a=new Admin();
-    Booking b =new Booking ();
+    Admin a = new Admin();
+    Booking b = new Booking();
 
     private int thisUserIndex = -1;
     private static Scanner scanner = new Scanner(System.in);
@@ -27,6 +34,7 @@ public class SignUp_LogIn {
 
         System.out.println("Please Enter Your Name:");
         name = scanner.nextLine();
+        newUser.setName(name);
 
 
         while (true) {
@@ -88,7 +96,7 @@ public class SignUp_LogIn {
             gender = scanner.nextLine().trim();
 
             if (gender.equalsIgnoreCase("Male") || gender.equalsIgnoreCase("Female")) {
-                //newUser.setGender(gender);
+                newUser.setGender(gender);
                 break;
             } else {
                 System.out.println("Invalid Choice. Please Try Again!");
@@ -101,20 +109,32 @@ public class SignUp_LogIn {
 
             if (phoneInput.matches("\\d{11,}")) {
                 phoneNumber = Integer.parseInt(phoneInput);
-                // newUser.setPhoneNumber(phoneNumber);
+                newUser.setPhoneNumber(phoneNumber);
                 break;
             } else {
                 System.out.println("Invalid Phone Number. Please Try Again!");
             }
         }
 
-        System.out.println("Enter Your Date Of Birth:");
-        dateOfBirth = scanner.nextLine();
-        //newUser.setDateOfBirth(birthDate);
+        while (true) {
+            System.out.println("Enter Your Date Of Birth (dd-MM-yyyy):");
+            dateOfBirth = scanner.nextLine();
 
-        Passenger newPassenger = new Passenger(name, gender, phoneNumber, dateOfBirth);
-
-        newUser.addPassenger(newPassenger);
+            // Validate the date format and logical check
+            if (isValidDate(dateOfBirth)) {
+                LocalDate dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                LocalDate today = LocalDate.now();
+                Period period = Period.between(dob, today);
+                if (period.getYears() < 18) {
+                    System.out.println("You must be at least 18 years old. Please try again.");
+                } else {
+                    newUser.setDateOfBirth(dateOfBirth);
+                    break;
+                }
+            } else {
+                System.out.println("Invalid Date format. Please enter in dd-MM-yyyy format.");
+            }
+        }
 
 
         users.add(newUser);
@@ -125,22 +145,30 @@ public class SignUp_LogIn {
     }
 
     public boolean LogIn_A() {
-        System.out.println("Enter Your Email:");
-        String email = scanner.nextLine();
+        while (true) {
+            System.out.println("Enter Your Email:");
+            String email = scanner.nextLine();
 
-        System.out.println("Enter Your Password:");
-        String password = scanner.nextLine();
+            System.out.println("Enter Your Password:");
+            String password = scanner.nextLine();
 
-        for (Admin admin : admins) {
-            if (email.equals(admin.getEmail()) && password.equals(admin.getPassword())) {
-                System.out.println("Admin Log-In Successful! Welcome, " );
-                return true;
+            for (Admin admin : admins) {
+                if (email.equals(admin.getEmail()) && password.equals(admin.getPassword())) {
+                    System.out.println("Admin Log-In Successful! Welcome ");
+                    return true;
+                }
+            }
+
+            System.out.println("Invalid Admin Email or Password.");
+            System.out.println("If you want to exit, type 'exit', or press Enter to try again.");
+
+            String exitChoice = scanner.nextLine().trim();
+            if (exitChoice.equalsIgnoreCase("exit")) {
+                return false;  // Exit login attempt
             }
         }
-
-        System.out.println("Invalid Admin Email or Password. Please Try Again.");
-        return false;
     }
+
 
     public boolean LogIn_U() {
         if (users.isEmpty()) {
@@ -148,32 +176,42 @@ public class SignUp_LogIn {
             return false;
         }
 
-        System.out.println("Enter Your Email:");
-        String email = scanner.nextLine();
+        while (true) {
+            System.out.println("Enter Your Email:");
+            String email = scanner.nextLine();
 
-        System.out.println("Enter Your Password:");
-        String password = scanner.nextLine();
+            System.out.println("Enter Your Password:");
+            String password = scanner.nextLine();
 
-        for (User u : users) {
-            if (email.equals(u.getEmail()) && password.equals(u.getPassword())) {
-                System.out.println("Log-In Successful! Welcome back, " );
-                u.setLoggedIn(true);
-                return true;
+            for (User u : users) {
+                if (email.equals(u.getEmail()) && password.equals(u.getPassword())) {
+                    System.out.println("Log-In Successful! Welcome back ");
+                    u.setLoggedIn(true);
+                    return true;
+                }
             }
-        }
 
+            System.out.println("Invalid Email or Password.");
+            System.out.println("If you want to exit, type 'exit', or press Enter to try again.");
 
-        System.out.println("Invalid Email or Password. Please Try Again.");
-        return false;
-    }
-    public void setLoggedInUserIndex(int userID) {
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserID()==userID) {
-                thisUserIndex = i;
-                break;
+            String exitChoice = scanner.nextLine().trim();
+            if (exitChoice.equalsIgnoreCase("exit")) {
+                return false;  // Exit login attempt
             }
         }
     }
+
+    private boolean isValidDate(String date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); // Changed to dd-MM-yyyy
+        dateFormat.setLenient(false);
+        try {
+            Date parsedDate = dateFormat.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
     public void MainMenu() {
         while (true) {
             System.out.println("\nWelcome to the Flight Booking System");
@@ -230,7 +268,8 @@ public class SignUp_LogIn {
             }
         }
     }
-    public void MainMenu2(){
+
+    public void MainMenu2() {
         while (true) {
             System.out.println("\nWelcome To Our Flight Management System");
             System.out.println("1. Search And Book A Flight");
@@ -240,22 +279,15 @@ public class SignUp_LogIn {
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
-            int choice = -1;
-            boolean validChoice = false;
 
-            while (!validChoice) {
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-
-                    if (choice >= 1 && choice <= 5) {
-                        validChoice = true; // Valid choice entered
-                    } else {
-                        System.out.println("Invalid choice. Please enter a number between 1 and 5.");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Please enter a number between 1 and 5.");
-                }
+            int choice;
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Input. Please Enter a Valid Choice.");
+                continue;
             }
+
 
             // Process the valid choice
             switch (choice) {
@@ -281,11 +313,13 @@ public class SignUp_LogIn {
                 case 5:
                     // Exit the system
                     System.out.println("Exiting the Flight Management System. Goodbye!");
-                    users.get(thisUserIndex).setLoggedIn(false);
                     return;
+                default:
+                    System.out.println("Invalid Choice. Please Try Again.");
+
 
             }
 
         }
-
-    }}
+    }
+}

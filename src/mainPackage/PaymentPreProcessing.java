@@ -39,7 +39,8 @@ public class PaymentPreProcessing {
             }
         }
 
-        return baseFareTotal + taxes + additionalCost * (booking.getNumberOfSeats());
+        double subtotal = baseFareTotal + taxes + additionalCost ;
+        return Math.round(subtotal * 100.0) / 100.0;
     }
 
     public void setAdditionalServices(boolean[] additionalServices) {
@@ -63,13 +64,13 @@ public class PaymentPreProcessing {
             int choice = scanner.nextInt();
             switch (choice) {
                 case 1:
-                    Card card = new Card();
+                    Card card = new Card(this);
                     card.getInfo();
                     card.process();
                     running = false;
                     break;
                 case 2:
-                    ApplePay applePay = new ApplePay();
+                    ApplePay applePay = new ApplePay(this);
                     applePay.getInfo();
                     applePay.process();
                     running = false;

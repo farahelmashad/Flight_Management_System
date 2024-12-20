@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 public class Main {
 
-public static void main(String[] args) {
+public static void
+    main(String[] args) {
     // Initialize ArrayLists
-    GlobalData.loadData(".idea/users.JSON",".idea/bookings.JSON",".idea/flights.txt",".idea/airport.txt",".idea/admins.txt");
-    ArrayList<User>users=GlobalData.users;
-    ArrayList<Flight>flights=GlobalData.flights;
-    ArrayList<Airport>airports=GlobalData.airports;
-    ArrayList<Admin>admins=GlobalData.admins;
-    ArrayList<Booking>bookings=GlobalData.bookings;
+    GlobalData.loadData(".idea/users.JSON", ".idea/bookings.JSON", ".idea/flights.txt", ".idea/airport.txt", ".idea/admins.txt");
+    ArrayList<User> users = GlobalData.users;
+    ArrayList<Flight> flights = GlobalData.flights;
+    ArrayList<Airport> airports = GlobalData.airports;
+    ArrayList<Admin> admins = GlobalData.admins;
+    ArrayList<Booking> bookings = GlobalData.bookings;
+}}
 //    for (Admin admin : admins) {
 //        System.out.println("Email: " + admin.getEmail());
 //        System.out.println("Password: " + admin.getPassword());
@@ -57,7 +59,7 @@ public static void main(String[] args) {
 //        }
 //    }
 //
-//cairo international airport
+////cairo international airport
 //    String toEmail = "farahalmashad75@gmail.com";
 //    String subject = "Flight Booking Confirmation";
 //    String body = "Dear User,\n\nYour flight has been successfully booked. Thank you!";
@@ -69,9 +71,9 @@ public static void main(String[] args) {
 //          Booking booking=new Booking();
 //          booking.flightSearch();
 //
-    }
-}
-
-
-
+//    }
+//}
+//
+//
+//
 

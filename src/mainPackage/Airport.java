@@ -63,10 +63,6 @@ public class Airport {
                 "Location: " + airportLocation;
     }
 
-    public static void addAirport(Airport airport) {
-        airports.add(airport);
-    }
-
     public static Airport AirportSearch(String searchValue) {
         for (Airport airport : airports) {
             if (airport.getAirportCode().equalsIgnoreCase(searchValue) ||
