@@ -416,7 +416,7 @@ public class Booking {
 
             flightNum=foundFlight.getFlightNumber();
             flight=foundFlight;
-            System.out.println(flight.getAirlineName());
+
         }
     }
     public void SeatSelection(Flight flight){
