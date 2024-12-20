@@ -521,6 +521,7 @@ public class Booking {
 
     }
     public void bookFlight( ArrayList<Seat> chosenSeats ){
+        AirportFileWriter.writeBookingsToFile();
         //flightSearch();
         for(User u:users){
             if(u.isLoggedIn()==true){
@@ -665,6 +666,7 @@ public class Booking {
 
 
     public void cancelBooking(){
+        AirportFileWriter.writeBookingsToFile();
         getLoggedInUser();
 
         for (Booking b : currentUser.getBookings()) {

@@ -2,11 +2,19 @@
   {
     "bookingId": 1,
     "flightNumber": "EGY003",
+    "numberOfSeats": 2,
+    "economySeats": 0,
+    "businessSeats": 0,
+    "firstClassSeats": 2,
+    "hasWheelchair": true,
+    "hasLounge": false,
+    "hasSpecialMeal": false,
+    "hasPet": true,
     "passengers": [
       {
         "name": "John Doe",
         "gender": "Male",
-        "phoneNumber": 01122344,
+        "phoneNumber": 1122344,
         "dateOfBirth": "1990-01-01",
         "PId": 101,
         "seat": {
@@ -17,7 +25,7 @@
       {
         "name": "Jane Doe",
         "gender": "Female",
-        "phoneNumber": 09239873,
+        "phoneNumber": 9239873,
         "dateOfBirth": "1992-02-02",
         "PId": 102,
         "seat": {
@@ -25,20 +33,24 @@
           "seatClass": "First Class"
         }
       }
-    ],
-      "hasWheelchair": true,
-      "hasLounge": false,
-      "hasSpecialMeal": false,
-      "hasPet": true
+    ]
   },
   {
     "bookingId": 2,
     "flightNumber": "BA002",
+    "numberOfSeats": 1,
+    "economySeats": 0,
+    "businessSeats": 1,
+    "firstClassSeats": 0,
+    "hasWheelchair": false,
+    "hasLounge": true,
+    "hasSpecialMeal": true,
+    "hasPet": false,
     "passengers": [
       {
         "name": "Alice Smith",
         "gender": "Female",
-        "phoneNumber": 01187378,
+        "phoneNumber": 1187378,
         "dateOfBirth": "1995-05-05",
         "PId": 201,
         "seat": {
@@ -46,20 +58,24 @@
           "seatClass": "Business Class"
         }
       }
-    ],
-      "hasWheelchair": false,
-      "hasLounge": true,
-      "hasSpecialMeal": true,
-      "hasPet": false
+    ]
   },
   {
     "bookingId": 3,
     "flightNumber": "EK003",
+    "numberOfSeats": 2,
+    "economySeats": 0,
+    "businessSeats": 2,
+    "firstClassSeats": 0,
+    "hasWheelchair": false,
+    "hasLounge": false,
+    "hasSpecialMeal": true,
+    "hasPet": false,
     "passengers": [
       {
         "name": "Michael Johnson",
         "gender": "Male",
-        "phoneNumber": 01378637,
+        "phoneNumber": 1378637,
         "dateOfBirth": "1988-07-14",
         "PId": 301,
         "seat": {
@@ -70,7 +86,7 @@
       {
         "name": "Linda Johnson",
         "gender": "Female",
-        "phoneNumber": 011376,
+        "phoneNumber": 11376,
         "dateOfBirth": "1990-11-16",
         "PId": 302,
         "seat": {
@@ -78,20 +94,24 @@
           "seatClass": "Business Class"
         }
       }
-    ],
-      "hasWheelchair": false,
-      "hasLounge": false,
-      "hasSpecialMeal": true,
-      "hasPet": false
+    ]
   },
   {
     "bookingId": 4,
     "flightNumber": "EGY004",
+    "numberOfSeats": 1,
+    "economySeats": 1,
+    "businessSeats": 0,
+    "firstClassSeats": 0,
+    "hasWheelchair": true,
+    "hasLounge": true,
+    "hasSpecialMeal": false,
+    "hasPet": false,
     "passengers": [
       {
         "name": "William Brown",
         "gender": "Male",
-        "phoneNumber": 01223786,
+        "phoneNumber": 1223786,
         "dateOfBirth": "1985-03-20",
         "PId": 401,
         "seat": {
@@ -99,20 +119,24 @@
           "seatClass": "Economy Class"
         }
       }
-    ],
-      "hasWheelchair": true,
-      "hasLounge": true,
-      "hasSpecialMeal": false,
-      "hasPet": false
+    ]
   },
   {
     "bookingId": 5,
     "flightNumber": "BA005",
+    "numberOfSeats": 1,
+    "economySeats": 1,
+    "businessSeats": 0,
+    "firstClassSeats": 0,
+    "hasWheelchair": false,
+    "hasLounge": false,
+    "hasSpecialMeal": true,
+    "hasPet": true,
     "passengers": [
       {
         "name": "Olivia Green",
         "gender": "Female",
-        "phoneNumber": 0112344,
+        "phoneNumber": 112344,
         "dateOfBirth": "1993-02-10",
         "PId": 501,
         "seat": {
@@ -120,20 +144,24 @@
           "seatClass": "Economy Class"
         }
       }
-    ],
-      "hasWheelchair": false,
-      "hasLounge": false,
-      "hasSpecialMeal": true,
-      "hasPet": true
+    ]
   },
   {
     "bookingId": 6,
     "flightNumber": "EK007",
+    "numberOfSeats": 2,
+    "economySeats": 0,
+    "businessSeats": 0,
+    "firstClassSeats": 2,
+    "hasWheelchair": true,
+    "hasLounge": false,
+    "hasSpecialMeal": false,
+    "hasPet": false,
     "passengers": [
       {
         "name": "Sophia White",
         "gender": "Female",
-        "phoneNumber": 0112876,
+        "phoneNumber": 112876,
         "dateOfBirth": "1997-09-09",
         "PId": 601,
         "seat": {
@@ -144,7 +172,7 @@
       {
         "name": "Jackson White",
         "gender": "Male",
-        "phoneNumber": 0116379,
+        "phoneNumber": 116379,
         "dateOfBirth": "1994-06-22",
         "PId": 602,
         "seat": {
@@ -152,20 +180,24 @@
           "seatClass": "First Class"
         }
       }
-    ],
-      "hasWheelchair": true,
-      "hasLounge": false,
-      "hasSpecialMeal": false,
-      "hasPet": false
+    ]
   },
   {
     "bookingId": 7,
     "flightNumber": "EGY008",
+    "numberOfSeats": 1,
+    "economySeats": 1,
+    "businessSeats": 0,
+    "firstClassSeats": 0,
+    "hasWheelchair": false,
+    "hasLounge": true,
+    "hasSpecialMeal": false,
+    "hasPet": false,
     "passengers": [
       {
         "name": "Henry Black",
         "gender": "Male",
-        "phoneNumber": 0190837,
+        "phoneNumber": 190837,
         "dateOfBirth": "1987-05-25",
         "PId": 701,
         "seat": {
@@ -173,20 +205,24 @@
           "seatClass": "Economy Class"
         }
       }
-    ],
-      "hasWheelchair": false,
-      "hasLounge": true,
-      "hasSpecialMeal": false,
-      "hasPet": false
+    ]
   },
   {
     "bookingId": 8,
     "flightNumber": "BA009",
+    "numberOfSeats": 1,
+    "economySeats": 0,
+    "businessSeats": 1,
+    "firstClassSeats": 0,
+    "hasWheelchair": true,
+    "hasLounge": true,
+    "hasSpecialMeal": true,
+    "hasPet": false,
     "passengers": [
       {
         "name": "Mia Blue",
         "gender": "Female",
-        "phoneNumber": 01128973,
+        "phoneNumber": 1128973,
         "dateOfBirth": "1998-12-12",
         "PId": 801,
         "seat": {
@@ -194,20 +230,24 @@
           "seatClass": "Business Class"
         }
       }
-    ],
-      "hasWheelchair": true,
-      "hasLounge": true,
-      "hasSpecialMeal": true,
-      "hasPet": false
+    ]
   },
   {
     "bookingId": 9,
     "flightNumber": "EK010",
+    "numberOfSeats": 1,
+    "economySeats": 1,
+    "businessSeats": 0,
+    "firstClassSeats": 0,
+    "hasWheelchair": false,
+    "hasLounge": false,
+    "hasSpecialMeal": true,
+    "hasPet": true,
     "passengers": [
       {
         "name": "Ethan Yellow",
         "gender": "Male",
-        "phoneNumber": 0118927,
+        "phoneNumber": 118927,
         "dateOfBirth": "1992-04-18",
         "PId": 901,
         "seat": {
@@ -215,20 +255,24 @@
           "seatClass": "Economy Class"
         }
       }
-    ],
-      "hasWheelchair": false,
-      "hasLounge": false,
-      "hasSpecialMeal": true,
-      "hasPet": true
+    ]
   },
   {
     "bookingId": 10,
     "flightNumber": "EGY011",
+    "numberOfSeats": 2,
+    "economySeats": 2,
+    "businessSeats": 0,
+    "firstClassSeats": 0,
+    "hasWheelchair": false,
+    "hasLounge": false,
+    "hasSpecialMeal": false,
+    "hasPet": true,
     "passengers": [
       {
         "name": "Ava Pink",
         "gender": "Female",
-        "phoneNumber": 0182763,
+        "phoneNumber": 182763,
         "dateOfBirth": "1996-11-30",
         "PId": 1001,
         "seat": {
@@ -239,7 +283,7 @@
       {
         "name": "Lucas Pink",
         "gender": "Male",
-        "phoneNumber": 01223876,
+        "phoneNumber": 1223876,
         "dateOfBirth": "1994-08-08",
         "PId": 1002,
         "seat": {
@@ -247,20 +291,24 @@
           "seatClass": "Economy Class"
         }
       }
-    ],
-      "hasWheelchair": false,
-      "hasLounge": false,
-      "hasSpecialMeal": false,
-      "hasPet": true
+    ]
   },
   {
     "bookingId": 11,
     "flightNumber": "BA012",
+    "numberOfSeats": 1,
+    "economySeats": 0,
+    "businessSeats": 0,
+    "firstClassSeats": 1,
+    "hasWheelchair": true,
+    "hasLounge": true,
+    "hasSpecialMeal": false,
+    "hasPet": false,
     "passengers": [
       {
         "name": "Charlotte Red",
         "gender": "Female",
-        "phoneNumber": 092972,
+        "phoneNumber": 92972,
         "dateOfBirth": "1991-10-10",
         "PId": 1101,
         "seat": {
@@ -268,20 +316,24 @@
           "seatClass": "First Class"
         }
       }
-    ],
-      "hasWheelchair": true,
-      "hasLounge": true,
-      "hasSpecialMeal": false,
-      "hasPet": false
+    ]
   },
   {
     "bookingId": 12,
     "flightNumber": "EK013",
+    "numberOfSeats": 1,
+    "economySeats": 0,
+    "businessSeats": 1,
+    "firstClassSeats": 0,
+    "hasWheelchair": false,
+    "hasLounge": false,
+    "hasSpecialMeal": true,
+    "hasPet": true,
     "passengers": [
       {
         "name": "Mason Green",
         "gender": "Male",
-        "phoneNumber": 012936,
+        "phoneNumber": 12936,
         "dateOfBirth": "1993-02-01",
         "PId": 1201,
         "seat": {
@@ -289,20 +341,24 @@
           "seatClass": "Business Class"
         }
       }
-    ],
-      "hasWheelchair": false,
-      "hasLounge": false,
-      "hasSpecialMeal": true,
-      "hasPet": true
+    ]
   },
   {
     "bookingId": 13,
     "flightNumber": "EGY014",
+    "numberOfSeats": 1,
+    "economySeats": 1,
+    "businessSeats": 0,
+    "firstClassSeats": 0,
+    "hasWheelchair": false,
+    "hasLounge": true,
+    "hasSpecialMeal": false,
+    "hasPet": false,
     "passengers": [
       {
         "name": "Liam Brown",
         "gender": "Male",
-        "phoneNumber": 0290380,
+        "phoneNumber": 290380,
         "dateOfBirth": "1990-03-15",
         "PId": 1301,
         "seat": {
@@ -310,20 +366,24 @@
           "seatClass": "Economy Class"
         }
       }
-    ],
-      "hasWheelchair": false,
-      "hasLounge": true,
-      "hasSpecialMeal": false,
-      "hasPet": false
+    ]
   },
   {
     "bookingId": 14,
     "flightNumber": "BA015",
+    "numberOfSeats": 2,
+    "economySeats": 2,
+    "businessSeats": 0,
+    "firstClassSeats": 0,
+    "hasWheelchair": false,
+    "hasLounge": false,
+    "hasSpecialMeal": true,
+    "hasPet": false,
     "passengers": [
       {
         "name": "Ella White",
         "gender": "Female",
-        "phoneNumber": 092983,
+        "phoneNumber": 92983,
         "dateOfBirth": "1995-07-20",
         "PId": 1401,
         "seat": {
@@ -334,7 +394,7 @@
       {
         "name": "James White",
         "gender": "Male",
-        "phoneNumber": 0123874,
+        "phoneNumber": 123874,
         "dateOfBirth": "1993-05-30",
         "PId": 1402,
         "seat": {
@@ -342,20 +402,24 @@
           "seatClass": "Economy Class"
         }
       }
-    ],
-      "hasWheelchair": false,
-      "hasLounge": false,
-      "hasSpecialMeal": true,
-      "hasPet": false
+    ]
   },
   {
     "bookingId": 15,
     "flightNumber": "BA015",
+    "numberOfSeats": 2,
+    "economySeats": 0,
+    "businessSeats": 2,
+    "firstClassSeats": 0,
+    "hasWheelchair": true,
+    "hasLounge": false,
+    "hasSpecialMeal": true,
+    "hasPet": false,
     "passengers": [
       {
         "name": "Sophia Green",
         "gender": "Female",
-        "phoneNumber": 0123084,
+        "phoneNumber": 123084,
         "dateOfBirth": "1992-08-30",
         "PId": 1501,
         "seat": {
@@ -366,7 +430,7 @@
       {
         "name": "Daniel Green",
         "gender": "Male",
-        "phoneNumber": 0190280,
+        "phoneNumber": 190280,
         "dateOfBirth": "1994-11-22",
         "PId": 1502,
         "seat": {
@@ -374,11 +438,6 @@
           "seatClass": "Business Class"
         }
       }
-    ],
-      "hasWheelchair": true,
-      "hasLounge": false,
-      "hasSpecialMeal": true,
-      "hasPet": false
+    ]
   }
 ]
-

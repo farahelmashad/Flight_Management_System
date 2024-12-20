@@ -36,6 +36,7 @@ public class Admin extends User {
     }
 
     private void Addflight() {
+        AirportFileWriter.writeBookingsToFile();
         try{
             System.out.println("enter flight number");
             String FlightNumber = input.next();
@@ -123,6 +124,7 @@ public class Admin extends User {
 
 
     private void UpdateFlightschedule() {
+        AirportFileWriter.writeBookingsToFile();
         try {
             System.out.println("enter flight number");
             String FlightNumber = input.next();
@@ -167,6 +169,7 @@ public class Admin extends User {
 
 
     private void Cancelsaetbooking() {
+        AirportFileWriter.writeBookingsToFile();
         System.out.print("Enter Flight Number: ");
         String flightNumber = input.nextLine().trim();
 
@@ -225,6 +228,7 @@ public class Admin extends User {
     }
 
     private void Deleteflight() {
+        AirportFileWriter.writeBookingsToFile();
         System.out.println("enter the number of the flight you want to delete: ");
         String FlightNumber = input.nextLine().trim();
         Flight flight = findFlightByNumber(FlightNumber);
