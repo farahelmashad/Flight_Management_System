@@ -33,20 +33,8 @@ public class User {
         this.p = p;
     }
 
-    public User(String email, String password, ArrayList<Passenger> p, int user_Id) {
-        Email = email;
-        Password = password;
-        this.p = p;
 
-    }
 
-    public User(String email, String password, String gender, long phoneNumber, String name) {
-        Email = email;
-        Password = password;
-        Gender = gender;
-        PhoneNumber = phoneNumber;
-        this.name = name;
-    }
 
     public User(String email, String password, String gender, long phoneNumber, String dateOfBirth, ArrayList<Passenger> p, ArrayList<Booking> bookings, Flight selectedFlight, int user_Id, boolean loggedIn) {
         Email = email;
