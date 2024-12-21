@@ -15,7 +15,7 @@ public class SignUp_LogIn {
     Admin a=new Admin();
     Booking b =new Booking ();
 
-    private int thisUserIndex = -1;
+    //    private int thisUserIndex = -1;
     private static Scanner scanner = new Scanner(System.in);
 
     public boolean SignUp() {
@@ -147,7 +147,7 @@ public class SignUp_LogIn {
 
 
         users.add(newUser);
-
+        AirportFileWriter.writeUsersToFile();
         System.out.println("Sign Up Successfully!");
         System.out.println("Please Log In.");
         return true;
