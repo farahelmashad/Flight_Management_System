@@ -254,9 +254,9 @@ public class Admin extends User {
                 }
             }
             user.getBookings().removeAll(bookingsToRemove);
-
-            System.out.println("Flight with Flight Number " + FlightNumber + " and all associated bookings have been deleted successfully.");
         }
+            System.out.println("Flight with Flight Number " + FlightNumber + " and all associated bookings have been deleted successfully.");
+        AirportFileWriter.writeFlightsToFile();
     }
 
 
