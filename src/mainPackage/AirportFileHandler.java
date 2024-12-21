@@ -156,7 +156,7 @@ public class AirportFileHandler {
                     booking.setCurrentUser(user);
                     booking.setBookingStatus("Confirmed");
                     booking.setFlight(booking.getFlightNumber());
-                    System.out.println("flight: "+booking.getFlightNumber().getArrivalAirport());
+
                 }
 
                 int first=0,bus=0,econ=0;
