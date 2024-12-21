@@ -48,19 +48,19 @@ public class Seat {
     @Override
     public String toString() {
         return "SeatNumber:" + SeatNumber+ ","
-                 + (IsAvailable? "Available" : "Booked") + ", SeatClass:" + SeatClass + '.';
+                + (IsAvailable? "Available" : "Booked") + ", SeatClass:" + SeatClass + '.';
 
     }
 
     public void cancelBooking()
-   {
+    {
         if (!IsAvailable) {
             IsAvailable = true;
+            AirportFileWriter.writeFlightsToFile();
+            AirportFileWriter.writeBookingsToFile();
             System.out.println("Booking for seat " + SeatNumber + " has been canceled.");
         } else {
             System.out.println("Seat " + SeatNumber + " is already available.");
         }
     }
-    }
-
-
+}

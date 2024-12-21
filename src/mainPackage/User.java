@@ -6,7 +6,7 @@ public class User {
     protected String Email;
     protected String Password;
     private String Gender;
-    private int PhoneNumber;
+    private long PhoneNumber;
     private String name;
     private String DateOfBirth;
     private ArrayList<Passenger> p = new ArrayList<>();
@@ -40,7 +40,7 @@ public class User {
 
     }
 
-    public User(String email, String password, String gender, int phoneNumber, String name) {
+    public User(String email, String password, String gender, long phoneNumber, String name) {
         Email = email;
         Password = password;
         Gender = gender;
@@ -48,7 +48,7 @@ public class User {
         this.name = name;
     }
 
-    public User(String email, String password, String gender, int phoneNumber, String dateOfBirth, ArrayList<Passenger> p, ArrayList<Booking> bookings, Flight selectedFlight, int user_Id, boolean loggedIn) {
+    public User(String email, String password, String gender, long phoneNumber, String dateOfBirth, ArrayList<Passenger> p, ArrayList<Booking> bookings, Flight selectedFlight, int user_Id, boolean loggedIn) {
         Email = email;
         Password = password;
         Gender = gender;
@@ -124,11 +124,11 @@ public class User {
         DateOfBirth = dateOfBirth;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return PhoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         PhoneNumber = phoneNumber;
     }
 

@@ -1,13 +1,10 @@
 package mainPackage;
 
 import java.io.Console;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 
@@ -15,8 +12,8 @@ public class SignUp_LogIn {
 
     ArrayList<Admin> admins = GlobalData.admins;
     ArrayList<User> users = GlobalData.users;
-    Admin a = new Admin();
-    Booking b = new Booking();
+    Admin a=new Admin();
+    Booking b =new Booking ();
 
     private int thisUserIndex = -1;
     private static Scanner scanner = new Scanner(System.in);
@@ -27,14 +24,22 @@ public class SignUp_LogIn {
         String name;
         String gender;
         String dateOfBirth;
-        int phoneNumber;
+        long phoneNumber;
 
 
         User newUser = new User();
+        while (true) {
+            System.out.println("Please Enter Your Name (Only letters and spaces are allowed):");
+            name = scanner.nextLine().trim();
 
-        System.out.println("Please Enter Your Name:");
-        name = scanner.nextLine();
-        newUser.setName(name);
+            if (name.matches("[a-zA-Z\\s]+")) { // Regular expression to allow letters and spaces only
+                newUser.setName(name);
+                break;
+            } else {
+                System.out.println("Invalid Name. Please Enter a Valid Name!");
+            }
+        }
+
 
 
         while (true) {
@@ -108,7 +113,7 @@ public class SignUp_LogIn {
             String phoneInput = scanner.nextLine().trim();
 
             if (phoneInput.matches("\\d{11,}")) {
-                phoneNumber = Integer.parseInt(phoneInput);
+                phoneNumber = Long.parseLong(phoneInput);
                 newUser.setPhoneNumber(phoneNumber);
                 break;
             } else {
@@ -117,24 +122,28 @@ public class SignUp_LogIn {
         }
 
         while (true) {
-            System.out.println("Enter Your Date Of Birth (dd-MM-yyyy):");
-            dateOfBirth = scanner.nextLine();
+            try {
+                System.out.println("Enter Your Date Of Birth (dd-MM-yyyy):");
+                dateOfBirth = scanner.nextLine().trim();
 
-            // Validate the date format and logical check
-            if (isValidDate(dateOfBirth)) {
-                LocalDate dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate dob = LocalDate.parse(dateOfBirth, formatter);
+
                 LocalDate today = LocalDate.now();
                 Period period = Period.between(dob, today);
+
                 if (period.getYears() < 18) {
                     System.out.println("You must be at least 18 years old. Please try again.");
                 } else {
                     newUser.setDateOfBirth(dateOfBirth);
                     break;
                 }
-            } else {
+            } catch (Exception e) {
                 System.out.println("Invalid Date format. Please enter in dd-MM-yyyy format.");
             }
         }
+
+
 
 
         users.add(newUser);
@@ -154,7 +163,7 @@ public class SignUp_LogIn {
 
             for (Admin admin : admins) {
                 if (email.equals(admin.getEmail()) && password.equals(admin.getPassword())) {
-                    System.out.println("Admin Log-In Successful! Welcome ");
+                    System.out.println("Admin Log-In Successful! Welcome " );
                     return true;
                 }
             }
@@ -164,7 +173,7 @@ public class SignUp_LogIn {
 
             String exitChoice = scanner.nextLine().trim();
             if (exitChoice.equalsIgnoreCase("exit")) {
-                return false;  // Exit login attempt
+                return false;
             }
         }
     }
@@ -196,21 +205,11 @@ public class SignUp_LogIn {
 
             String exitChoice = scanner.nextLine().trim();
             if (exitChoice.equalsIgnoreCase("exit")) {
-                return false;  // Exit login attempt
+                return false;
             }
         }
     }
 
-    private boolean isValidDate(String date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); // Changed to dd-MM-yyyy
-        dateFormat.setLenient(false);
-        try {
-            Date parsedDate = dateFormat.parse(date);
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
-    }
 
     public void MainMenu() {
         while (true) {
@@ -269,15 +268,16 @@ public class SignUp_LogIn {
         }
     }
 
-    public void MainMenu2() {
+    public void MainMenu2(){
         while (true) {
             System.out.println("\nWelcome To Our Flight Management System");
             System.out.println("1. Search And Book A Flight");
-            System.out.println("2. change your seat");
+            System.out.println("2. Modify Your Flight");
             System.out.println("3. List All Bookings");
             System.out.println("4. Cancel Your Booking");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
+
 
 
             int choice;
@@ -321,5 +321,6 @@ public class SignUp_LogIn {
             }
 
         }
-    }
-}
+
+
+    }}
